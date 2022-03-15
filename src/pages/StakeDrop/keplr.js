@@ -12,8 +12,6 @@ const MicroFactor = 1000000;
 
 //set comdex
 async function initializeKeplr() {
-  window.onload = async () =>
-  {
     if (!window.keplr) {
       alert("Please install keplr extension");
     } else {
@@ -23,12 +21,9 @@ async function initializeKeplr() {
         keplrSet = true;
       }
     }
-  }
 }
 
 async function getKeplrWallet(chainID) {
-  window.onload = async () =>
-  {
     if (!window.keplr) {
       alert("Please install keplr extension");
     } else {
@@ -40,7 +35,6 @@ async function getKeplrWallet(chainID) {
         console.log(e);
       }
     }
-  }
 }
 
 initializeKeplr().catch((e) => console.log(e));
