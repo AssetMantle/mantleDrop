@@ -10,6 +10,7 @@ import campaignData from "../../../data/campaignData.json";
 import { sendCoinTxWithMemo } from "../send";
 import HowToModal from "./HowToModal";
 import QAComponent from "./QAComponent";
+import {BiCheckCircle, BiTimeFive} from "react-icons/bi";
 
 export default function PersistenceCalculationPage() {
   const { t } = useTranslation();
@@ -74,7 +75,7 @@ export default function PersistenceCalculationPage() {
   const [StakeAddress, setStakeAddress] = useState();
   const [TotalStaked, setTotalStaked] = useState("0.00");
   const [TotalReward, setTotalReward] = useState("0.00");
-  const [TotalCorrect, setTotalCorrect] = useState(0);
+  const [TotalCorrect, setTotalCorrect] = useState("--");
   const [TotalEstimated, setTotalEstimated] = useState(0);
 
   const TotalStakedN = Number(TotalStaked);
@@ -482,57 +483,31 @@ export default function PersistenceCalculationPage() {
               <div className="section_questions__qBox">
                 <div className="section_questions__qBox_title">
                   <h3 className="section_questions__qBox_title__name">
-                    Reward
+                    Quiz result
+                    {Quiz === true && (
+                        <div className="success">
+                          <BiCheckCircle /> Completed
+                        </div>
+                    )}
                   </h3>
-                  <div className="section_questions__qBox_title__right"></div>
-                </div>
-                <section className="section_reward_table">
-                  <div className="section_reward_table__element">
-                    <div className="section_reward_table__element_option">
-                      <h4>Reward:</h4>
-                      <p>
-                        {reward.toLocaleString("en-US", {
-                          maximumFractionDigits: 4,
-                        })}
-                        {` $MNTL`}
-                      </p>
-                    </div>
-                    <div className="section_reward_table__element_option">
-                      <h4>
-                        Bonus Reward: <br />
-                        (You scored {TotalCorrect} out of 21 in quiz. for
-                        persistance)
-                      </h4>
-                      <p>
-                        {totalReward.toLocaleString("en-US", {
-                          maximumFractionDigits: 4,
-                        })}{" "}
-                        $MNTL
-                      </p>
-                    </div>
-                    <div className="section_reward_table__element_option">
-                      <h4>Total Reward:</h4>
-                      <p>
-                        {(reward + totalReward).toLocaleString("en-US", {
-                          maximumFractionDigits: 4,
-                        })}
-                        {` $MNTL`}
-                      </p>
-                    </div>
-                    {/* <div className="section_reward_table__element_option">
-                      <h4>{t("AIRDROP_ALLOCATION_BY_NETWORK_OPTION_3_KEY")}</h4>
-                      <p>{t("AIRDROP_ALLOCATION_BY_NETWORK_OPTION_3_VALUE")}</p>
-                    </div> */}
+                  <div className="section_questions__qBox_title__right">
+                    <span>
+                      <BiTimeFive />
+                    </span>
+                    <p>EXPIRED</p>
                   </div>
-                </section>
-                {/* <div className="section_questions__qBox_button">
-                  <button
+                </div>
+                <p className="section_questions__qBox_details">
+                  You scored {TotalCorrect} out of 21.
+                </p>
+                <div className="section_questions__qBox_button">
+                  {/* <button
                     onClick={() => setQuizModal(true)}
                     disabled={Quiz === true || Quiz === 0 ? true : false}
                   >
                     {Quiz === true ? "Completed" : "Take the Quiz"}
-                  </button>
-                </div> */}
+                  </button> */}
+                </div>
               </div>
             </section>
             <>
