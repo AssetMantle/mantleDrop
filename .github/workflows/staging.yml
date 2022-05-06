@@ -3,7 +3,7 @@ name: Airdrop-Staging
 
 on:
   push:
-    branches: [airdrop/master]
+    branches: [master]
 
 jobs:
   deploy:
