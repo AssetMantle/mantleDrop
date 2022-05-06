@@ -525,7 +525,7 @@ export default function OsmosisClaimPage() {
                 className="section_mission__container_mission__button"
                 onClick={() =>
                     window.open(
-                        "https://app.osmosis.zone/pool/" +
+                        config.poolURL +
                         config.poolNumber,
                         "_blank"
                     )}
