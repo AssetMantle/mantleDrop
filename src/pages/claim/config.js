@@ -10,5 +10,6 @@ const websiteURL = process.env.REACT_APP_websiteURL;
 const claimPageClaimEndPoint = process.env.REACT_APP_claimPageClaimEndPoint;
 const proposalID = process.env.REACT_APP_proposalID;
 const poolNumber = process.env.REACT_APP_poolNumber;
+const poolURL = process.env.REACT_APP_poolURL;
 
-export default {mainNetChainID,chainName,coinName,coinDenom,addressPrefix,restAPI,tendermintRPC,websiteURL,claimPageClaimEndPoint,proposalID,poolNumber}
+export default {mainNetChainID,chainName,coinName,coinDenom,addressPrefix,restAPI,tendermintRPC,websiteURL,claimPageClaimEndPoint,proposalID,poolNumber,poolURL}
