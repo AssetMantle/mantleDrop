@@ -56,6 +56,10 @@ export default function OsmosisClaimPage() {
       success: false,
       txHash: "",
     },
+    liquidity: {
+      success: false,
+      txHash: "",
+    },
   });
 
   // connect keplr
@@ -169,6 +173,10 @@ export default function OsmosisClaimPage() {
               success: false,
               txHash: "",
             },
+            liquidity: {
+              success: false,
+              txHash: "",
+            },
           });
           setNotEligible(true);
         }
@@ -249,6 +257,10 @@ export default function OsmosisClaimPage() {
               success: false,
               txHash: "",
             },
+            liquidity: {
+              success: false,
+              txHash: "",
+            },
           });
           setNotEligible(true);
         }
@@ -275,6 +287,9 @@ export default function OsmosisClaimPage() {
     }
     if (ClaimResponse.success && ClaimResponse.vote.success) {
       bar += 10;
+    }
+    if (ClaimResponse.success && ClaimResponse.liquidity.success) {
+      bar += 20;
     }
     setBar(bar);
   }, [ClaimResponse]);
