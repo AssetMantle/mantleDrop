@@ -122,6 +122,11 @@ export default function MantleDropClaim({ totalValue }) {
     }
   };
 
+  const disconnectKeplr = () => {
+    setKeplrConnectionState(0);
+    setMNTLAddress("");
+  }
+
   const InputCalculate = () => {
     if (InputAddress.includes("cosmos")) {
       fetch(
@@ -295,7 +300,7 @@ export default function MantleDropClaim({ totalValue }) {
         mantleAddress: "",
       });
       setInputError(
-        "Please enter a valid Cosmos or Persistence or Terra or Comdex or Juno or Stargaze or Osmosis address to calculate your rewards."
+        "Please enter a valid $MNTL or Cosmos or Persistence or Terra or Comdex or Juno or Stargaze or Osmosis address to calculate your rewards."
       );
     }
   };
@@ -329,6 +334,8 @@ export default function MantleDropClaim({ totalValue }) {
         InputCampaignData.received/1000000
     );
   }, [APIResponse, InputCampaignData]);
+
+  console.log(MNTLAddress)
 
   return (
     <>
@@ -435,6 +442,18 @@ export default function MantleDropClaim({ totalValue }) {
                           2: t("CONNECTED"),
                         }[KeplrConnectionState]
                       } Keplr`}</span>
+                    </button>
+                    <button
+                      className="section_calculation__connect_button"
+                      onClick={disconnectKeplr}
+                      disabled={
+                        MNTLAddress !== null && MNTLAddress !== undefined && MNTLAddress !== ""
+                          ? false
+                          : true
+                      }
+                    >
+                      <img src="/images/airdrop/Kepler.png" alt="Keplr icon" />
+                      <span>{t("DISCONNECT_KEPLR")}</span>
                     </button>
                   </div>
                   <div className="section_calculation__or">Or</div>
@@ -814,7 +833,7 @@ const Container = styled.main`
         display: flex;
         align-items: center;
         gap: 24px;
-        justify-content: space-between;
+        /* justify-content: space-between; */
         @media (max-width: 768px) {
           flex-wrap: wrap;
         }
