@@ -416,10 +416,6 @@ export default function Airdrop() {
                       </p>
                     </div>
                   )}
-                  {/* <div className="section_allocation_by_network__element_option">
-                  <h4>{t("AIRDROP_ALLOCATION_BY_NETWORK_OPTION_3_KEY")}</h4>
-                  <p>{t("AIRDROP_ALLOCATION_BY_NETWORK_OPTION_3_VALUE")}</p>
-                </div> */}
                 </div>
               </section>
             )}
@@ -440,17 +436,6 @@ export default function Airdrop() {
               <h4>{t("AIRDROP_NFT_OWNERS_VALUE")}</h4>
             </div>
             <div className="section_drop__button two">
-              {/* <a
-                href={
-                  airDropData.NFTOwners.href !== null ||
-                  airDropData.NFTOwners.href !== undefined ||
-                  airDropData.NFTOwners.href !== ""
-                    ? airDropData.NFTOwners.href
-                    : undefined
-                }
-              >
-                {t("NOTIFY_ME")}
-              </a> */}
             </div>
           </div>
         </section>
