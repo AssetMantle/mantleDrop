@@ -40,7 +40,7 @@ export default function Airdrop() {
 
   const [MantleDropClaimValue, setMantleDropClaimValue] = useState(0);
 
-  const [OpenseaSignState, setOpenseaSignState] = useState(true);
+  const [OpenseaSignState, setOpenseaSignState] = useState(false);
 
   // const [Total, setTotal] = useState(0);
 
@@ -322,19 +322,11 @@ export default function Airdrop() {
                 )}
                 <section className="section_drop" style={{ padding: "20px 0" }}>
                   <div className="section_drop__element">
-                    <div className="section_drop__element_details">
-                      <h3>{false}</h3>
-                      <div className="section_drop__element_details__hover">
-                        <p></p>
-                      </div>
-                    </div>
-                    <div className="section_drop__element_value">
-                      <p></p>
-                      <h4>{false}</h4>
-                    </div>
+                    <div className="section_drop__element_details"></div>
+                    <div className="section_drop__element_value"></div>
                     <div className="section_drop__button">
-                      <button onClick={setOpenseaSignState(true)}>
-                        {t("DETAILS")}
+                      <button onClick={() => setOpenseaSignState(true)}>
+                        Details
                       </button>
                     </div>
                   </div>
@@ -435,8 +427,7 @@ export default function Airdrop() {
               <p>{t("AIRDROP_NFT_OWNERS_KEY")}</p>
               <h4>{t("AIRDROP_NFT_OWNERS_VALUE")}</h4>
             </div>
-            <div className="section_drop__button two">
-            </div>
+            <div className="section_drop__button two"></div>
           </div>
         </section>
         {LPModalStat && (

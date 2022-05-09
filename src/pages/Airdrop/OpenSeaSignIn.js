@@ -13,20 +13,25 @@ export default function OpenSeaSignIn({
   const [MetaMaskConnectionState, setMetaMaskConnectionState] = useState(0);
 
   const handleMetamaskConnect = async () => {
-    if (typeof window.ethereum !== "undefined") {
-      console.log("Connecting MetaMask...");
-      setMetaMaskConnectionState(1);
+    if (!MetaMaskAddress) {
+      if (typeof window.ethereum !== "undefined") {
+        console.log("Connecting MetaMask...");
+        setMetaMaskConnectionState(1);
 
-      const accounts = await window.ethereum.request({
-        method: "eth_requestAccounts",
-      });
-      const account = accounts[0];
+        const accounts = await window.ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        const account = accounts[0];
 
-      // console.log("Account: ", account);
-      setMetaMaskConnectionState(2);
-      setMetaMaskWallet(account);
+        // console.log("Account: ", account);
+        setMetaMaskConnectionState(2);
+        setMetaMaskWallet(account);
+      } else {
+        window.alert("Please install MetaMask to move forward with the task.");
+      }
     } else {
-      window.alert("Please install MetaMask to move forward with the task.");
+      setMetaMaskConnectionState(0);
+      setMetaMaskWallet();
     }
   };
 
@@ -35,24 +40,29 @@ export default function OpenSeaSignIn({
 
   const [MNTLAddress, setMNTLAddress] = useState("");
   const handleKeplrConnect = async () => {
-    if (window.keplr) {
-      setKeplrConnectionState(1);
+    if (!MNTLAddress) {
+      if (window.keplr) {
+        setKeplrConnectionState(1);
 
-      // adding MNTL wallet
-      try {
-        await initializeKeplr();
-      } catch (e) {
-        console.log(e);
+        // adding MNTL wallet
+        try {
+          await initializeKeplr();
+        } catch (e) {
+          console.log(e);
+        }
+        let mantleOfflineSigner = window.keplr.getOfflineSigner(
+          process.env.REACT_APP_mainNetChainID
+        );
+        let mntlAccounts = await mantleOfflineSigner.getAccounts();
+        let mntlAddress = mntlAccounts[0].address;
+        setMNTLAddress(mntlAddress);
+        setKeplrConnectionState(2);
+      } else {
+        window.alert("Please install Keplr to move forward with the task.");
       }
-      let mantleOfflineSigner = window.keplr.getOfflineSigner(
-        process.env.REACT_APP_mainNetChainID
-      );
-      let mntlAccounts = await mantleOfflineSigner.getAccounts();
-      let mntlAddress = mntlAccounts[0].address;
-      setMNTLAddress(mntlAddress);
-      setKeplrConnectionState(2);
     } else {
-      window.alert("Please install Keplr to move forward with the task.");
+      setKeplrConnectionState(0);
+      setMNTLAddress("");
     }
   };
 
@@ -72,67 +82,130 @@ export default function OpenSeaSignIn({
           <img src="/images/icons/close.png" alt="close" />
         </div>
         <div className="modal_container">
-          <h2 className="modal_container__title">{t("SIGN_IN")}</h2>
+          <h2 className="modal_container__title">OpenSea $MNTL Airdrop</h2>
           <div className="modal_container__connect">
             <p className="modal_container__connect_instruction">
-              {t("CONNECT_YOUR_WALLET")}
+              {/* {t("CONNECT_YOUR_WALLET")} */} Step 1: Connect MetaMask
             </p>
+          </div>
+          <div
+            className="modal_container__connect"
+            style={{ paddingTop: "24px" }}
+          >
+            {/* <p className="modal_container__connect_instruction">
+              {t("CONNECT_YOUR_WALLET")} Step 1
+            </p> */}
             <div className="section_wallets__buttons">
               <div
                 className="section_wallets__buttons_button"
+                style={{ border: "none", outline: "none" }}
                 onClick={handleMetamaskConnect}
               >
                 <img src="/images/airdrop/MetaMask.png" alt="Metamask icon" />
                 <span>{`${
-                  { 0: t("CONNECT"), 1: t("CONNECTING"), 2: t("CONNECTED") }[
+                  { 0: t("CONNECT"), 1: t("CONNECTING"), 2: t("DISCONNECT") }[
                     MetaMaskConnectionState
                   ]
                 } MetaMask`}</span>
               </div>
             </div>
-            <div className="section_wallets__buttons">
-              <div
-                className="section_wallets__buttons_button"
-                onClick={handleKeplrConnect}
-              >
-                <img src="/images/airdrop/Kepler.png" alt="Keplr icon" />
-                <span>{`${
-                  { 0: t("CONNECT"), 1: t("CONNECTING"), 2: t("CONNECTED") }[
-                    KeplrConnectionState
-                  ]
-                } Keplr`}</span>
-              </div>
-            </div>
-            {/* <div className="section_container__connect_address yellow-t">
+            <div className="section_container__connect_address yellow-t">
               {MetaMaskAddress}
-            </div> */}
+            </div>
           </div>
-          {/* <div
+          <div
             className="modal_container__connect"
-            style={{ paddingTop: "20px" }}
+            style={{ paddingTop: "36px" }}
           >
             <p className="modal_container__connect_instruction">
-              {t("CONNECT_YOUR_WALLET")}
+              {/* {t("CONNECT_YOUR_WALLET")} */} Step 2: Provide Mantle Address
             </p>
+          </div>
+          <div
+            className="modal_container__connect"
+            style={{ paddingTop: "24px" }}
+          >
+            {/* <p className="modal_container__connect_instruction">
+              {t("CONNECT_YOUR_WALLET")} Step 2
+            </p> */}
             <div className="section_wallets__buttons">
-              <div
+              <button
                 className="section_wallets__buttons_button"
+                style={{ border: "none", outline: "none" }}
                 onClick={handleKeplrConnect}
+                disabled={MetaMaskAddress ? false : true}
               >
                 <img src="/images/airdrop/Kepler.png" alt="Keplr icon" />
                 <span>{`${
-                  { 0: t("CONNECT"), 1: t("CONNECTING"), 2: t("CONNECTED") }[
+                  { 0: t("CONNECT"), 1: t("CONNECTING"), 2: t("DISCONNECT") }[
                     KeplrConnectionState
                   ]
                 } Keplr`}</span>
+              </button>
+            </div>
+            {MNTLAddress ? (
+              <div className="section_container__connect_address yellow-t">
+                {MNTLAddress}
               </div>
-            </div>
-            <div className="section_container__connect_address yellow-t">
-              {MNTLAddress}
-            </div>
-          </div> */}
-          <div className="modal_container__or">{t("OR")}</div>
+            ) : (
+              <>
+                <p className="modal_container__connect_instruction">Or</p>
+                <div className="modal_container__form" style={{ flex: "1" }}>
+                  {/* <label htmlFor="address" className="modal_container__form_label">
+              {t("AIRDROP_MODAL_KEPLR_LABEL")}
+            </label> */}
+                  <div className="modal_container__form_line2">
+                    <input
+                      type="text"
+                      className="modal_container__form_line2_input"
+                      name="address"
+                      onChange={(e) => setMNTLAddress(e.target.value)}
+                      placeholder="Enter Valid Mantle Address"
+                      readOnly={MetaMaskAddress ? false : true}
+                    />
+                    {/* <button
+                onClick={handleSignIn}
+                className="modal_container__form_line2_button"
+                disabled={MNTLAddress && MetaMaskAddress ? false : true}
+              >
+                {t("SIGN_IN")}
+              </button> */}
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+          <div
+            className="modal_container__connect"
+            style={{ paddingTop: "10px" }}
+          >
+            <p className="modal_container__connect_instruction2">
+              {/* {t("CONNECT_YOUR_WALLET")} */} Don't have keplr? Install{" "}
+              <a
+                href="https://chrome.google.com/webstore/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap?hl=en"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                here
+              </a>
+            </p>
+          </div>
           <div className="modal_container__form">
+            <div
+              className="modal_container__form_line2"
+              style={{ justifyContent: "center", paddingTop: "24px" }}
+            >
+              <button
+                onClick={handleSignIn}
+                className="modal_container__form_line2_button"
+                disabled={MNTLAddress && MetaMaskAddress ? false : true}
+              >
+                {t("CLAIM")}
+              </button>
+            </div>
+          </div>
+          {/* <div className="modal_container__or">{t("OR")}</div> */}
+          {/* <div className="modal_container__form">
             <label htmlFor="address" className="modal_container__form_label">
               {t("AIRDROP_MODAL_KEPLR_LABEL")}
             </label>
@@ -141,6 +214,7 @@ export default function OpenSeaSignIn({
                 type="text"
                 className="modal_container__form_line2_input"
                 name="address"
+                value={MNTLAddress}
                 onChange={(e) => setMNTLAddress(e.target.value)}
                 placeholder="Enter Valid $MNTL Address"
               />
@@ -152,7 +226,7 @@ export default function OpenSeaSignIn({
                 {t("SIGN_IN")}
               </button>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </Container>
@@ -225,7 +299,7 @@ const Container = styled.div`
     &__title {
       font: var(--h2);
       color: var(--gray);
-      padding-bottom: 60px;
+      padding-bottom: 40px;
       margin: 0;
     }
     &__connect {
@@ -236,6 +310,25 @@ const Container = styled.div`
       &_instruction {
         font: var(--p-l);
         color: var(--gray);
+        &2 {
+          font: var(--p-s);
+          color: var(--gray-deep);
+          a {
+            color: var(--yellow);
+            text-decoration: none;
+          }
+        }
+      }
+      .section_wallets__buttons_button {
+        &:disabled {
+          /* background: var(--yellow-disabled); */
+          opacity: 0.6;
+          box-shadow: none;
+          &:hover,
+          &:focus {
+            box-shadow: none;
+          }
+        }
       }
       .section_container__connect_address {
         font: var(--p-m);
@@ -275,6 +368,12 @@ const Container = styled.div`
           background: transparent;
           outline: none;
           color: var(--gray);
+          &:read-only {
+            border-color: var(--gray-deep);
+            color: var(--gray-deep);
+            cursor: not-allowed;
+            opacity: 0.4;
+          }
           &::placeholder {
             color: var(--gray-deep);
           }
@@ -283,20 +382,22 @@ const Container = styled.div`
           font: 600 var(--p-m);
           color: var(--yellow);
           background: transparent;
-          border: 2px solid var(--yellow);
+          border: 2px solid var(--yellow) !important;
           border-radius: 12px;
           padding: 8px 63px 10px;
           cursor: pointer;
           color: var(--yellow);
           text-decoration: none;
           box-shadow: none;
+          border: none;
+          outline: none;
           &:hover,
           &:focus {
             box-shadow: 0px 0px 5px 3px rgba(255, 201, 66, 0.4);
           }
           &:disabled {
             color: var(--yellow-disabled);
-            border: 2px solid var(--yellow-disabled);
+            border: 2px solid var(--yellow-disabled) !important;
             cursor: not-allowed;
             &:hover,
             &:focus {

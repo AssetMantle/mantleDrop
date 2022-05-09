@@ -287,6 +287,7 @@ const English = {
     DAY: "day",
     DAYS: "days",
     DETAILS: "Details",
+    DISCONNECT: "Disconnect",
     DISCONNECT_KEPLR: "Disconnect Keplr",
     EDIT: "Edit",
     LETS_GO: "Let's go",
