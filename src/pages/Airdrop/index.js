@@ -12,9 +12,8 @@ import MetaMaskModal from "./MetaMaskModal";
 import TAndCModal from "../claim/TAndCModal";
 import OsmoIModal from "./OsmoIModal";
 import MantleDropClaim from "../claim/MantleDropClaim";
-import {getMantleAddress} from "../claim/utils/address";
-
-// const chainIDs = require("../../data/chain.json");
+import { getMantleAddress } from "../claim/utils/address";
+import OpenSeaSignIn from "./OpenSeaSignIn";
 
 export default function Airdrop() {
   const { t } = useTranslation();
@@ -25,7 +24,7 @@ export default function Airdrop() {
   const [KeplrCalculatedDATA, setKeplrCalculatedDATA] = useState();
   const [OsmoAllocation, setOsmoAllocation] = useState(0);
   const [OsmoTS, setOsmoTS] = useState(false);
-  const [TotalCalModal,setTotalCalModal] = useState(false);
+  const [TotalCalModal, setTotalCalModal] = useState(false);
   const [TAndC, setTAndC] = useState(false);
 
   const [MetaMaskModalStat, setMetaMaskModalStat] = useState(false);
@@ -39,7 +38,7 @@ export default function Airdrop() {
 
   const [MantleDropClaimValue, setMantleDropClaimValue] = useState(0);
 
-  // const [Total, setTotal] = useState(0);
+  const [OpenseaSignState, setOpenseaSignState] = useState(false);
 
   useEffect(() => {
     fetch(`https://airdrop-data.assetmantle.one/keplr/${OsmoAddress}`)
@@ -106,41 +105,6 @@ export default function Airdrop() {
           </div>
         </section>
         <MantleDropClaim totalValue={setMantleDropClaimValue} />
-        {/* <section className="section_drop">
-          <div className="section_drop__heading">
-            <h3>{t("COMPLETED")}</h3>
-            <hr />
-          </div>
-          <div className="section_drop__element">
-            <div className="section_drop__element_details">
-              <h3>{t("AIRDROP_START_WITH_STAKEDROP_TITLE")}</h3>
-              <div className="section_drop__element_details__hover">
-                <p>{t("AIRDROP_START_WITH_STAKEDROP_DESCRIPTION")}</p>
-                <button>
-                  <HiOutlineInformationCircle />
-                </button>
-                <span>{t("AIRDROP_START_WITH_STAKEDROP_DESCRIPTION")}</span>
-              </div>
-            </div>
-            <div className="section_drop__element_value">
-              <p>{t("AIRDROP_START_WITH_STAKEDROP_KEY")}</p>
-              <h4>{t("AIRDROP_START_WITH_STAKEDROP_VALUE")}</h4>
-            </div>
-            <div className="section_drop__button">
-              <a
-                href={
-                  airDropData.startWithStakedrop.href !== null ||
-                  airDropData.startWithStakedrop.href !== undefined ||
-                  airDropData.startWithStakedrop.href !== ""
-                    ? airDropData.startWithStakedrop.href
-                    : undefined
-                }
-              >
-                {t("CHECK")}
-              </a>
-            </div>
-          </div>
-        </section> */}
         <section className="section_drop">
           <div className="section_drop__heading">
             <h3>{t("AIRDROP_REQUIRED_ELIGIBILITY_HEADING")}</h3>
@@ -154,9 +118,6 @@ export default function Airdrop() {
                 <button onClick={() => setOsmoIModalState(true)}>
                   <HiOutlineInformationCircle />
                 </button>
-                {/* <span>
-                  {t("AIRDROP_REQUIRED_ELIGIBILITY_DESCRIPTION_1")}
-                  </span> */}
               </div>
             </div>
             <div className="section_drop__element_value">
@@ -209,7 +170,8 @@ export default function Airdrop() {
                     >
                       {KeplrCalculatedDATA &&
                         KeplrCalculatedDATA.allocation &&
-                        Number(KeplrCalculatedDATA.allocation).toFixed(2)}{` $MNTL`}{" "}
+                        Number(KeplrCalculatedDATA.allocation).toFixed(2)}
+                      {` $MNTL`}{" "}
                       {OsmoTS ? <AiFillCaretUp /> : <AiFillCaretDown />}
                     </p>
                   </div>
@@ -354,6 +316,17 @@ export default function Airdrop() {
                     </div>
                   </section>
                 )}
+                <section className="section_drop" style={{ padding: "20px 0" }}>
+                  <div className="section_drop__element">
+                    <div className="section_drop__element_details"></div>
+                    <div className="section_drop__element_value"></div>
+                    <div className="section_drop__button">
+                      <button onClick={() => setOpenseaSignState(true)}>
+                        Details
+                      </button>
+                    </div>
+                  </div>
+                </section>
               </>
             ) : MetaMaskCalculatedDATA === false ? (
               <section className="section_allocation">
@@ -385,58 +358,55 @@ export default function Airdrop() {
                   <h4 className="yellow-t">{t("AIRDROP_ALLOCATION_KEY")}</h4>
                 </div>
                 <p className="yellow-t">
-                  <span onClick={() => setTotalCalModal(!TotalCalModal)}
-                        style={{ cursor: "pointer" }}
+                  <span
+                    onClick={() => setTotalCalModal(!TotalCalModal)}
+                    style={{ cursor: "pointer" }}
                   >
                     {(
-                        Number(OsmoAllocation) +
-                        Number(MetamaskAllocation) +
-                        MantleDropClaimValue
-                    ).toFixed(2)} {` $MNTL`}
-                    {" "}
+                      Number(OsmoAllocation) +
+                      Number(MetamaskAllocation) +
+                      MantleDropClaimValue
+                    ).toFixed(2)}{" "}
+                    {` $MNTL`}{" "}
                     {TotalCalModal ? <AiFillCaretUp /> : <AiFillCaretDown />}
-                    </span>
+                  </span>
                 </p>
               </div>
             </section>
-            {TotalCalModal &&
-                <section className="section_allocation_by_network">
-                  <div className="section_allocation_by_network__element">
-                    <div className="section_allocation_by_network__element_option">
-                      <h4>Category</h4>
-                      <p>$MNTL Allocation</p>
-                    </div>
-                    {MantleDropClaimValue !== 0 && (
-                        <div className="section_allocation_by_network__element_option">
-                          <h4>{t("AIRDROP_START_WITH_STAKEDROP_TITLE")}</h4>
-                          <p>{Number(MantleDropClaimValue).toFixed(2)}</p>
-                        </div>
-                    )}
-                    {KeplrCalculatedDATA && KeplrCalculatedDATA.allocation && (
-                        <div className="section_allocation_by_network__element_option">
-                          <h4>{t("AIRDROP_ALLOCATION_BY_NETWORK_OPTION_1_KEY")}</h4>
-                          <p>
-                            {KeplrCalculatedDATA &&
-                                KeplrCalculatedDATA.allocation &&
-                                Number(KeplrCalculatedDATA.allocation).toFixed(2)}
-                          </p>
-                        </div>
-                    )}
-                    {MetaMaskCalculatedDATA && MetaMaskCalculatedDATA.allocation && (
-                        <div className="section_allocation_by_network__element_option">
-                          <h4>{t("AIRDROP_ALLOCATION_BY_NETWORK_OPTION_2_KEY")}</h4>
-                          <p>
-                            {Number(MetaMaskCalculatedDATA.allocation).toFixed(2)}
-                          </p>
-                        </div>
-                    )}
-                    {/* <div className="section_allocation_by_network__element_option">
-                  <h4>{t("AIRDROP_ALLOCATION_BY_NETWORK_OPTION_3_KEY")}</h4>
-                  <p>{t("AIRDROP_ALLOCATION_BY_NETWORK_OPTION_3_VALUE")}</p>
-                </div> */}
+            {TotalCalModal && (
+              <section className="section_allocation_by_network">
+                <div className="section_allocation_by_network__element">
+                  <div className="section_allocation_by_network__element_option">
+                    <h4>Category</h4>
+                    <p>$MNTL Allocation</p>
                   </div>
-                </section>
-            }
+                  {MantleDropClaimValue !== 0 && (
+                    <div className="section_allocation_by_network__element_option">
+                      <h4>{t("AIRDROP_START_WITH_STAKEDROP_TITLE")}</h4>
+                      <p>{Number(MantleDropClaimValue).toFixed(2)}</p>
+                    </div>
+                  )}
+                  {KeplrCalculatedDATA && KeplrCalculatedDATA.allocation && (
+                    <div className="section_allocation_by_network__element_option">
+                      <h4>{t("AIRDROP_ALLOCATION_BY_NETWORK_OPTION_1_KEY")}</h4>
+                      <p>
+                        {KeplrCalculatedDATA &&
+                          KeplrCalculatedDATA.allocation &&
+                          Number(KeplrCalculatedDATA.allocation).toFixed(2)}
+                      </p>
+                    </div>
+                  )}
+                  {MetaMaskCalculatedDATA && MetaMaskCalculatedDATA.allocation && (
+                    <div className="section_allocation_by_network__element_option">
+                      <h4>{t("AIRDROP_ALLOCATION_BY_NETWORK_OPTION_2_KEY")}</h4>
+                      <p>
+                        {Number(MetaMaskCalculatedDATA.allocation).toFixed(2)}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </section>
+            )}
           </>
         ) : undefined}
         <section className="section_drop">
@@ -453,19 +423,7 @@ export default function Airdrop() {
               <p>{t("AIRDROP_NFT_OWNERS_KEY")}</p>
               <h4>{t("AIRDROP_NFT_OWNERS_VALUE")}</h4>
             </div>
-            <div className="section_drop__button two">
-              {/* <a
-                href={
-                  airDropData.NFTOwners.href !== null ||
-                  airDropData.NFTOwners.href !== undefined ||
-                  airDropData.NFTOwners.href !== ""
-                    ? airDropData.NFTOwners.href
-                    : undefined
-                }
-              >
-                {t("NOTIFY_ME")}
-              </a> */}
-            </div>
+            <div className="section_drop__button two"></div>
           </div>
         </section>
         {LPModalStat && (
@@ -478,6 +436,13 @@ export default function Airdrop() {
           <MetaMaskModal
             closeModal={setMetaMaskModalStat}
             setMetaMaskWallet={setMetaMaskAddress}
+          />
+        )}
+        {OpenseaSignState && (
+          <OpenSeaSignIn
+            closeModal={setOpenseaSignState}
+            setMetaMaskWallet={setMetaMaskAddress}
+            MetaMaskAddress={MetaMaskAddress}
           />
         )}
         {TAndC === true && <TAndCModal closeModal={setTAndC} />}

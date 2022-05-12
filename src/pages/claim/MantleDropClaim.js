@@ -59,67 +59,104 @@ export default function MantleDropClaim({ totalValue }) {
   const [KeplrConnectionState, setKeplrConnectionState] = useState(0);
 
   const handleKeplrConnect = async () => {
-    if (window.keplr) {
-      setKeplrConnectionState(1);
+    if (!MNTLAddress) {
+      if (window.keplr) {
+        setKeplrConnectionState(1);
 
-      // adding MNTL wallet
-      try {
-        await initializeKeplr();
-      } catch (e) {
-        console.log(e);
+        // adding MNTL wallet
+        try {
+          await initializeKeplr();
+        } catch (e) {
+          console.log(e);
+        }
+        let mantleOfflineSigner = window.keplr.getOfflineSigner(
+          process.env.REACT_APP_mainNetChainID
+        );
+        let mntlAccounts = await mantleOfflineSigner.getAccounts();
+        let mntlAddress = mntlAccounts[0].address;
+        setMNTLAddress(mntlAddress);
+
+        // fetching address and rewards
+        fetch(`${stakeDropAPI}/stakeDrop/${mntlAddress}`)
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.success === true) {
+              setAPIResponse(data);
+            } else if (data.success === false) {
+              setAPIResponse({
+                success: false,
+                cosmos: {
+                  address: "",
+                  amount: 0,
+                },
+                juno: {
+                  address: "",
+                  amount: 0,
+                },
+                comdex: {
+                  address: "",
+                  amount: 0,
+                },
+                stargaze: {
+                  address: "",
+                  amount: 0,
+                },
+                terra: {
+                  address: "",
+                  amount: 0,
+                },
+                persistence: {
+                  address: "",
+                  amount: 0,
+                },
+              });
+            }
+          })
+          .catch((err) => console.log(err));
+
+        // took necessary addresses
+
+        setKeplrConnectionState(2);
+        setModal(false);
+      } else {
+        window.alert("Please install Keplr to move forward with the task.");
       }
-      let mantleOfflineSigner = window.keplr.getOfflineSigner(
-        process.env.REACT_APP_mainNetChainID
-      );
-      let mntlAccounts = await mantleOfflineSigner.getAccounts();
-      let mntlAddress = mntlAccounts[0].address;
-      setMNTLAddress(mntlAddress);
-
-      // fetching address and rewards
-      fetch(`${stakeDropAPI}/stakeDrop/${mntlAddress}`)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success === true) {
-            setAPIResponse(data);
-          } else if (data.success === false) {
-            setAPIResponse({
-              success: false,
-              cosmos: {
-                address: "",
-                amount: 0,
-              },
-              juno: {
-                address: "",
-                amount: 0,
-              },
-              comdex: {
-                address: "",
-                amount: 0,
-              },
-              stargaze: {
-                address: "",
-                amount: 0,
-              },
-              terra: {
-                address: "",
-                amount: 0,
-              },
-              persistence: {
-                address: "",
-                amount: 0,
-              },
-            });
-          }
-        })
-        .catch((err) => console.log(err));
-
-      // took necessary addresses
-
-      setKeplrConnectionState(2);
-      setModal(false);
     } else {
-      window.alert("Please install Keplr to move forward with the task.");
+      setKeplrConnectionState(0);
+      setMNTLAddress("");
+      setAPIResponse({
+        success: false,
+        cosmos: {
+          address: "",
+          amount: 0,
+        },
+        juno: {
+          address: "",
+          amount: 0,
+        },
+        comdex: {
+          address: "",
+          amount: 0,
+        },
+        stargaze: {
+          address: "",
+          amount: 0,
+        },
+        terra: {
+          address: "",
+          amount: 0,
+        },
+        persistence: {
+          address: "",
+          amount: 0,
+        },
+      });
     }
+  };
+
+  const disconnectKeplr = () => {
+    setKeplrConnectionState(0);
+    setMNTLAddress("");
   };
 
   const InputCalculate = () => {
@@ -295,7 +332,7 @@ export default function MantleDropClaim({ totalValue }) {
         mantleAddress: "",
       });
       setInputError(
-        "Please enter a valid Cosmos or Persistence or Terra or Comdex or Juno or Stargaze or Osmosis address to calculate your rewards."
+        "Please enter a valid $MNTL or Cosmos or Persistence or Terra or Comdex or Juno or Stargaze or Osmosis address to calculate your rewards."
       );
     }
   };
@@ -326,9 +363,11 @@ export default function MantleDropClaim({ totalValue }) {
         APIResponse.juno.amount +
         APIResponse.stargaze.amount +
         APIResponse.terra.amount +
-        InputCampaignData.received/1000000
+        InputCampaignData.received / 1000000
     );
   }, [APIResponse, InputCampaignData]);
+
+  console.log(MNTLAddress);
 
   return (
     <>
@@ -432,9 +471,14 @@ export default function MantleDropClaim({ totalValue }) {
                         {
                           0: t("CONNECT"),
                           1: t("CONNECTING"),
-                          2: t("CONNECTED"),
+                          2: `${t("DISCONNECT")} ${MNTLAddress.substring(
+                            0,
+                            8
+                          )}...${MNTLAddress.substring(
+                            MNTLAddress.length - 4
+                          )}`,
                         }[KeplrConnectionState]
-                      } Keplr`}</span>
+                      }`}</span>
                     </button>
                   </div>
                   <div className="section_calculation__or">Or</div>
@@ -616,7 +660,9 @@ export default function MantleDropClaim({ totalValue }) {
 
                       <p>
                         {InputCampaignData.received
-                          ? (InputCampaignData.received/1000000).toLocaleString("en-US", {
+                          ? (
+                              InputCampaignData.received / 1000000
+                            ).toLocaleString("en-US", {
                               maximumFractionDigits: 2,
                             })
                           : "--"}
@@ -630,27 +676,30 @@ export default function MantleDropClaim({ totalValue }) {
                   <div className="section_reward_table__element_option">
                     <h4>Total Rewards:</h4>
                     {/* <span></span> */}
-                    <h4>{MNTLAddress ? MNTLAddress : InputCampaignData.mantleAddress}</h4>
+                    <h4>
+                      {MNTLAddress
+                        ? MNTLAddress
+                        : InputCampaignData.mantleAddress}
+                    </h4>
                     <span onClick={() => setShowTable(!ShowTable)}>
-                    <p>
-                      <img
+                      <p>
+                        <img
                           src="/images/airdrop/dark.png"
                           alt="coin illustration dark"
-                      />{" "}
-                      {( InputCampaignData.received ? (InputCampaignData.received/1000000) :
-                          (APIResponse.cosmos.amount +
-                          APIResponse.comdex.amount +
-                          APIResponse.persistence.amount +
-                          APIResponse.juno.amount +
-                          APIResponse.stargaze.amount +
-                          APIResponse.terra.amount)
-
-                      ).toLocaleString("en-US", {
-                        maximumFractionDigits: 2,
-                      })}
-                      {` $MNTL`}
-                    </p>
-                      {" "}
+                        />{" "}
+                        {(InputCampaignData.received
+                          ? InputCampaignData.received / 1000000
+                          : APIResponse.cosmos.amount +
+                            APIResponse.comdex.amount +
+                            APIResponse.persistence.amount +
+                            APIResponse.juno.amount +
+                            APIResponse.stargaze.amount +
+                            APIResponse.terra.amount
+                        ).toLocaleString("en-US", {
+                          maximumFractionDigits: 2,
+                        })}
+                        {` $MNTL`}
+                      </p>{" "}
                       {ShowTable ? <AiFillCaretUp /> : <AiFillCaretDown />}
                     </span>
                   </div>
@@ -814,7 +863,7 @@ const Container = styled.main`
         display: flex;
         align-items: center;
         gap: 24px;
-        justify-content: space-between;
+        /* justify-content: space-between; */
         @media (max-width: 768px) {
           flex-wrap: wrap;
         }
@@ -827,7 +876,7 @@ const Container = styled.main`
           color: #c2c2c2;
         }
         &_button {
-          width: 296px;
+          min-width: 296px;
           border-radius: 12px;
           background: var(--yellow-gradient-bg);
           box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25),
