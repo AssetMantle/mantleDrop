@@ -471,24 +471,15 @@ export default function MantleDropClaim({ totalValue }) {
                         {
                           0: t("CONNECT"),
                           1: t("CONNECTING"),
-                          2: `${t("DISCONNECT")} ${MNTLAddress.substring(0, 8)}...${MNTLAddress.substring(MNTLAddress.length - 4)}`,
+                          2: `${t("DISCONNECT")} ${MNTLAddress.substring(
+                            0,
+                            8
+                          )}...${MNTLAddress.substring(
+                            MNTLAddress.length - 4
+                          )}`,
                         }[KeplrConnectionState]
                       }`}</span>
                     </button>
-                    {/* <button
-                      className="section_calculation__connect_button"
-                      onClick={disconnectKeplr}
-                      disabled={
-                        MNTLAddress !== null &&
-                        MNTLAddress !== undefined &&
-                        MNTLAddress !== ""
-                          ? false
-                          : true
-                      }
-                    >
-                      <img src="/images/airdrop/Kepler.png" alt="Keplr icon" />
-                      <span>{t("DISCONNECT_KEPLR")}</span>
-                    </button> */}
                   </div>
                   <div className="section_calculation__or">Or</div>
                   <div className="section_calculation__from">

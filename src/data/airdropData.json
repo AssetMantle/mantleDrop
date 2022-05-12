@@ -92,5 +92,12 @@
     "MetaMaskInstruction": "Get started by connecting your wallet",
     "MetaMaskLabel": "Enter your wallet address",
     "MetaMaskButton": "Confirm"
+  },
+  "openSeaSignModal": {
+    "title": "OpenSea $MNTL Airdrop",
+    "step1": "Step 1: Connect MetaMask",
+    "step2": "Step 2: Provide Mantle Address",
+    "placeholder": "Enter Valid Mantle Address",
+    "dontHave": "Don't have keplr? Install"
   }
 }

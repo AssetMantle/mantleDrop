@@ -15,8 +15,6 @@ import MantleDropClaim from "../claim/MantleDropClaim";
 import { getMantleAddress } from "../claim/utils/address";
 import OpenSeaSignIn from "./OpenSeaSignIn";
 
-// const chainIDs = require("../../data/chain.json");
-
 export default function Airdrop() {
   const { t } = useTranslation();
 
@@ -41,8 +39,6 @@ export default function Airdrop() {
   const [MantleDropClaimValue, setMantleDropClaimValue] = useState(0);
 
   const [OpenseaSignState, setOpenseaSignState] = useState(false);
-
-  // const [Total, setTotal] = useState(0);
 
   useEffect(() => {
     fetch(`https://airdrop-data.assetmantle.one/keplr/${OsmoAddress}`)

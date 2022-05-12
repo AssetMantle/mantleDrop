@@ -82,19 +82,18 @@ export default function OpenSeaSignIn({
           <img src="/images/icons/close.png" alt="close" />
         </div>
         <div className="modal_container">
-          <h2 className="modal_container__title">OpenSea $MNTL Airdrop</h2>
+          <h2 className="modal_container__title">
+            {t("AIRDROP_MODAL_OPENSEA_TITLE")}
+          </h2>
           <div className="modal_container__connect">
             <p className="modal_container__connect_instruction">
-              {/* {t("CONNECT_YOUR_WALLET")} */} Step 1: Connect MetaMask
+              {t("AIRDROP_MODAL_OPENSEA_STEP1")}
             </p>
           </div>
           <div
             className="modal_container__connect"
             style={{ paddingTop: "24px" }}
           >
-            {/* <p className="modal_container__connect_instruction">
-              {t("CONNECT_YOUR_WALLET")} Step 1
-            </p> */}
             <div className="section_wallets__buttons">
               <div
                 className="section_wallets__buttons_button"
@@ -118,16 +117,13 @@ export default function OpenSeaSignIn({
             style={{ paddingTop: "36px" }}
           >
             <p className="modal_container__connect_instruction">
-              {/* {t("CONNECT_YOUR_WALLET")} */} Step 2: Provide Mantle Address
+              {t("AIRDROP_MODAL_OPENSEA_STEP2")}
             </p>
           </div>
           <div
             className="modal_container__connect"
             style={{ paddingTop: "24px" }}
           >
-            {/* <p className="modal_container__connect_instruction">
-              {t("CONNECT_YOUR_WALLET")} Step 2
-            </p> */}
             <div className="section_wallets__buttons">
               <button
                 className="section_wallets__buttons_button"
@@ -151,25 +147,15 @@ export default function OpenSeaSignIn({
               <>
                 <p className="modal_container__connect_instruction">Or</p>
                 <div className="modal_container__form" style={{ flex: "1" }}>
-                  {/* <label htmlFor="address" className="modal_container__form_label">
-              {t("AIRDROP_MODAL_KEPLR_LABEL")}
-            </label> */}
                   <div className="modal_container__form_line2">
                     <input
                       type="text"
                       className="modal_container__form_line2_input"
                       name="address"
                       onChange={(e) => setMNTLAddress(e.target.value)}
-                      placeholder="Enter Valid Mantle Address"
+                      placeholder={t("AIRDROP_MODAL_OPENSEA_PLACEHOLDER")}
                       readOnly={MetaMaskAddress ? false : true}
                     />
-                    {/* <button
-                onClick={handleSignIn}
-                className="modal_container__form_line2_button"
-                disabled={MNTLAddress && MetaMaskAddress ? false : true}
-              >
-                {t("SIGN_IN")}
-              </button> */}
                   </div>
                 </div>
               </>
@@ -180,13 +166,13 @@ export default function OpenSeaSignIn({
             style={{ paddingTop: "10px" }}
           >
             <p className="modal_container__connect_instruction2">
-              {/* {t("CONNECT_YOUR_WALLET")} */} Don't have keplr? Install{" "}
+              {t("AIRDROP_MODAL_OPENSEA_DONT_Have")}{" "}
               <a
                 href="https://chrome.google.com/webstore/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap?hl=en"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                here
+                {t("HERE")}
               </a>
             </p>
           </div>
@@ -204,29 +190,6 @@ export default function OpenSeaSignIn({
               </button>
             </div>
           </div>
-          {/* <div className="modal_container__or">{t("OR")}</div> */}
-          {/* <div className="modal_container__form">
-            <label htmlFor="address" className="modal_container__form_label">
-              {t("AIRDROP_MODAL_KEPLR_LABEL")}
-            </label>
-            <div className="modal_container__form_line2">
-              <input
-                type="text"
-                className="modal_container__form_line2_input"
-                name="address"
-                value={MNTLAddress}
-                onChange={(e) => setMNTLAddress(e.target.value)}
-                placeholder="Enter Valid $MNTL Address"
-              />
-              <button
-                onClick={handleSignIn}
-                className="modal_container__form_line2_button"
-                disabled={MNTLAddress && MetaMaskAddress ? false : true}
-              >
-                {t("SIGN_IN")}
-              </button>
-            </div>
-          </div> */}
         </div>
       </div>
     </Container>

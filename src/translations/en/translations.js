@@ -31,9 +31,12 @@ const English = {
       airDropData.reqEligibilityCheck.checks[0].key,
     AIRDROP_REQUIRED_ELIGIBILITY_VALUE_1:
       airDropData.reqEligibilityCheck.checks[0].value,
-      AIRDROP_REQUIRED_ELIGIBILITY_TABLE_TITLE_1: airDropData.reqEligibilityCheck.checks[0].tableTitle,
-      AIRDROP_REQUIRED_ELIGIBILITY_TABLE_KEY_1_1: airDropData.reqEligibilityCheck.checks[0].tableKey1,
-      AIRDROP_REQUIRED_ELIGIBILITY_TABLE_KEY_2_1: airDropData.reqEligibilityCheck.checks[0].tableKey2,
+    AIRDROP_REQUIRED_ELIGIBILITY_TABLE_TITLE_1:
+      airDropData.reqEligibilityCheck.checks[0].tableTitle,
+    AIRDROP_REQUIRED_ELIGIBILITY_TABLE_KEY_1_1:
+      airDropData.reqEligibilityCheck.checks[0].tableKey1,
+    AIRDROP_REQUIRED_ELIGIBILITY_TABLE_KEY_2_1:
+      airDropData.reqEligibilityCheck.checks[0].tableKey2,
     AIRDROP_REQUIRED_ELIGIBILITY_TITLE_2:
       airDropData.reqEligibilityCheck.checks[1].title,
     AIRDROP_REQUIRED_ELIGIBILITY_DESCRIPTION_2:
@@ -42,10 +45,14 @@ const English = {
       airDropData.reqEligibilityCheck.checks[1].key,
     AIRDROP_REQUIRED_ELIGIBILITY_VALUE_2:
       airDropData.reqEligibilityCheck.checks[1].value,
-      AIRDROP_REQUIRED_ELIGIBILITY_TABLE_TITLE_2: airDropData.reqEligibilityCheck.checks[1].tableTitle,
-      AIRDROP_REQUIRED_ELIGIBILITY_TABLE_KEY_1_2: airDropData.reqEligibilityCheck.checks[1].tableKey1,
-      AIRDROP_REQUIRED_ELIGIBILITY_TABLE_VALUE_1_2: airDropData.reqEligibilityCheck.checks[1].tableValue1,
-      AIRDROP_REQUIRED_ELIGIBILITY_NOT_ELIGIBLE: airDropData.reqEligibilityCheck.notEligible,
+    AIRDROP_REQUIRED_ELIGIBILITY_TABLE_TITLE_2:
+      airDropData.reqEligibilityCheck.checks[1].tableTitle,
+    AIRDROP_REQUIRED_ELIGIBILITY_TABLE_KEY_1_2:
+      airDropData.reqEligibilityCheck.checks[1].tableKey1,
+    AIRDROP_REQUIRED_ELIGIBILITY_TABLE_VALUE_1_2:
+      airDropData.reqEligibilityCheck.checks[1].tableValue1,
+    AIRDROP_REQUIRED_ELIGIBILITY_NOT_ELIGIBLE:
+      airDropData.reqEligibilityCheck.notEligible,
     AIRDROP_ALLOCATION_SINGLE_TITLE:
       airDropData.reqEligibilityCheck.allocationTitle,
 
@@ -93,6 +100,13 @@ const English = {
     AIRDROP_MODAL_METAMASK_INSTRUCTION: airDropData.modal.MetaMaskInstruction,
     AIRDROP_MODAL_METAMASK_LABEL: airDropData.modal.MetaMaskLabel,
     AIRDROP_MODAL_METAMASK_BUTTON_TEXT: airDropData.modal.MetaMaskButton,
+
+    // OpenSea Modal
+    AIRDROP_MODAL_OPENSEA_TITLE: airDropData.openSeaSignModal.title,
+    AIRDROP_MODAL_OPENSEA_STEP1: airDropData.openSeaSignModal.step1,
+    AIRDROP_MODAL_OPENSEA_STEP2: airDropData.openSeaSignModal.step2,
+    AIRDROP_MODAL_OPENSEA_PLACEHOLDER: airDropData.openSeaSignModal.placeholder,
+    AIRDROP_MODAL_OPENSEA_DONT_Have: airDropData.openSeaSignModal.dontHave,
 
     // Osmosis Claim Page
     // title section
@@ -290,6 +304,7 @@ const English = {
     DISCONNECT: "Disconnect",
     DISCONNECT_KEPLR: "Disconnect Keplr",
     EDIT: "Edit",
+    HERE: "here",
     LETS_GO: "Let's go",
     MISSION: "Mission",
     NOTIFY_ME: "Notify Me",
