@@ -1,7 +1,8 @@
 import { useTranslation } from "react-i18next";
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import { initializeKeplr } from "../claim/utils/keplr";
+import {checkAccountExists} from "./utils/mantle";
 
 export default function OpenSeaSignIn({
   closeModal,
@@ -11,6 +12,8 @@ export default function OpenSeaSignIn({
   const { t } = useTranslation();
 
   const [MetaMaskConnectionState, setMetaMaskConnectionState] = useState(0);
+  const [Sign, setSign] = useState("");
+  const [SubmitResponse,setSubmitResponse] = useState("");
 
   const handleMetamaskConnect = async () => {
     if (!MetaMaskAddress) {
@@ -66,8 +69,46 @@ export default function OpenSeaSignIn({
     }
   };
 
-  const handleSignIn = () => {
+  useEffect(() => {
+    window.addEventListener("keplr_keystorechange", () => {
+      handleKeplrConnect();
+    })
+
+  })
+
+  const handleSignIn = async () => {
     console.log("Signing in...");
+    const message = MNTLAddress
+    const exits = await checkAccountExists(MNTLAddress);
+    console.log(exits)
+    if (exits.exists === false){
+      // const accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
+      // const account = accounts[0];
+      // console.log("Metamask:",MetaMaskAddress);
+      // console.log("Account:",account);
+
+      const sign = await window.ethereum.request({method: 'personal_sign', params: [message, MetaMaskAddress]})
+      setSign(sign)
+      const res = await fetch(
+          process.env.REACT_APP_openSeaURL,
+          {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              signature: sign,
+              mantleAddress: MNTLAddress,
+            }),
+          }
+      );
+      setSubmitResponse(res);
+      console.log(Sign);
+    }
+    else {
+      console.log("Account Already exists!")
+    }
   };
 
   return (
