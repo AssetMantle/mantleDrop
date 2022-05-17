@@ -321,8 +321,8 @@ export default function Airdrop() {
                     <div className="section_drop__element_details"></div>
                     <div className="section_drop__element_value"></div>
                     <div className="section_drop__button">
-                      <button onClick={() => setOpenseaSignState(true)}>
-                        Details
+                      <button disabled={true} onClick={() => setOpenseaSignState(true)}>
+                        Claim
                       </button>
                     </div>
                   </div>
