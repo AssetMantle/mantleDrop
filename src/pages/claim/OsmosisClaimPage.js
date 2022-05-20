@@ -518,7 +518,7 @@ export default function OsmosisClaimPage() {
                 }
               >
                 {/* Vote */}
-                Soon
+                Coming Soon
               </button>
               <div className="section_mission__container_mission__done">
                 <MdDone />
@@ -561,7 +561,7 @@ export default function OsmosisClaimPage() {
                 className="section_mission__container_mission__button"
               >
                 {/* Mint */}
-                Soon
+                Coming Soon
               </button>
               <div className="section_mission__container_mission__done">
                 <MdDone />
