@@ -316,17 +316,17 @@ export default function Airdrop() {
                     </div>
                   </section>
                 )}
-                <section className="section_drop" style={{ padding: "20px 0" }}>
+                {/* <section className="section_drop" style={{ padding: "20px 0" }}>
                   <div className="section_drop__element">
                     <div className="section_drop__element_details"></div>
                     <div className="section_drop__element_value"></div>
                     <div className="section_drop__button">
-                      <button onClick={() => setOpenseaSignState(true)}>
-                        Details
+                      <button disabled={true} onClick={() => setOpenseaSignState(true)}>
+                        Claim
                       </button>
                     </div>
                   </div>
-                </section>
+                </section> */}
               </>
             ) : MetaMaskCalculatedDATA === false ? (
               <section className="section_allocation">

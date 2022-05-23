@@ -257,6 +257,15 @@ export const AirdropContainer = styled.main`
           &:focus {
             box-shadow: 0px 0px 5px 3px rgba(255, 201, 66, 0.4);
           }
+          &:disabled {
+            background: none;
+            background-color: var(--yellow-disabled) !important;
+            box-shadow: none;
+            &:hover,
+            &:focus {
+              box-shadow: none;
+            }
+          }
           &.button_2 {
             background: transparent;
             color: var(--yellow);
@@ -267,6 +276,15 @@ export const AirdropContainer = styled.main`
             &:hover,
             &:focus {
               box-shadow: none;
+            }
+            &:disabled {
+              background: none;
+              background-color: var(--yellow-disabled) !important;
+              box-shadow: none;
+              &:hover,
+              &:focus {
+                box-shadow: none;
+              }
             }
           }
           @media (max-width: 548px) {
@@ -289,6 +307,15 @@ export const AirdropContainer = styled.main`
             &:hover,
             &:focus {
               box-shadow: 0px 0px 5px 3px rgba(255, 201, 66, 0.4);
+            }
+            &:disabled {
+              background: none;
+              background-color: var(--yellow-disabled) !important;
+              box-shadow: none;
+              &:hover,
+              &:focus {
+                box-shadow: none;
+              }
             }
           }
         }

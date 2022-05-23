@@ -739,7 +739,7 @@ export default function MantleDropClaim({ totalValue }) {
               <h4>{false}</h4>
             </div>
             <div className="section_drop__button">
-              <a href="/stakedrop">Details</a>
+              <a href="/stakedrop">Claim</a>
             </div>
           </div>
         </section>
