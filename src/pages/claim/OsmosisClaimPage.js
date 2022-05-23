@@ -83,12 +83,9 @@ export default function OsmosisClaimPage() {
       });
   }
 
-  const total_supply =
-    `${process.env.REACT_APP_restAPI}/cosmos/bank/v1beta1/supply/umntl`;
-  const inflation =
-      `${process.env.REACT_APP_restAPI}/cosmos/mint/v1beta1/inflation`;
-  const bondedAmount =
-    `${process.env.REACT_APP_restAPI}/cosmos/staking/v1beta1/pool`;
+  const total_supply = `${process.env.REACT_APP_restAPI}/cosmos/bank/v1beta1/supply/umntl`;
+  const inflation = `${process.env.REACT_APP_restAPI}/cosmos/mint/v1beta1/inflation`;
+  const bondedAmount = `${process.env.REACT_APP_restAPI}/cosmos/staking/v1beta1/pool`;
 
   function getAPR() {
     return axios
@@ -509,7 +506,8 @@ export default function OsmosisClaimPage() {
                 <h4>{t("OSMOSIS_CLAIM_MISSION_3")}</h4>
               </div>
               <button
-                disabled={ClaimResponse.success ? ClaimResponse.vote.success : true}
+                disabled={true}
+                // disabled={ClaimResponse.success ? ClaimResponse.vote.success : true}
                 className="section_mission__container_mission__button"
                 onClick={() =>
                   window.open(
@@ -519,31 +517,32 @@ export default function OsmosisClaimPage() {
                   )
                 }
               >
-                Vote
-                {/*Soon*/}
+                {/* Vote */}
+                Coming Soon
               </button>
               <div className="section_mission__container_mission__done">
                 <MdDone />
               </div>
             </div>
-            <div className={`section_mission__container_mission ${
+            <div
+              className={`section_mission__container_mission ${
                 ClaimResponse.success &&
                 ClaimResponse.liquidity.success &&
                 "completed"
-            }`}>
+              }`}
+            >
               <div className="section_mission__container_mission__title">
                 <p>{t("MISSION")} #4</p>
                 <h4>{t("OSMOSIS_CLAIM_MISSION_4")}</h4>
               </div>
               <button
-                disabled={ClaimResponse.success ? ClaimResponse.liquidity.success : true}
+                disabled={
+                  ClaimResponse.success ? ClaimResponse.liquidity.success : true
+                }
                 className="section_mission__container_mission__button"
                 onClick={() =>
-                    window.open(
-                        config.poolURL +
-                        config.poolNumber,
-                        "_blank"
-                    )}
+                  window.open(config.poolURL + config.poolNumber, "_blank")
+                }
               >
                 Provide
                 {/*Soon*/}
@@ -562,7 +561,7 @@ export default function OsmosisClaimPage() {
                 className="section_mission__container_mission__button"
               >
                 {/* Mint */}
-                Soon
+                Coming Soon
               </button>
               <div className="section_mission__container_mission__done">
                 <MdDone />
