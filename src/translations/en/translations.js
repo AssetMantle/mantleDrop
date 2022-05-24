@@ -284,7 +284,9 @@ const English = {
     // Commons [A-Z order]
 
     AIRDROP: "Airdrop",
+    ALLOCATION: "Allocation",
     AND: "and",
+    CATEGORY: "Category",
     CHECK: "Check",
     CHECK_ELIGIBILITY: "Check Eligibility",
     CHECK_NOW: "Check Now",
@@ -315,7 +317,9 @@ const English = {
     TAKE_A_TOUR: "Take a tour",
     TELL_ME_MORE: "Tell me more",
     VIEW: "View",
+    VALUE_LP: "Value LP (in USD)",
     WALLET: "Wallet",
+    WALLET_ADDRESS: "Wallet Address",
     WALLET_CONNECTED: "Wallet Connected",
   },
 };
