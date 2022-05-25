@@ -281,11 +281,17 @@ const English = {
     STAKEDROP_MODAL_CAMPAIGNSTAT_OPTION_4_TITLE:
       stakeDropData.modal.campaignStat.option4.title,
 
-    // Commons [A-Z order]
+    // MantleDrop Claim section
+    PARTICIPATED_QUESTION: "Participated in the StakeDrop Campaign?",
+    PARTICIPATED_YES_CHECK: "Check your $MNTL Allocation",
 
+    // Commons [A-Z order]
+    ADDRESS: "Address",
     AIRDROP: "Airdrop",
     ALLOCATION: "Allocation",
     AND: "and",
+    CALCULATE: "Calculate",
+    CAMPAIGN: "Campaign",
     CATEGORY: "Category",
     CHECK: "Check",
     CHECK_ELIGIBILITY: "Check Eligibility",
@@ -307,17 +313,20 @@ const English = {
     DISCONNECT_KEPLR: "Disconnect Keplr",
     EDIT: "Edit",
     ELIGIBLE_POOLS: "Eligible Pools",
+    ENTER_YOUR_WALLET_ADDRESS: "Enter Your Wallet Address",
     HERE: "here",
     LETS_GO: "Let's go",
     MISSION: "Mission",
     NOTIFY_ME: "Notify Me",
     ONGOING: "Ongoing",
     OR: "or",
+    REWARDS: "Rewards",
     SIGN_IN: "Sign In",
     SIGN_UP: "Sign up",
     SNAPSHOT_DATE: "Snapshot Date",
     TAKE_A_TOUR: "Take a tour",
     TELL_ME_MORE: "Tell me more",
+    TOTAL_REWARDS: "Total Rewards",
     VIEW: "View",
     VALUE_LP: "Value LP (in USD)",
     WALLET: "Wallet",
