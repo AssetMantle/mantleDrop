@@ -286,6 +286,9 @@ const English = {
     PARTICIPATED_QUESTION: "Participated in the StakeDrop Campaign?",
     PARTICIPATED_YES_CHECK: "Check your $MNTL Allocation",
 
+    // t & c modal
+    T_AND_C_MODAL_TITLE: "",
+
     // Commons [A-Z order]
     ADDRESS: "Address",
     AIRDROP: "Airdrop",
@@ -310,6 +313,7 @@ const English = {
     CREATE_A_STORE: "Create A Store",
     DAY: "day",
     DAYS: "days",
+    DELEGATE: "Delegate",
     DETAILS: "Details",
     DISCONNECT: "Disconnect",
     DISCONNECT_KEPLR: "Disconnect Keplr",
