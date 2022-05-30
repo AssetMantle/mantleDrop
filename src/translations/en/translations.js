@@ -1,6 +1,7 @@
 import airDropData from "../../data/airdropData.json";
 import osmosisData from "../../data/osmosisClaimData.json";
 import stakeDropData from "../../data/stakeDropData.json";
+import mantledropPageData from "../../data/campaignPageComponent.json";
 
 const English = {
   translations: {
@@ -279,8 +280,20 @@ const English = {
       stakeDropData.modal.campaignStat.option2.title,
     STAKEDROP_MODAL_CAMPAIGNSTAT_OPTION_3_TITLE:
       stakeDropData.modal.campaignStat.option3.title,
+    STAKEDROP_MODAL_CAMPAIGNSTAT_OPTION_3I_TITLE:
+      stakeDropData.modal.campaign.option3i.title,
     STAKEDROP_MODAL_CAMPAIGNSTAT_OPTION_4_TITLE:
       stakeDropData.modal.campaignStat.option4.title,
+
+    // Mantledrop Campaign page component
+    MANTLEDROP_CAMPAIGN_BACK: mantledropPageData.backMessage,
+    MANTLEDROP_CAMPAIGN_TITLE: mantledropPageData.title,
+    MANTLEDROP_CAMPAIGN_CONNECT_TITLE: mantledropPageData.connectTitle,
+    MANTLEDROP_CAMPAIGN_CONNECT_WALLET: mantledropPageData.connectWallet,
+    MANTLEDROP_CAMPAIGN_CONNECT_WALLET_LABEL:
+      mantledropPageData.connectWalletLabel,
+    MANTLEDROP_CAMPAIGN_CONNECT_NOT_PARTICIPATED:
+      mantledropPageData.notParticipated,
 
     // MantleDrop Claim section
     PARTICIPATED_QUESTION: "Participated in the StakeDrop Campaign?",
@@ -294,6 +307,7 @@ const English = {
     AIRDROP: "Airdrop",
     ALLOCATION: "Allocation",
     AND: "and",
+    BLOCK_HEIGHT: "Block Height",
     CALCULATE: "Calculate",
     CALCULATION: "Calculation",
     CAMPAIGN: "Campaign",
@@ -304,6 +318,7 @@ const English = {
     CLAIM: "Claim",
     COMING_SOON: "Coming Soon",
     COMPLETED: "Completed",
+    CONCLUDED: "Concluded",
     CONNECT: "Connect",
     CONNECTED: "Connected",
     CONNECTING: "Connecting...",
@@ -321,13 +336,16 @@ const English = {
     ELIGIBLE_POOLS: "Eligible Pools",
     ENTER_YOUR_WALLET_ADDRESS: "Enter Your Wallet Address",
     HERE: "here",
+    IN_QUIZ: "in quiz",
     LETS_GO: "Let's go",
     MINT: "Mint",
     MISSION: "Mission",
     NOTIFY_ME: "Notify Me",
     ONGOING: "Ongoing",
     OR: "or",
+    OUT_OF: "out of",
     PROVIDE: "Provide",
+    QUIZ_RESULT: "Quiz Result",
     REWARDS: "Rewards",
     SIGN_IN: "Sign In",
     SIGN_UP: "Sign up",
@@ -335,7 +353,10 @@ const English = {
     STAKE: "Stake",
     TAKE_A_TOUR: "Take a tour",
     TELL_ME_MORE: "Tell me more",
+    TOTAL_ACTIVE: "Total Active",
     TOTAL_REWARDS: "Total Rewards",
+    TOTAL_STAKED: "Total Staked",
+    TOTAL_ESTIMATED_REWARDS: "Total Estimated Rewards",
     VIEW: "View",
     VOTE: "Vote",
     VALUE_LP: "Value LP (in USD)",
@@ -343,6 +364,7 @@ const English = {
     WALLET_ADDRESS: "Wallet Address",
     WALLET_CONNECTED: "Wallet Connected",
     WHERE: "where",
+    YOU_SCORED: "You scored",
   },
 };
 
