@@ -1,10 +1,27 @@
 {
+  "cosmos": {
+    "currency": "$ATOM",
+    "dataTable1": {
+      "title": "Cosmos StakeDrop Campaign",
+      "op1Key": "Tokens to distribute",
+      "op1Value": 2000000,
+      "op2Key": "Magic Transaction Start Date",
+      "op2Value": "15 Mar 2022",
+      "op2Description": "Block Height: 9758961 ",
+      "op3Key": "Reward Distribution Start Date",
+      "op3Value": "16 Mar 2022",
+      "op3Description": "Block Height: 9770481",
+      "op4Key": "End Date",
+      "op4Value": "22 Mar 2022",
+      "op4Description": "Block Height: 9839600"
+    }
+  },
   "persistance": {
     "currency": "$XPRT",
     "dataTable1": {
       "title": "Persistence StakeDrop Campaign",
       "op1Key": "Tokens to distribute",
-      "op1Value": "1000000",
+      "op1Value": 1000000,
       "op2Key": "Magic Transaction Start Date",
       "op2Value": "18 Mar 2022",
       "op2Description": "Block Height: 5273217",
@@ -21,7 +38,7 @@
     "dataTable1": {
       "title": "Terra StakeDrop Campaign",
       "op1Key": "Tokens to distribute",
-      "op1Value": "2000000",
+      "op1Value": 2000000,
       "op2Key": "Magic Transaction Start Date",
       "op2Value": "22 Mar 2022",
       "op2Description": "Block Height: 6946901",
@@ -38,7 +55,7 @@
     "dataTable1": {
       "title": "Comdex StakeDrop Campaign",
       "op1Key": "Tokens to distribute",
-      "op1Value": "1000000",
+      "op1Value": 1000000,
       "op2Key": "Magic Transaction Start Date",
       "op2Value": "25 Mar 2022",
       "op2Description": "Block Height: 1762901",
@@ -55,7 +72,7 @@
     "dataTable1": {
       "title": "Juno StakeDrop Campaign",
       "op1Key": "Tokens to distribute",
-      "op1Value": "2000000",
+      "op1Value": 2000000,
       "op2Key": "Magic Transaction Start Date",
       "op2Value": "29 Mar 2022",
       "op2Description": "Block Height: 2484509",
@@ -72,7 +89,7 @@
     "dataTable1": {
       "title": "Stargaze StakeDrop Campaign",
       "op1Key": "Tokens to distribute",
-      "op1Value": "1000000",
+      "op1Value": 1000000,
       "op2Key": "Magic Transaction Start Date",
       "op2Value": "1 Apr 2022",
       "op2Description": "Block Height: 2247281",
