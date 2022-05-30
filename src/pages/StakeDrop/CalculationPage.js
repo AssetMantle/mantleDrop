@@ -143,7 +143,7 @@ export default function CalculationPage() {
         onClick={() => window.open("/stakedrop", "_self")}
       >
         <img src="/images/stakedrop/back_arrow.svg" alt="back arrow" />
-        <h2>Back to AssetMantle StakeDrop page</h2>
+        <h2>{t("MANTLEDROP_CAMPAIGN_BACK")}</h2>
       </section>
       {path.id === "cosmos" ||
       path.id === "persistence" ||
@@ -157,16 +157,7 @@ export default function CalculationPage() {
               <div>
                 <div className="section__overview_campaign lighter_bg">
                   <h3 className="section__overview_campaign__title">
-                    {
-                      {
-                        cosmos: t("STAKEDROP_MODAL_CAMPAIGN_TITLE"),
-                        persistence: campaignDATA.persistance.dataTable1.title,
-                        terra: campaignDATA.terra.dataTable1.title,
-                        comdex: campaignDATA.comdex.dataTable1.title,
-                        juno: campaignDATA.juno.dataTable1.title,
-                        stargaze: campaignDATA.stargaze.dataTable1.title,
-                      }[path.id]
-                    }
+                    {`${path.id} ${t("MANTLEDROP_CAMPAIGN_TITLE")}`}
                   </h3>
                   <div className="section__overview_campaign__option">
                     <p className="section__overview_campaign__option_label                                                                                                                        ">
@@ -227,6 +218,7 @@ export default function CalculationPage() {
                       }
                     </h3>
                     <p className="section__overview_campaign__option_details">
+                      {t("BLOCK_HEIGHT")}:{" "}
                       {
                         {
                           cosmos: campaignDATA.cosmos.dataTable1.op2Description,
@@ -243,7 +235,7 @@ export default function CalculationPage() {
                   </div>
                   <div className="section__overview_campaign__option">
                     <p className="section__overview_campaign__option_label                                                                                                                        ">
-                      Reward Distribution Start Date
+                      {t("STAKEDROP_MODAL_CAMPAIGNSTAT_OPTION_3I_TITLE")}
                     </p>
                     <h3 className="section__overview_campaign__option_value">
                       {
@@ -259,6 +251,7 @@ export default function CalculationPage() {
                       }
                     </h3>
                     <p className="section__overview_campaign__option_details">
+                      {t("BLOCK_HEIGHT")}:{" "}
                       {
                         {
                           cosmos: campaignDATA.cosmos.dataTable1.op3Description,
@@ -291,6 +284,7 @@ export default function CalculationPage() {
                       }
                     </h3>
                     <p className="section__overview_campaign__option_details">
+                      {t("BLOCK_HEIGHT")}:{" "}
                       {
                         {
                           cosmos: campaignDATA.cosmos.dataTable1.op4Description,
@@ -325,7 +319,7 @@ export default function CalculationPage() {
                       {t("STAKEDROP_MODAL_CAMPAIGNSTAT_OPTION_2_TITLE")}
                     </p>
                     <h3 className="section__overview_campaignStat__option_value">
-                      Concluded
+                      {t("CONCLUDED")}
                     </h3>
                   </div>
                   <div className="section__overview_campaignStat__option">
@@ -354,7 +348,7 @@ export default function CalculationPage() {
                       }
                     </h3>
                     <p className="section__overview_campaign__option_details">
-                      {`Total Active: `}
+                      {t("TOTAL_ACTIVE")}:{" "}
                       {CampaignStat
                         ? (
                             Number(CampaignStat.worldGlobalDelegation) / 1000000
@@ -393,10 +387,10 @@ export default function CalculationPage() {
           </div>
           <div className="right">
             <section className="section_calculation lighter_bg">
-              <h2>Calculate Your Estimated Rewards</h2>
+              <h2>{t("MANTLEDROP_CAMPAIGN_CONNECT_TITLE")}</h2>
               <div className="section_calculation__connect">
                 <p className="section_calculation__connect_text">
-                  Connect your wallet to calculate estimated rewards
+                  {t("MANTLEDROP_CAMPAIGN_CONNECT_WALLET")}
                 </p>
                 <div
                   className="section_calculation__connect_button"
@@ -410,13 +404,13 @@ export default function CalculationPage() {
                   } Keplr`}</span>
                 </div>
               </div>
-              <div className="section_calculation__or">Or</div>
+              <div className="section_calculation__or">{t("OR")}</div>
               <div className="section_calculation__from">
                 <label
                   htmlFor="walletAddress"
                   className="section_calculation__from_label"
                 >
-                  Enter your wallet address
+                  {t("MANTLEDROP_CAMPAIGN_CONNECT_WALLET_LABEL")}
                 </label>
                 <div className="section_calculation__from_line2">
                   <input
@@ -438,7 +432,7 @@ export default function CalculationPage() {
                         : true
                     }
                   >
-                    Calculate
+                    {t("CALCULATE")}
                   </button>
                 </div>
               </div>
@@ -449,7 +443,9 @@ export default function CalculationPage() {
                       <span>
                         <BsInfoCircle />
                       </span>
-                      <h3>You didn't participate in this campaign!</h3>
+                      <h3>
+                        {t("MANTLEDROP_CAMPAIGN_CONNECT_NOT_PARTICIPATED")}
+                      </h3>
                     </div>
                   </div>
                   <div className="section_calculation__error_element"></div>
@@ -458,7 +454,7 @@ export default function CalculationPage() {
               <div className="section_calculation__result">
                 <div className="section_calculation__result_address">
                   <p className="section_calculation__result_address__label">
-                    MNTL Address
+                    MNTL {t("ADDRESS")}
                   </p>
                   <p className="section_calculation__result_address__value">
                     {StakeAddress !== null &&
@@ -471,7 +467,7 @@ export default function CalculationPage() {
                 <div className="section_calculation__result_rewards">
                   <div className="section_calculation__result_rewards_reward">
                     <p className="section_calculation__result_rewards_reward__label">
-                      Total Staked
+                      {t("TOTAL_STAKED")}
                     </p>
                     <h3 className="section_calculation__result_rewards_reward__value">
                       {(TotalStakedN / 1000000).toLocaleString("en-US", {
@@ -491,7 +487,7 @@ export default function CalculationPage() {
                   </div>
                   <div className="section_calculation__result_rewards_reward">
                     <p className="section_calculation__result_rewards_reward__label">
-                      Total Rewards
+                      {t("TOTAL_REWARDS")}
                     </p>
                     <h3 className="section_calculation__result_rewards_reward__value">
                       {(TotalRewardN / 1000000).toLocaleString("en-US", {
@@ -502,7 +498,7 @@ export default function CalculationPage() {
                   </div>
                   <div className="section_calculation__result_rewards_reward">
                     <p className="section_calculation__result_rewards_reward__label">
-                      Total Estimated Rewards
+                      {t("TOTAL_ESTIMATED_REWARDS")}
                     </p>
                     <h3 className="section_calculation__result_rewards_reward__value">
                       {(TotalEstimatedN / 1000000).toLocaleString("en-US", {
@@ -518,12 +514,12 @@ export default function CalculationPage() {
               <div className="section_questions__qBox">
                 <div className="section_questions__qBox_title">
                   <h3 className="section_questions__qBox_title__name">
-                    Quiz Result
+                    {t("QUIZ_RESULT")}
                   </h3>
                   <div className="section_questions__qBox_title__right"></div>
                 </div>
                 <p className="section_questions__qBox_details">
-                  You scored {TotalCorrect} out of{" "}
+                  {t("YOU_SCORED")} {TotalCorrect} {t("OUT_OF")}{" "}
                   {
                     {
                       cosmos: 18,
@@ -534,7 +530,7 @@ export default function CalculationPage() {
                       stargaze: 21,
                     }[path.id]
                   }{" "}
-                  in quiz.
+                  {t("IN_QUIZ")}.
                 </p>
               </div>
             </section>
@@ -647,6 +643,7 @@ const Container = styled.main`
       &__or {
         font-family: "Lato";
         font-style: normal;
+        text-transform: capitalize;
         font-weight: 400;
         font-size: 36px;
         line-height: 120%;
@@ -1124,6 +1121,7 @@ const Container = styled.main`
       &_campaign,
       &_campaignStat {
         &__title {
+          text-transform: capitalize;
           font: var(--h3);
           font-size: 24px;
           color: var(--gray);
