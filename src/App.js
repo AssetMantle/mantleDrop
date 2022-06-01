@@ -6,7 +6,7 @@ import "./styles/App.css";
 
 import Footer from "./layout/Footer";
 
-import HeaderASAO from "./layout/HeaderASAO";
+import Header from "./layout/Header";
 
 import RouteNotFound from "./components/RouteNotFound";
 import Airdrop from "./pages/Airdrop";
@@ -56,7 +56,7 @@ const App = () => {
 
   return (
     <div className="app">
-      <HeaderASAO />
+      <Header />
       <Switch>
         {routes.map((route) => {
           return (
