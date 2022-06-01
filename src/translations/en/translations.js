@@ -2,6 +2,7 @@ import airDropData from "../../data/airdropData.json";
 import osmosisData from "../../data/osmosisClaimData.json";
 import stakeDropData from "../../data/stakeDropData.json";
 import mantledropPageData from "../../data/campaignPageComponent.json";
+import footerData from "../../data/footerData.json";
 
 const English = {
   translations: {
@@ -299,8 +300,15 @@ const English = {
     PARTICIPATED_QUESTION: "Participated in the StakeDrop Campaign?",
     PARTICIPATED_YES_CHECK: "Check your $MNTL Allocation",
 
-    // t & c modal
-    T_AND_C_MODAL_TITLE: "",
+    // footer
+    FOOTER_TITLE: footerData.title,
+    FOOTER_SUBTITLE: footerData.subtitle,
+    FOOTER_EMAIL_TITLE_1: footerData.emailTitle1,
+    FOOTER_EMAIL_TITLE_2: footerData.emailTitle2,
+    FOOTER_JOIN_TITLE: footerData.joinTitle,
+    FOOTER_LINK_1: footerData.link1,
+    FOOTER_LINK_2: footerData.link2,
+    FOOTER_LINK_3: footerData.link3,
 
     // Commons [A-Z order]
     ADDRESS: "Address",
@@ -308,6 +316,7 @@ const English = {
     ALLOCATION: "Allocation",
     AND: "and",
     BLOCK_HEIGHT: "Block Height",
+    BLOG: "Blog",
     CALCULATE: "Calculate",
     CALCULATION: "Calculation",
     CAMPAIGN: "Campaign",
@@ -332,9 +341,12 @@ const English = {
     DETAILS: "Details",
     DISCONNECT: "Disconnect",
     DISCONNECT_KEPLR: "Disconnect Keplr",
+    DOCS: "Docs",
     EDIT: "Edit",
     ELIGIBLE_POOLS: "Eligible Pools",
+    EMAIL: "Email",
     ENTER_YOUR_WALLET_ADDRESS: "Enter Your Wallet Address",
+    EXPLORER: "Explorer",
     HERE: "here",
     IN_QUIZ: "in quiz",
     LETS_GO: "Let's go",
