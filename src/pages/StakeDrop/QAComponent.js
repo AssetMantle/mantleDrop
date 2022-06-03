@@ -13,6 +13,7 @@ export default function QAComponent({
   closeModal,
   TimeLeftQuiz,
   address1,
+  path,
 }) {
   // answer
   const [qArray, setqArray] = useState();
@@ -38,7 +39,7 @@ export default function QAComponent({
   const [questionShow, setQuestionShow] = useState(0);
 
   useEffect(() => {
-    fetch(`https://cosmos-stakedrop.assetmantle.one/qna/${address1}`)
+    fetch(`https://${path}-stakedrop.assetmantle.one/qna/${address1}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.qnaSet.length === 3) {
@@ -56,15 +57,19 @@ export default function QAComponent({
           setqArray(6);
         }
       });
-  }, [address1]);
+  }, [address1, path]);
 
-  //   const handleSubmit = () => {
-  //     console.log(Answer1, Answer2, Answer3);
-  //   };
-  const chainID = "cosmoshub-4";
+  const chainID = {
+    cosmos: "cosmoshub-4",
+    persistence: "core-1",
+    terra: "columbus-5",
+    comdex: "comdex-1",
+    juno: "juno-1",
+    stargaze: "stargaze-1",
+  }[path];
+
   const numToT = ["", "a", "b", "c", "d"];
-  // const data = `${Q1.QId}_${numToT[Answer1]},${Q2.QId}_${numToT[Answer2]},${Q3.QId}_${numToT[Answer3]}`;
-  // const data = "ques1Id_ans1Id,ques2Id_ans2Id"
+
   const handleSubmit = async () => {
     const data =
       qArray === 3
@@ -82,7 +87,7 @@ export default function QAComponent({
       data
     );
 
-    const res = await fetch("https://cosmos-stakedrop.assetmantle.one/qna", {
+    const res = await fetch(`https://${path}-stakedrop.assetmantle.one/qna`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -109,7 +114,7 @@ export default function QAComponent({
   useEffect(() => {
     SubmitResponse &&
       SubmitResponse.status === 200 &&
-      fetch(`https://cosmos-stakedrop.assetmantle.one/qna/${address}`)
+      fetch(`https://${path}-stakedrop.assetmantle.one/qna/${address}`)
         .then((res) => res.json())
         .then((data) => {
           if (data.success === true) {
@@ -121,7 +126,7 @@ export default function QAComponent({
             setSubmitStatus(false);
           }
         });
-  }, [SubmitResponse]);
+  }, [SubmitResponse, Quiz, address, path]);
 
   return (
     <Container>

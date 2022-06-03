@@ -6,14 +6,16 @@ import { FooterContainer } from "../styles/layout/FooterStyle";
 import DATA from "../data/footerData.json";
 
 import SubscribeForm from "../components/SubscribeForm";
+import { useTranslation } from "react-i18next";
 
 const mailURl = process.env.REACT_APP_MAIL_CHIMP_URL;
 
 const Footer = () => {
+  const { t } = useTranslation();
   return (
     <FooterContainer>
-      <h2 className="footer__title">Get in touch</h2>
-      <p className="footer__details">We would love to hear from you.</p>
+      <h2 className="footer__title">{t("FOOTER_TITLE")}</h2>
+      <p className="footer__details">{t("FOOTER_SUBTITLE")}</p>
       <div className="footer_container">
         <div className="footer_container__element">
           <div className="footer_container__element_emails">
@@ -22,12 +24,14 @@ const Footer = () => {
               alt="email icon"
               className="footer_container__element_emails__icon"
             />
-            <h3 className="footer_container__element_emails__title">Email</h3>
+            <h3 className="footer_container__element_emails__title">
+              {t("EMAIL")}
+            </h3>
           </div>
 
           <div className="footer_container__element_email__tile">
             <h4 className="footer_container__element_email__tile_title">
-              For Information And Support:
+              {t("FOOTER_EMAIL_TITLE_1")}
             </h4>
             <a
               className="footer_container__element_email__tile_email"
@@ -41,7 +45,7 @@ const Footer = () => {
 
           <div className="footer_container__element_email__tile">
             <h4 className="footer_container__element_email__tile_title">
-              For Collaboration And Interests
+              {t("FOOTER_EMAIL_TITLE_2")}
             </h4>
             <a
               className="footer_container__element_email__tile_email"
@@ -80,7 +84,7 @@ const Footer = () => {
         <div className="footer_container__element_2">
           <div className="footer_container__element_2__subscribe">
             <h3 className="footer_container__element_2__subscribe_title">
-              Join our Whitelist
+              {t("FOOTER_JOIN_TITLE")}
             </h3>
             <div className="footer_container__element_2__subscribe_form">
               <MailchimpSubscribe
@@ -111,33 +115,33 @@ const Footer = () => {
           </div>
           <div className="footer_container__element_2__links">
             <p className="footer_container__element_2__links_link">
-              Want to know what we're upto?&nbsp;
+              {t("FOOTER_LINK_1")}&nbsp;
               <a
                 href="http://blog.assetmantle.one/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Blog
+                {t("BLOG")}
               </a>
             </p>
             <p className="footer_container__element_2__links_link">
-              Want to know more?&nbsp;
+              {t("FOOTER_LINK_2")}&nbsp;
               <a
                 href="https://docs.assetmantle.one/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Docs
+                {t("DOCS")}
               </a>
             </p>
             <p className="footer_container__element_2__links_link">
-              Interested in transaction activities?&nbsp;
+              {t("FOOTER_LINK_3")}&nbsp;
               <a
-                href="https://test-mantle-1.explorer.assetmantle.one/"
+                href="https://explorer.assetmantle.one/"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Explorer
+                {t("EXPLORER")}
               </a>
             </p>
           </div>

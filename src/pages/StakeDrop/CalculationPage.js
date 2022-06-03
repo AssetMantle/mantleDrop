@@ -1,78 +1,99 @@
+import { useParams } from "react-router-dom";
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import styled from "styled-components";
+import "../../styles/pages/campaignTable.css";
+import { BsInfoCircle } from "react-icons/bs";
 
-import { BiTimeFive, BiCheckCircle } from "react-icons/bi";
+import campaignDATA from "../../data/campaignData.json";
 
-// import data from "../../../data/stakeDropData.json";
-import campaignData from "../../../data/campaignData.json";
-import { sendCoinTx } from "../send";
-import HowToModal from "./HowToModal";
-import QAComponent from "./QAComponent";
+import { initializeKeplrForTera } from "./utils/terraKeplr";
+import { initializeKeplrForComdex } from "./utils/comdexKeplr";
 
-const a = "s"; // don't change this value
-
-export default function JunoCalculationPage() {
+export default function CalculationPage() {
+  const path = useParams();
   const { t } = useTranslation();
-  const sendingAddress = "juno1dsuar2ztnqevefxlnalmaetxca3gr0fpr2v8pl";
-  // const DATA = data.modal;
-  const [modal, setModal] = useState(false);
-  const [QuizModal, setQuizModal] = useState(false);
-  const [Quiz, setQuiz] = useState(0);
+
   const [Address, setAddress] = useState();
-  const [MTButtonText, setMTButtonText] = useState(0);
 
   const [CampaignStat, setCampaignStat] = useState();
 
   const [IsMagicTransaction, setIsMagicTransaction] = useState();
 
   useEffect(() => {
-    fetch("https://juno-stakedrop.assetmantle.one/status")
+    fetch(`https://${path.id}-stakedrop.assetmantle.one/status`)
       .then((res) => res.json())
       .then((res) => setCampaignStat(res))
       .catch((err) => console.log(err));
-  }, []);
-  // https://juno-stakedrop.assetmantle.one/status
+  }, [path.id]);
 
   // connect keplr
   const [KeplrConnectionState, setKeplrConnectionState] = useState(0);
-  const chainID = "juno-1";
-  const handleKeplrConnect = async () => {
-    if (window.keplr) {
-      setKeplrConnectionState(1);
-      let offlineSigner = window.keplr.getOfflineSigner(chainID);
-      let accounts = await offlineSigner.getAccounts();
-      const account = accounts[0].address;
-      setAddress(account);
-      setKeplrConnectionState(2);
-      setIsMagicTransaction();
-    } else {
-      window.alert("Please install Keplr to move forward with the task.");
-    }
-  };
+  const chainID = {
+    cosmos: "cosmoshub-4",
+    persistence: "core-1",
+    terra: "columbus-5",
+    comdex: "comdex-1",
+    juno: "juno-1",
+    stargaze: "stargaze-1",
+  }[path.id];
 
-  // no magic transaction ?
-  const handleMagicTransaction = async () => {
-    setMTButtonText(1);
-    const response = await sendCoinTx(sendingAddress, "juno", 0.000001);
-    console.log(response);
-    if (response === 0) {
-      setIsMagicTransaction(true);
-      setMTButtonText(3);
-      alert("Magic Transaction Successful");
+  const handleKeplrConnect = async () => {
+    if (path.id === "terra") {
+      if (window.keplr) {
+        setKeplrConnectionState(1);
+        try {
+          await initializeKeplrForTera();
+        } catch (e) {
+          console.log(e);
+        }
+        let offlineSigner = window.keplr.getOfflineSigner(chainID);
+        let accounts = await offlineSigner.getAccounts();
+        const account = accounts[0].address;
+        setAddress(account);
+        setKeplrConnectionState(2);
+        setIsMagicTransaction();
+      } else {
+        window.alert("Please install Keplr to move forward with the task.");
+      }
+    } else if (path.id === "comdex") {
+      if (window.keplr) {
+        setKeplrConnectionState(1);
+        try {
+          await initializeKeplrForComdex();
+        } catch (e) {
+          console.log(e);
+        }
+        let offlineSigner = window.keplr.getOfflineSigner(chainID);
+        let accounts = await offlineSigner.getAccounts();
+        const account = accounts[0].address;
+        setAddress(account);
+        setKeplrConnectionState(2);
+        setIsMagicTransaction();
+      } else {
+        window.alert("Please install Keplr to move forward with the task.");
+      }
     } else {
-      setIsMagicTransaction(false);
-      setMTButtonText(2);
-      alert(response);
+      if (window.keplr) {
+        setKeplrConnectionState(1);
+        let offlineSigner = window.keplr.getOfflineSigner(chainID);
+        let accounts = await offlineSigner.getAccounts();
+        const account = accounts[0].address;
+        setAddress(account);
+        setKeplrConnectionState(2);
+        setIsMagicTransaction();
+      } else {
+        window.alert("Please install Keplr to move forward with the task.");
+      }
     }
   };
 
   // calculate rewards
   const [StakeAddress, setStakeAddress] = useState();
   const [TotalStaked, setTotalStaked] = useState("0.00");
-  const [TotalReward, setTotalReward] = useState("0.00");
-  const [TotalEstimated, setTotalEstimated] = useState("0.00");
+  const [TotalReward, setTotaReward] = useState("0.00");
   const [TotalCorrect, setTotalCorrect] = useState("--");
+  const [TotalEstimated, setTotalEstimated] = useState(0);
 
   const TotalStakedN = Number(TotalStaked);
   const TotalRewardN = Number(TotalReward);
@@ -85,161 +106,197 @@ export default function JunoCalculationPage() {
         counter++;
       }
     });
+
     return counter;
   }
 
   const handleCalculate = () => {
-    fetch(`https://juno-stakedrop.assetmantle.one/delegator/${Address}`)
+    fetch(`https://${path.id}-stakedrop.assetmantle.one/delegator/${Address}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success.toString() === "true") {
           setStakeAddress(data.mantleAddress);
           setTotalStaked(data.globalDelegation);
-          setTotalReward(data.received);
+          setTotaReward(data.received);
           setTotalEstimated(data.estimated);
           setIsMagicTransaction(true);
-          fetch(`https://juno-stakedrop.assetmantle.one/qna/${Address}`)
+          fetch(`https://${path.id}-stakedrop.assetmantle.one/qna/${Address}`)
             .then((res) => res.json())
             .then((data) => {
-              data.qnaSet.length === 0 ? setQuiz(true) : setQuiz(false);
               setTotalCorrect(countAnswer(data.qaData));
             });
         } else if (data.success.toString() === "false") {
           setIsMagicTransaction(false);
           setStakeAddress();
           setTotalStaked("0.00");
-          setTotalReward("0.00");
+          setTotaReward("0.00");
           setTotalEstimated("0.00");
         }
       })
       .catch((err) => console.log(err));
   };
 
-  // Time left count down
-  const [TimeLeft, setTimeLeft] = useState(1);
-  var countDownDate = new Date(2022, 3, 5, 17, 30).getTime();
-  var x = setInterval(function () {
-    var now = new Date().getTime();
-    var distance = countDownDate - now;
-    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    var hours = Math.floor(
-      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    setTimeLeft(days + "d " + hours + "h " + minutes + "m " + seconds + "s ");
-    if (distance < 0) {
-      clearInterval(x);
-      setTimeLeft("EXPIRED");
-    }
-  }, 1000);
-
-  // time left for quiz
-
-  const [Day, setDay] = useState(1);
-  useEffect(() => {
-    fetch(`https://juno-stakedrop.assetmantle.one/qna/${Address}`)
-      .then((res) => res.json())
-      .then((data) => {
-        data.success === true ? setDay(data.day) : setDay(7);
-      });
-  }, [Address]);
-  const [TimeLeftQuiz, setTimeLeftQuiz] = useState("EXPIRED");
-  var countDownDate2 = new Date(
-    2022,
-    { 1: 2, 2: 2, 3: 3, 4: 3, 5: 3, 6: 3, 7: 3 }[Day],
-    { 1: 30, 2: 31, 3: 1, 4: 2, 5: 3, 6: 4, 7: 5 }[Day],
-    17,
-    30
-  ).getTime();
-  var xn = setInterval(function () {
-    var now2 = new Date().getTime();
-    var distance = countDownDate2 - now2;
-    var hours2 = Math.floor(
-      (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
-    );
-    setTimeLeftQuiz(
-      hours2 > 1
-        ? hours2 + "hours Left"
-        : hours2 === 0
-        ? `${24} hours Left`
-        : isNaN(hours2)
-        ? `-- hour Left`
-        : hours2 + "hour Left"
-    );
-    if (distance < 0) {
-      clearInterval(xn);
-      setTimeLeftQuiz("EXPIRED");
-    }
-  }, 1000);
-
-  //  slider value
-  const [SliderValue, setSliderValue] = useState(10);
-
   return (
-    <>
-      <Container>
-        <section
-          className="section_goBack"
-          onClick={() => window.history.back()}
-        >
-          <img src="/images/stakedrop/back_arrow.svg" alt="back arrow" />
-          <h2>Back to AssetMantle StakeDrop page</h2>
-        </section>
+    <Container>
+      <section
+        className="section_goBack"
+        onClick={() => window.open("/stakedrop", "_self")}
+      >
+        <img src="/images/stakedrop/back_arrow.svg" alt="back arrow" />
+        <h2>{t("MANTLEDROP_CAMPAIGN_BACK")}</h2>
+      </section>
+      {path.id === "cosmos" ||
+      path.id === "persistence" ||
+      path.id === "terra" ||
+      path.id === "comdex" ||
+      path.id === "juno" ||
+      path.id === "stargaze" ? (
         <div className="calculate_grid">
           <div className="left">
             <section className="section__overview">
               <div>
                 <div className="section__overview_campaign lighter_bg">
                   <h3 className="section__overview_campaign__title">
-                    {campaignData.juno.dataTable1.title}
+                    {`${path.id} ${t("MANTLEDROP_CAMPAIGN_TITLE")}`}
                   </h3>
                   <div className="section__overview_campaign__option">
                     <p className="section__overview_campaign__option_label                                                                                                                        ">
                       {t("STAKEDROP_MODAL_CAMPAIGN_OPTION_2_TITLE")}
                     </p>
                     <h3 className="section__overview_campaign__option_value">
-                      {Number(
-                        campaignData.juno.dataTable1.op1Value
-                      ).toLocaleString("en-US", {
-                        maximumFractionDigits: 4,
-                      })}{" "}
-                      $MNTL
+                      {
+                        {
+                          cosmos: Number(
+                            campaignDATA.cosmos.dataTable1.op1Value
+                          ).toLocaleString("en-US", {
+                            maximumFractionDigits: 4,
+                          }),
+                          persistence: Number(
+                            campaignDATA.persistance.dataTable1.op1Value
+                          ).toLocaleString("en-US", {
+                            maximumFractionDigits: 4,
+                          }),
+                          terra: Number(
+                            campaignDATA.terra.dataTable1.op1Value
+                          ).toLocaleString("en-US", {
+                            maximumFractionDigits: 4,
+                          }),
+                          comdex: Number(
+                            campaignDATA.comdex.dataTable1.op1Value
+                          ).toLocaleString("en-US", {
+                            maximumFractionDigits: 4,
+                          }),
+                          juno: Number(
+                            campaignDATA.juno.dataTable1.op1Value
+                          ).toLocaleString("en-US", {
+                            maximumFractionDigits: 4,
+                          }),
+                          stargaze: Number(
+                            campaignDATA.stargaze.dataTable1.op1Value
+                          ).toLocaleString("en-US", {
+                            maximumFractionDigits: 4,
+                          }),
+                        }[path.id]
+                      }
                     </h3>
                   </div>
                   <div className="section__overview_campaign__option">
                     <p className="section__overview_campaign__option_label                                                                                                                        ">
-                      {campaignData.juno.dataTable1.op2Key}
+                      {t("STAKEDROP_MODAL_CAMPAIGN_OPTION_3_TITLE")}
                     </p>
                     <h3 className="section__overview_campaign__option_value">
-                      {campaignData.juno.dataTable1.op2Value}
+                      {
+                        {
+                          cosmos: campaignDATA.cosmos.dataTable1.op2Value,
+                          persistence:
+                            campaignDATA.persistance.dataTable1.op2Value,
+                          terra: campaignDATA.terra.dataTable1.op2Value,
+                          comdex: campaignDATA.comdex.dataTable1.op2Value,
+                          juno: campaignDATA.juno.dataTable1.op2Value,
+                          stargaze: campaignDATA.stargaze.dataTable1.op2Value,
+                        }[path.id]
+                      }
                     </h3>
                     <p className="section__overview_campaign__option_details">
-                      {campaignData.juno.dataTable1.op2Description}
+                      {t("BLOCK_HEIGHT")}:{" "}
+                      {
+                        {
+                          cosmos: campaignDATA.cosmos.dataTable1.op2Description,
+                          persistence:
+                            campaignDATA.persistance.dataTable1.op2Description,
+                          terra: campaignDATA.terra.dataTable1.op2Description,
+                          comdex: campaignDATA.comdex.dataTable1.op2Description,
+                          juno: campaignDATA.juno.dataTable1.op2Description,
+                          stargaze:
+                            campaignDATA.stargaze.dataTable1.op2Description,
+                        }[path.id]
+                      }
                     </p>
                   </div>
-                  <>
-                    <div className="section__overview_campaign__option">
-                      <p className="section__overview_campaign__option_label                                                                                                                        ">
-                        {campaignData.juno.dataTable1.op3Key}
-                      </p>
-                      <h3 className="section__overview_campaign__option_value">
-                        {campaignData.juno.dataTable1.op3Value}
-                      </h3>
-                      <p className="section__overview_campaign__option_details">
-                        {campaignData.juno.dataTable1.op3Description}
-                      </p>
-                    </div>
-                  </>
                   <div className="section__overview_campaign__option">
                     <p className="section__overview_campaign__option_label                                                                                                                        ">
-                      {campaignData.juno.dataTable1.op4Key}
+                      {t("STAKEDROP_MODAL_CAMPAIGNSTAT_OPTION_3I_TITLE")}
                     </p>
                     <h3 className="section__overview_campaign__option_value">
-                      {campaignData.juno.dataTable1.op4Value}
+                      {
+                        {
+                          cosmos: campaignDATA.cosmos.dataTable1.op3Value,
+                          persistence:
+                            campaignDATA.persistance.dataTable1.op3Value,
+                          terra: campaignDATA.terra.dataTable1.op3Value,
+                          comdex: campaignDATA.comdex.dataTable1.op3Value,
+                          juno: campaignDATA.juno.dataTable1.op3Value,
+                          stargaze: campaignDATA.stargaze.dataTable1.op3Value,
+                        }[path.id]
+                      }
                     </h3>
                     <p className="section__overview_campaign__option_details">
-                      {campaignData.juno.dataTable1.op4Description}
+                      {t("BLOCK_HEIGHT")}:{" "}
+                      {
+                        {
+                          cosmos: campaignDATA.cosmos.dataTable1.op3Description,
+                          persistence:
+                            campaignDATA.persistance.dataTable1.op3Description,
+                          terra: campaignDATA.terra.dataTable1.op3Description,
+                          comdex: campaignDATA.comdex.dataTable1.op3Description,
+                          juno: campaignDATA.juno.dataTable1.op3Description,
+                          stargaze:
+                            campaignDATA.stargaze.dataTable1.op3Description,
+                        }[path.id]
+                      }
+                    </p>
+                  </div>
+                  <div className="section__overview_campaign__option">
+                    <p className="section__overview_campaign__option_label                                                                                                                        ">
+                      {t("STAKEDROP_MODAL_CAMPAIGN_OPTION_4_TITLE")}
+                    </p>
+                    <h3 className="section__overview_campaign__option_value">
+                      {
+                        {
+                          cosmos: campaignDATA.cosmos.dataTable1.op4Value,
+                          persistence:
+                            campaignDATA.persistance.dataTable1.op4Value,
+                          terra: campaignDATA.terra.dataTable1.op4Value,
+                          comdex: campaignDATA.comdex.dataTable1.op4Value,
+                          juno: campaignDATA.juno.dataTable1.op4Value,
+                          stargaze: campaignDATA.stargaze.dataTable1.op4Value,
+                        }[path.id]
+                      }
+                    </h3>
+                    <p className="section__overview_campaign__option_details">
+                      {t("BLOCK_HEIGHT")}:{" "}
+                      {
+                        {
+                          cosmos: campaignDATA.cosmos.dataTable1.op4Description,
+                          persistence:
+                            campaignDATA.persistance.dataTable1.op4Description,
+                          terra: campaignDATA.terra.dataTable1.op4Description,
+                          comdex: campaignDATA.comdex.dataTable1.op4Description,
+                          juno: campaignDATA.juno.dataTable1.op4Description,
+                          stargaze:
+                            campaignDATA.stargaze.dataTable1.op4Description,
+                        }[path.id]
+                      }
                     </p>
                   </div>
                 </div>
@@ -254,14 +311,6 @@ export default function JunoCalculationPage() {
                       {t("STAKEDROP_MODAL_CAMPAIGNSTAT_OPTION_1_TITLE")}
                     </p>
                     <h3 className="section__overview_campaignStat__option_value">
-                      {a === false && CampaignStat
-                        ? (
-                            Number(campaignData.juno.dataTable1.op1Value) -
-                            Number(CampaignStat.totalDistributed) / 1000000
-                          ).toLocaleString("en-US", {
-                            maximumFractionDigits: 4,
-                          })
-                        : "--"}
                       0{` $MNTL`}
                     </h3>
                   </div>
@@ -270,7 +319,7 @@ export default function JunoCalculationPage() {
                       {t("STAKEDROP_MODAL_CAMPAIGNSTAT_OPTION_2_TITLE")}
                     </p>
                     <h3 className="section__overview_campaignStat__option_value">
-                      {a === false && TimeLeft}Concluded
+                      {t("CONCLUDED")}
                     </h3>
                   </div>
                   <div className="section__overview_campaignStat__option">
@@ -286,11 +335,20 @@ export default function JunoCalculationPage() {
                           ).toLocaleString("en-US", {
                             maximumFractionDigits: 4,
                           })
-                        : "--"}
-                      {` ${campaignData.juno.currency}`}
+                        : "--"}{" "}
+                      {
+                        {
+                          cosmos: campaignDATA.cosmos.currency,
+                          persistence: campaignDATA.persistance.currency,
+                          terra: campaignDATA.terra.currency,
+                          comdex: campaignDATA.comdex.currency,
+                          juno: campaignDATA.juno.currency,
+                          stargaze: campaignDATA.stargaze.currency,
+                        }[path.id]
+                      }
                     </h3>
                     <p className="section__overview_campaign__option_details">
-                      {`Total Active: `}
+                      {t("TOTAL_ACTIVE")}:{" "}
                       {CampaignStat
                         ? (
                             Number(CampaignStat.worldGlobalDelegation) / 1000000
@@ -298,7 +356,16 @@ export default function JunoCalculationPage() {
                             maximumFractionDigits: 4,
                           })
                         : "--"}{" "}
-                      {campaignData.juno.currency}
+                      {
+                        {
+                          cosmos: campaignDATA.cosmos.currency,
+                          persistence: campaignDATA.persistance.currency,
+                          terra: campaignDATA.terra.currency,
+                          comdex: campaignDATA.comdex.currency,
+                          juno: campaignDATA.juno.currency,
+                          stargaze: campaignDATA.stargaze.currency,
+                        }[path.id]
+                      }
                     </p>
                   </div>
                   <div className="section__overview_campaignStat__option">
@@ -320,10 +387,10 @@ export default function JunoCalculationPage() {
           </div>
           <div className="right">
             <section className="section_calculation lighter_bg">
-              <h2>Calculate Your Estimated Rewards</h2>
+              <h2>{t("MANTLEDROP_CAMPAIGN_CONNECT_TITLE")}</h2>
               <div className="section_calculation__connect">
                 <p className="section_calculation__connect_text">
-                  Connect your wallet to calculate estimated rewards
+                  {t("MANTLEDROP_CAMPAIGN_CONNECT_WALLET")}
                 </p>
                 <div
                   className="section_calculation__connect_button"
@@ -337,13 +404,13 @@ export default function JunoCalculationPage() {
                   } Keplr`}</span>
                 </div>
               </div>
-              <div className="section_calculation__or">Or</div>
+              <div className="section_calculation__or">{t("OR")}</div>
               <div className="section_calculation__from">
                 <label
                   htmlFor="walletAddress"
                   className="section_calculation__from_label"
                 >
-                  Enter your wallet address
+                  {t("MANTLEDROP_CAMPAIGN_CONNECT_WALLET_LABEL")}
                 </label>
                 <div className="section_calculation__from_line2">
                   <input
@@ -352,7 +419,7 @@ export default function JunoCalculationPage() {
                     value={Address}
                     onChange={(e) => setAddress(e.target.value)}
                     className="section_calculation__from_line2_input"
-                    placeholder="Enter your juno wallet address"
+                    placeholder={`Enter your ${path.id} wallet address`}
                   />
                   <button
                     onClick={handleCalculate}
@@ -365,7 +432,7 @@ export default function JunoCalculationPage() {
                         : true
                     }
                   >
-                    Calculate
+                    {t("CALCULATE")}
                   </button>
                 </div>
               </div>
@@ -373,66 +440,21 @@ export default function JunoCalculationPage() {
                 <div className="section_calculation__error">
                   <div className="section_calculation__error_element">
                     <div className="section_calculation__error_element__line1">
-                      <img src="/images/stakedrop/info.svg" alt="info icon" />
+                      <span>
+                        <BsInfoCircle />
+                      </span>
                       <h3>
-                        {a === false
-                          ? MTButtonText === 3
-                            ? "You have successfully submitted the magic transaction. Please wait for some time to show your estimated rewards."
-                            : MTButtonText === 0
-                            ? "You have not completed the magic transaction"
-                            : "You have not completed the magic transaction"
-                          : ""}
-                        You didn't participate in this campaign!
+                        {t("MANTLEDROP_CAMPAIGN_CONNECT_NOT_PARTICIPATED")}
                       </h3>
                     </div>
-                    {a === false && (
-                      <div className="section_calculation__error_element__line2">
-                        <p>
-                          You have to complete a magic transaction in order to
-                          calculate estimated rewards. Here's a quick guide on
-                          how to do this:{" "}
-                          <span onClick={() => setModal(true)}>
-                            Magic Transaction Guide
-                          </span>{" "}
-                          <br />
-                          <br />
-                          NOTE: If you have already sent magic transaction and
-                          received the success response, please wait for some
-                          time to confirm your participation. Please do not send
-                          the magic transaction multiple times as your
-                          participation is already confirmed.
-                        </p>
-                      </div>
-                    )}
                   </div>
-                  {a === false && (
-                    <div className="section_calculation__error_element">
-                      <button
-                        onClick={handleMagicTransaction}
-                        className="section_calculation__error_element__button"
-                        disabled={
-                          MTButtonText === 0 || MTButtonText === 2
-                            ? false
-                            : true
-                        }
-                      >
-                        {
-                          {
-                            0: "Complete Magic Transaction",
-                            1: "Processing...",
-                            2: "Failed - Retry",
-                            3: "Successful",
-                          }[MTButtonText]
-                        }
-                      </button>
-                    </div>
-                  )}
+                  <div className="section_calculation__error_element"></div>
                 </div>
               )}
               <div className="section_calculation__result">
                 <div className="section_calculation__result_address">
                   <p className="section_calculation__result_address__label">
-                    MNTL Address
+                    MNTL {t("ADDRESS")}
                   </p>
                   <p className="section_calculation__result_address__value">
                     {StakeAddress !== null &&
@@ -445,18 +467,27 @@ export default function JunoCalculationPage() {
                 <div className="section_calculation__result_rewards">
                   <div className="section_calculation__result_rewards_reward">
                     <p className="section_calculation__result_rewards_reward__label">
-                      Total Staked
+                      {t("TOTAL_STAKED")}
                     </p>
                     <h3 className="section_calculation__result_rewards_reward__value">
                       {(TotalStakedN / 1000000).toLocaleString("en-US", {
                         maximumFractionDigits: 4,
                       })}{" "}
-                      {campaignData.juno.currency}
+                      {
+                        {
+                          cosmos: campaignDATA.cosmos.currency,
+                          persistence: campaignDATA.persistance.currency,
+                          terra: campaignDATA.terra.currency,
+                          comdex: campaignDATA.comdex.currency,
+                          juno: campaignDATA.juno.currency,
+                          stargaze: campaignDATA.stargaze.currency,
+                        }[path.id]
+                      }
                     </h3>
                   </div>
                   <div className="section_calculation__result_rewards_reward">
                     <p className="section_calculation__result_rewards_reward__label">
-                      Total Rewards
+                      {t("TOTAL_REWARDS")}
                     </p>
                     <h3 className="section_calculation__result_rewards_reward__value">
                       {(TotalRewardN / 1000000).toLocaleString("en-US", {
@@ -467,7 +498,7 @@ export default function JunoCalculationPage() {
                   </div>
                   <div className="section_calculation__result_rewards_reward">
                     <p className="section_calculation__result_rewards_reward__label">
-                      Total Estimated Rewards
+                      {t("TOTAL_ESTIMATED_REWARDS")}
                     </p>
                     <h3 className="section_calculation__result_rewards_reward__value">
                       {(TotalEstimatedN / 1000000).toLocaleString("en-US", {
@@ -483,145 +514,37 @@ export default function JunoCalculationPage() {
               <div className="section_questions__qBox">
                 <div className="section_questions__qBox_title">
                   <h3 className="section_questions__qBox_title__name">
-                    Quiz Result
-                    {Quiz === 1 && (
-                      <div className="success">
-                        <BiCheckCircle /> Completed
-                      </div>
-                    )}
+                    {t("QUIZ_RESULT")}
                   </h3>
-                  <div className="section_questions__qBox_title__right">
-                    {a === false && (
-                      <>
-                        <span>
-                          <BiTimeFive />
-                        </span>
-                        <p>
-                          {TimeLeftQuiz}
-                          {Quiz === true && TimeLeft !== "EXPIRED"
-                            ? " to next quiz"
-                            : ""}
-                        </p>
-                      </>
-                    )}
-                  </div>
+                  <div className="section_questions__qBox_title__right"></div>
                 </div>
-                {a === false && (
-                  <>
-                    <div className="section_questions__qBox_button">
-                      <button
-                        onClick={() => setQuizModal(true)}
-                        disabled={Quiz === true || Quiz === 0 ? true : false}
-                      >
-                        {Quiz === true ? "Completed" : "Take the Quiz"}
-                      </button>
-                    </div>
-                    <p className="section_questions__qBox_details">
-                      The objective of this quiz is to spread more awareness
-                      about AssetMantle and it's product offerings. Please Note
-                      that as per the community feedbacks, we have decided to
-                      keep the quiz optional and the participants of the
-                      campaign will receive the total rewards as per the
-                      distribution independent of the quiz participation.
-                    </p>
-                  </>
-                )}
                 <p className="section_questions__qBox_details">
-                  You scored {TotalCorrect} out of 21 in quiz.
+                  {t("YOU_SCORED")} {TotalCorrect} {t("OUT_OF")}{" "}
+                  {
+                    {
+                      cosmos: 18,
+                      persistence: 21,
+                      terra: 21,
+                      comdex: 21,
+                      juno: 21,
+                      stargaze: 21,
+                    }[path.id]
+                  }{" "}
+                  {t("IN_QUIZ")}.
                 </p>
               </div>
             </section>
-            {a === false && (
-              <section className="section_calculation lighter_bg">
-                <h2>Calculate Your Estimated Rewards</h2>
-                <div className="section_calculation__range input">
-                  <p>
-                    How many {campaignData.juno.currency} would you like to
-                    stake?
-                  </p>
-                  <input
-                    type="number"
-                    value={SliderValue}
-                    onChange={(e) =>
-                      setSliderValue(
-                        e.target.value >= 500000 ? 500000 : e.target.value
-                      )
-                    }
-                  />
-                </div>
-                <div className="section_calculation__range">
-                  <input
-                    type="range"
-                    value={SliderValue}
-                    min={0}
-                    max={500000}
-                    step="1"
-                    onChange={(e) => setSliderValue(e.target.value)}
-                  />
-                </div>
-                <div className="section_calculation__result">
-                  <div className="section_calculation__result_rewards two">
-                    <div className="section_calculation__result_rewards_reward">
-                      <p className="section_calculation__result_rewards_reward__label">
-                        Stake
-                      </p>
-                      <h3 className="section_calculation__result_rewards_reward__value">
-                        {/* {(TotalStakedN / 1000000).toLocaleString("en-US", {
-                        maximumFractionDigits: 4,
-                      })}{" "} */}
-                        {`${Number(SliderValue).toLocaleString("en-US", {
-                          maximumFractionDigits: 4,
-                        })} ${campaignData.juno.currency}`}
-                      </h3>
-                    </div>
-                    <div className="section_calculation__result_rewards_reward">
-                      <p className="section_calculation__result_rewards_reward__label">
-                        Estimated Rewards
-                      </p>
-                      <h3 className="section_calculation__result_rewards_reward__value">
-                        {CampaignStat
-                          ? ((Number(SliderValue) *
-                              (Number(campaignData.juno.dataTable1.op1Value) -
-                                Number(CampaignStat.totalDistributed) /
-                                  1000000)) /
-                              (Number(CampaignStat.worldGlobalDelegation) /
-                                1000000) >=
-                            5000
-                              ? 5000
-                              : (Number(SliderValue) *
-                                  (Number(
-                                    campaignData.juno.dataTable1.op1Value
-                                  ) -
-                                    Number(CampaignStat.totalDistributed) /
-                                      1000000)) /
-                                (Number(CampaignStat.worldGlobalDelegation) /
-                                  1000000)
-                            ).toLocaleString("en-US", {
-                              maximumFractionDigits: 4,
-                            })
-                          : 0}{" "}
-                        $MNTL
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-              </section>
-            )}
           </div>
         </div>
-        {QuizModal === true && (
-          <QAComponent
-            Quiz={setQuiz}
-            TimeLeftQuiz={TimeLeftQuiz}
-            closeModal={setQuizModal}
-            address1={Address}
+      ) : (
+        <NotFound>
+          <img
+            src="/images/stakedrop/not_found.svg"
+            alt="no match found illustration"
           />
-        )}
-      </Container>
-      {modal === true && (
-        <HowToModal closeModal={setModal} address={sendingAddress} />
+        </NotFound>
       )}
-    </>
+    </Container>
   );
 }
 
@@ -634,7 +557,7 @@ const Container = styled.main`
   background-repeat: no-repeat;
   min-height: 100vh;
   z-index: 1;
-  padding: 120px 92px;
+  padding: 80px 92px;
   @media (max-width: 768px) {
     background-image: url("/images/bg/tab_bg_assets.svg");
     padding: 80px 40px;
@@ -720,6 +643,7 @@ const Container = styled.main`
       &__or {
         font-family: "Lato";
         font-style: normal;
+        text-transform: capitalize;
         font-weight: 400;
         font-size: 36px;
         line-height: 120%;
@@ -807,6 +731,13 @@ const Container = styled.main`
             align-items: center;
             gap: 16px;
             /* padding-bottom: 12px; */
+            span {
+              color: var(--yellow);
+              font: 800 var(--p-m);
+              font-size: 24px;
+              line-height: 100%;
+              padding-top: 5px;
+            }
             h3 {
               color: var(--gray);
             }
@@ -1190,6 +1121,7 @@ const Container = styled.main`
       &_campaign,
       &_campaignStat {
         &__title {
+          text-transform: capitalize;
           font: var(--h3);
           font-size: 24px;
           color: var(--gray);
@@ -1219,6 +1151,25 @@ const Container = styled.main`
           }
         }
       }
+    }
+  }
+`;
+
+const NotFound = styled.div`
+  padding: 40px 0;
+  img {
+    width: 100%;
+  }
+  h1 {
+    padding-top: 24px;
+    text-align: center;
+    color: var(--gray);
+    span {
+      color: var(--yellow);
+    }
+    a {
+      color: var(--yellow);
+      text-decoration: none;
     }
   }
 `;

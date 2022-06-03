@@ -1,6 +1,8 @@
 import airDropData from "../../data/airdropData.json";
 import osmosisData from "../../data/osmosisClaimData.json";
 import stakeDropData from "../../data/stakeDropData.json";
+import mantledropPageData from "../../data/campaignPageComponent.json";
+import footerData from "../../data/footerData.json";
 
 const English = {
   translations: {
@@ -121,6 +123,7 @@ const English = {
     OSMOSIS_CLAIM_OVERVIEW_2: osmosisData.overview2,
     OSMOSIS_CLAIM_OVERVIEW_3: osmosisData.overview3,
     OSMOSIS_CLAIM_OVERVIEW_4: osmosisData.overview4,
+    OSMOSIS_CLAIM_MISSION_TITLE: osmosisData.missionTitle,
     OSMOSIS_CLAIM_MISSION_1: osmosisData.mission1,
     OSMOSIS_CLAIM_MISSION_2: osmosisData.mission2,
     OSMOSIS_CLAIM_MISSION_3: osmosisData.mission3,
@@ -282,19 +285,53 @@ const English = {
       stakeDropData.modal.campaignStat.option2.title,
     STAKEDROP_MODAL_CAMPAIGNSTAT_OPTION_3_TITLE:
       stakeDropData.modal.campaignStat.option3.title,
+    STAKEDROP_MODAL_CAMPAIGNSTAT_OPTION_3I_TITLE:
+      stakeDropData.modal.campaign.option3i.title,
     STAKEDROP_MODAL_CAMPAIGNSTAT_OPTION_4_TITLE:
       stakeDropData.modal.campaignStat.option4.title,
 
-    // Commons [A-Z order]
+    // Mantledrop Campaign page component
+    MANTLEDROP_CAMPAIGN_BACK: mantledropPageData.backMessage,
+    MANTLEDROP_CAMPAIGN_TITLE: mantledropPageData.title,
+    MANTLEDROP_CAMPAIGN_CONNECT_TITLE: mantledropPageData.connectTitle,
+    MANTLEDROP_CAMPAIGN_CONNECT_WALLET: mantledropPageData.connectWallet,
+    MANTLEDROP_CAMPAIGN_CONNECT_WALLET_LABEL:
+      mantledropPageData.connectWalletLabel,
+    MANTLEDROP_CAMPAIGN_CONNECT_NOT_PARTICIPATED:
+      mantledropPageData.notParticipated,
 
+    // MantleDrop Claim section
+    PARTICIPATED_QUESTION: "Participated in the StakeDrop Campaign?",
+    PARTICIPATED_YES_CHECK: "Check your $MNTL Allocation",
+
+    // footer
+    FOOTER_TITLE: footerData.title,
+    FOOTER_SUBTITLE: footerData.subtitle,
+    FOOTER_EMAIL_TITLE_1: footerData.emailTitle1,
+    FOOTER_EMAIL_TITLE_2: footerData.emailTitle2,
+    FOOTER_JOIN_TITLE: footerData.joinTitle,
+    FOOTER_LINK_1: footerData.link1,
+    FOOTER_LINK_2: footerData.link2,
+    FOOTER_LINK_3: footerData.link3,
+
+    // Commons [A-Z order]
+    ADDRESS: "Address",
     AIRDROP: "Airdrop",
+    ALLOCATION: "Allocation",
     AND: "and",
+    BLOCK_HEIGHT: "Block Height",
+    BLOG: "Blog",
+    CALCULATE: "Calculate",
+    CALCULATION: "Calculation",
+    CAMPAIGN: "Campaign",
+    CATEGORY: "Category",
     CHECK: "Check",
     CHECK_ELIGIBILITY: "Check Eligibility",
     CHECK_NOW: "Check Now",
     CLAIM: "Claim",
     COMING_SOON: "Coming Soon",
     COMPLETED: "Completed",
+    CONCLUDED: "Concluded",
     CONNECT: "Connect",
     CONNECTED: "Connected",
     CONNECTING: "Connecting...",
@@ -304,23 +341,46 @@ const English = {
     CREATE_A_STORE: "Create A Store",
     DAY: "day",
     DAYS: "days",
+    DELEGATE: "Delegate",
     DETAILS: "Details",
     DISCONNECT: "Disconnect",
     DISCONNECT_KEPLR: "Disconnect Keplr",
+    DOCS: "Docs",
     EDIT: "Edit",
+    ELIGIBLE_POOLS: "Eligible Pools",
+    EMAIL: "Email",
+    ENTER_YOUR_WALLET_ADDRESS: "Enter Your Wallet Address",
+    EXPLORER: "Explorer",
     HERE: "here",
+    IN_QUIZ: "in quiz",
     LETS_GO: "Let's go",
+    MINT: "Mint",
     MISSION: "Mission",
     NOTIFY_ME: "Notify Me",
     ONGOING: "Ongoing",
     OR: "or",
+    OUT_OF: "out of",
+    PROVIDE: "Provide",
+    QUIZ_RESULT: "Quiz Result",
+    REWARDS: "Rewards",
     SIGN_IN: "Sign In",
     SIGN_UP: "Sign up",
+    SNAPSHOT_DATE: "Snapshot Date",
+    STAKE: "Stake",
     TAKE_A_TOUR: "Take a tour",
     TELL_ME_MORE: "Tell me more",
+    TOTAL_ACTIVE: "Total Active",
+    TOTAL_REWARDS: "Total Rewards",
+    TOTAL_STAKED: "Total Staked",
+    TOTAL_ESTIMATED_REWARDS: "Total Estimated Rewards",
     VIEW: "View",
+    VOTE: "Vote",
+    VALUE_LP: "Value LP (in USD)",
     WALLET: "Wallet",
+    WALLET_ADDRESS: "Wallet Address",
     WALLET_CONNECTED: "Wallet Connected",
+    WHERE: "where",
+    YOU_SCORED: "You scored",
   },
 };
 

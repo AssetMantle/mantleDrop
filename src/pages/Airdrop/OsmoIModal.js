@@ -1,7 +1,9 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import styled from "styled-components";
 
 export default function OsmoIModal({ closeModal }) {
+  const { t } = useTranslation();
   const LIST = [
     `OSMO/ATOM`,
     `OSMO/XPRT`,
@@ -29,9 +31,7 @@ export default function OsmoIModal({ closeModal }) {
             </div>
           </>
           <div className="modal_container">
-            <h2 className="modal_container__title">
-              Eligible Pools
-            </h2>
+            <h2 className="modal_container__title">{t("ELIGIBLE_POOLS")}</h2>
             <div className="modal_container__body">
               <div className="modal_container__body_table">
                 {React.Children.toArray(
@@ -46,7 +46,7 @@ export default function OsmoIModal({ closeModal }) {
               </div>
               <br />
               <br />
-              <h3>Snapshot Date - 15th Feb, 2022</h3>
+              <h3>{t("SNAPSHOT_DATE")} - 15th Feb, 2022</h3>
             </div>
           </div>
         </div>
@@ -144,20 +144,20 @@ const Container = styled.div`
         gap: 5px;
         &__data {
           background-color: var(--dark-m);
-        padding: 15px;
-        border-radius: 12px;
-        text-decoration: none;
-        color: var(--gray);
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: min(200px,100%);
+          padding: 15px;
+          border-radius: 12px;
+          text-decoration: none;
+          color: var(--gray);
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          width: min(200px, 100%);
           font: var(--h5);
-        &:hover {
-          background: var(--yellow-gradient-bg);
-          color: var(--dark-m);
-        }
+          &:hover {
+            background: var(--yellow-gradient-bg);
+            color: var(--dark-m);
+          }
         }
       }
     }

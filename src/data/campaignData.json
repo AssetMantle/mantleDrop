@@ -1,19 +1,36 @@
 {
+  "cosmos": {
+    "currency": "$ATOM",
+    "dataTable1": {
+      "title": "Cosmos StakeDrop Campaign",
+      "op1Key": "Tokens to distribute",
+      "op1Value": 2000000,
+      "op2Key": "Magic Transaction Start Date",
+      "op2Value": "15 Mar 2022",
+      "op2Description": "9758961 ",
+      "op3Key": "Reward Distribution Start Date",
+      "op3Value": "16 Mar 2022",
+      "op3Description": "9770481",
+      "op4Key": "End Date",
+      "op4Value": "22 Mar 2022",
+      "op4Description": "9839600"
+    }
+  },
   "persistance": {
     "currency": "$XPRT",
     "dataTable1": {
       "title": "Persistence StakeDrop Campaign",
       "op1Key": "Tokens to distribute",
-      "op1Value": "1000000",
+      "op1Value": 1000000,
       "op2Key": "Magic Transaction Start Date",
       "op2Value": "18 Mar 2022",
-      "op2Description": "Block Height: 5273217",
+      "op2Description": "5273217",
       "op3Key": "Reward Distribution Start Date",
       "op3Value": "18 Mar 2022",
-      "op3Description": "Block Height: 5287867",
+      "op3Description": "5287867",
       "op4Key": "End Date",
       "op4Value": "25 Mar 2022",
-      "op4Description": "Block Height: 5375766"
+      "op4Description": "5375766"
     }
   },
   "terra": {
@@ -21,16 +38,16 @@
     "dataTable1": {
       "title": "Terra StakeDrop Campaign",
       "op1Key": "Tokens to distribute",
-      "op1Value": "2000000",
+      "op1Value": 2000000,
       "op2Key": "Magic Transaction Start Date",
       "op2Value": "22 Mar 2022",
-      "op2Description": "Block Height: 6946901",
+      "op2Description": "6946901",
       "op3Key": "Reward Distribution Start Date",
       "op3Value": "22 Mar 2022",
-      "op3Description": "Block Height: 6946901",
+      "op3Description": "6946901",
       "op4Key": "End Date",
       "op4Value": "29 Mar 2022",
-      "op4Description": "Block Height: 7038530"
+      "op4Description": "7038530"
     }
   },
   "comdex": {
@@ -38,16 +55,16 @@
     "dataTable1": {
       "title": "Comdex StakeDrop Campaign",
       "op1Key": "Tokens to distribute",
-      "op1Value": "1000000",
+      "op1Value": 1000000,
       "op2Key": "Magic Transaction Start Date",
       "op2Value": "25 Mar 2022",
-      "op2Description": "Block Height: 1762901",
+      "op2Description": "1762901",
       "op3Key": "Reward Distribution Start Date",
       "op3Value": "25 Mar 2022",
-      "op3Description": "Block Height: 1762901",
+      "op3Description": "1762901",
       "op4Key": "End Date",
       "op4Value": "1 Apr 2022",
-      "op4Description": "Block Height: 1863700"
+      "op4Description": "1863700"
     }
   },
   "juno": {
@@ -55,16 +72,16 @@
     "dataTable1": {
       "title": "Juno StakeDrop Campaign",
       "op1Key": "Tokens to distribute",
-      "op1Value": "2000000",
+      "op1Value": 2000000,
       "op2Key": "Magic Transaction Start Date",
       "op2Value": "29 Mar 2022",
-      "op2Description": "Block Height: 2484509",
+      "op2Description": "2484509",
       "op3Key": "Reward Distribution Start Date",
       "op3Value": "29 Mar 2022",
-      "op3Description": "Block Height: 2484509",
+      "op3Description": "2484509",
       "op4Key": "End Date",
       "op4Value": "5 Apr 2022",
-      "op4Description": "Block Height: 2581276"
+      "op4Description": "2581276"
     }
   },
   "stargaze": {
@@ -72,16 +89,16 @@
     "dataTable1": {
       "title": "Stargaze StakeDrop Campaign",
       "op1Key": "Tokens to distribute",
-      "op1Value": "1000000",
+      "op1Value": 1000000,
       "op2Key": "Magic Transaction Start Date",
       "op2Value": "1 Apr 2022",
-      "op2Description": "Block Height: 2247281",
+      "op2Description": "2247281",
       "op3Key": "Reward Distribution Start Date",
       "op3Value": "1 Apr 2022",
-      "op3Description": "Block Height: 2252501",
+      "op3Description": "2252501",
       "op4Key": "End Date",
       "op4Value": "8 Apr 2022",
-      "op4Description": "Block Height: 2350990"
+      "op4Description": "2350990"
     }
   }
 }
