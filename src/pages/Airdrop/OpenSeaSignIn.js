@@ -1,8 +1,8 @@
 import { useTranslation } from "react-i18next";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { initializeKeplr } from "../claim/utils/keplr";
-import {checkAccountExists} from "./utils/mantle";
+import { checkAccountExists } from "./utils/mantle";
 
 export default function OpenSeaSignIn({
   closeModal,
@@ -13,7 +13,8 @@ export default function OpenSeaSignIn({
 
   const [MetaMaskConnectionState, setMetaMaskConnectionState] = useState(0);
   const [Sign, setSign] = useState("");
-  const [SubmitResponse,setSubmitResponse] = useState("");
+  const [SubmitResponse, setSubmitResponse] = useState();
+  const [AccountExist, setAccountExist] = useState();
 
   const handleMetamaskConnect = async () => {
     if (!MetaMaskAddress) {
@@ -72,167 +73,190 @@ export default function OpenSeaSignIn({
   useEffect(() => {
     window.addEventListener("keplr_keystorechange", () => {
       handleKeplrConnect();
-    })
-
-  })
+    });
+  });
 
   const handleSignIn = async () => {
     console.log("Signing in...");
-    const message = MNTLAddress
+    const message = MNTLAddress;
     const exits = await checkAccountExists(MNTLAddress);
-    console.log(exits)
-    if (exits.exists === false){
+    console.log(exits);
+    setAccountExist(exits.exists);
+    if (exits.exists === false) {
       // const accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
       // const account = accounts[0];
       // console.log("Metamask:",MetaMaskAddress);
       // console.log("Account:",account);
 
-      const sign = await window.ethereum.request({method: 'personal_sign', params: [message, MetaMaskAddress]})
-      setSign(sign)
-      const res = await fetch(
-          process.env.REACT_APP_openSeaURL,
-          {
-            method: "POST",
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              signature: sign,
-              mantleAddress: MNTLAddress,
-            }),
-          }
-      );
+      const sign = await window.ethereum.request({
+        method: "personal_sign",
+        params: [message, MetaMaskAddress],
+      });
+      setSign(sign);
+      const res = await fetch(process.env.REACT_APP_openSeaURL, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          signature: sign,
+          mantleAddress: MNTLAddress,
+        }),
+      });
       setSubmitResponse(res);
       console.log(Sign);
-    }
-    else {
-      console.log("Account Already exists!")
+    } else {
+      console.log("Account Already exists!");
     }
   };
 
   return (
     <Container>
       <div className="modal___fo_bg" onClick={() => closeModal(false)}></div>
-      <div className="modal__sc">
-        <div
-          className="modal__sc_close"
-          onClick={() => closeModal(false)}
-          onKeyPress={(e) => e.key === "Enter" && closeModal(false)}
-        >
-          <img src="/images/icons/close.png" alt="close" />
+      {AccountExist === true ? (
+        <div className="modal_success">
+          <div
+            className="modal_success__close"
+            onClick={() => closeModal(false)}
+            onKeyPress={(e) => e.key === "Enter" && closeModal(false)}
+          >
+            <img src="/images/icons/close.png" alt="close" />
+          </div>
+          <div className="modal_success__container">
+            <div className="modal_success__container_element">
+              <img
+                src="/images/icons/greentick.png"
+                alt="Success illustration"
+              />
+            </div>
+            <div className="modal_success__container_element">
+              <h1>{t("AIRDROP_MODAL_OPENSEA_SUCCESS_TITLE")}</h1>
+              <p>{t("AIRDROP_MODAL_OPENSEA_SUCCESS_DESCRIPTION")}</p>
+            </div>
+          </div>
         </div>
-        <div className="modal_container">
-          <h2 className="modal_container__title">
-            {t("AIRDROP_MODAL_OPENSEA_TITLE")}
-          </h2>
-          <div className="modal_container__connect">
-            <p className="modal_container__connect_instruction">
-              {t("AIRDROP_MODAL_OPENSEA_STEP1")}
-            </p>
-          </div>
+      ) : (
+        <div className="modal__sc">
           <div
-            className="modal_container__connect"
-            style={{ paddingTop: "24px" }}
+            className="modal__sc_close"
+            onClick={() => closeModal(false)}
+            onKeyPress={(e) => e.key === "Enter" && closeModal(false)}
           >
-            <div className="section_wallets__buttons">
-              <div
-                className="section_wallets__buttons_button"
-                style={{ border: "none", outline: "none" }}
-                onClick={handleMetamaskConnect}
-              >
-                <img src="/images/airdrop/MetaMask.png" alt="Metamask icon" />
-                <span>{`${
-                  { 0: t("CONNECT"), 1: t("CONNECTING"), 2: t("DISCONNECT") }[
-                    MetaMaskConnectionState
-                  ]
-                } MetaMask`}</span>
-              </div>
+            <img src="/images/icons/close.png" alt="close" />
+          </div>
+          <div className="modal_container">
+            <h2 className="modal_container__title">
+              {t("AIRDROP_MODAL_OPENSEA_TITLE")}
+            </h2>
+            <div className="modal_container__connect">
+              <p className="modal_container__connect_instruction">
+                {t("AIRDROP_MODAL_OPENSEA_STEP1")}
+              </p>
             </div>
-            <div className="section_container__connect_address yellow-t">
-              {MetaMaskAddress}
-            </div>
-          </div>
-          <div
-            className="modal_container__connect"
-            style={{ paddingTop: "36px" }}
-          >
-            <p className="modal_container__connect_instruction">
-              {t("AIRDROP_MODAL_OPENSEA_STEP2")}
-            </p>
-          </div>
-          <div
-            className="modal_container__connect"
-            style={{ paddingTop: "24px" }}
-          >
-            <div className="section_wallets__buttons">
-              <button
-                className="section_wallets__buttons_button"
-                style={{ border: "none", outline: "none" }}
-                onClick={handleKeplrConnect}
-                disabled={MetaMaskAddress ? false : true}
-              >
-                <img src="/images/airdrop/Kepler.png" alt="Keplr icon" />
-                <span>{`${
-                  { 0: t("CONNECT"), 1: t("CONNECTING"), 2: t("DISCONNECT") }[
-                    KeplrConnectionState
-                  ]
-                } Keplr`}</span>
-              </button>
-            </div>
-            {MNTLAddress ? (
-              <div className="section_container__connect_address yellow-t">
-                {MNTLAddress}
-              </div>
-            ) : (
-              <>
-                <p className="modal_container__connect_instruction">Or</p>
-                <div className="modal_container__form" style={{ flex: "1" }}>
-                  <div className="modal_container__form_line2">
-                    <input
-                      type="text"
-                      className="modal_container__form_line2_input"
-                      name="address"
-                      onChange={(e) => setMNTLAddress(e.target.value)}
-                      placeholder={t("AIRDROP_MODAL_OPENSEA_PLACEHOLDER")}
-                      readOnly={MetaMaskAddress ? false : true}
-                    />
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
-          <div
-            className="modal_container__connect"
-            style={{ paddingTop: "10px" }}
-          >
-            <p className="modal_container__connect_instruction2">
-              {t("AIRDROP_MODAL_OPENSEA_DONT_Have")}{" "}
-              <a
-                href="https://chrome.google.com/webstore/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap?hl=en"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {t("HERE")}
-              </a>
-            </p>
-          </div>
-          <div className="modal_container__form">
             <div
-              className="modal_container__form_line2"
-              style={{ justifyContent: "center", paddingTop: "24px" }}
+              className="modal_container__connect"
+              style={{ paddingTop: "24px" }}
             >
-              <button
-                onClick={handleSignIn}
-                className="modal_container__form_line2_button"
-                disabled={MNTLAddress && MetaMaskAddress ? false : true}
+              <div className="section_wallets__buttons">
+                <div
+                  className="section_wallets__buttons_button"
+                  style={{ border: "none", outline: "none" }}
+                  onClick={handleMetamaskConnect}
+                >
+                  <img src="/images/airdrop/MetaMask.png" alt="Metamask icon" />
+                  <span>{`${
+                    { 0: t("CONNECT"), 1: t("CONNECTING"), 2: t("DISCONNECT") }[
+                      MetaMaskConnectionState
+                    ]
+                  } MetaMask`}</span>
+                </div>
+              </div>
+              <div className="section_container__connect_address yellow-t">
+                {MetaMaskAddress}
+              </div>
+            </div>
+            <div
+              className="modal_container__connect"
+              style={{ paddingTop: "36px" }}
+            >
+              <p className="modal_container__connect_instruction">
+                {t("AIRDROP_MODAL_OPENSEA_STEP2")}
+              </p>
+            </div>
+            <div
+              className="modal_container__connect"
+              style={{ paddingTop: "24px" }}
+            >
+              <div className="section_wallets__buttons">
+                <button
+                  className="section_wallets__buttons_button"
+                  style={{ border: "none", outline: "none" }}
+                  onClick={handleKeplrConnect}
+                  disabled={MetaMaskAddress ? false : true}
+                >
+                  <img src="/images/airdrop/Kepler.png" alt="Keplr icon" />
+                  <span>{`${
+                    { 0: t("CONNECT"), 1: t("CONNECTING"), 2: t("DISCONNECT") }[
+                      KeplrConnectionState
+                    ]
+                  } Keplr`}</span>
+                </button>
+              </div>
+              {MNTLAddress ? (
+                <div className="section_container__connect_address yellow-t">
+                  {MNTLAddress}
+                </div>
+              ) : (
+                <>
+                  <p className="modal_container__connect_instruction">Or</p>
+                  <div className="modal_container__form" style={{ flex: "1" }}>
+                    <div className="modal_container__form_line2">
+                      <input
+                        type="text"
+                        className="modal_container__form_line2_input"
+                        name="address"
+                        onChange={(e) => setMNTLAddress(e.target.value)}
+                        placeholder={t("AIRDROP_MODAL_OPENSEA_PLACEHOLDER")}
+                        readOnly={MetaMaskAddress ? false : true}
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
+            </div>
+            <div
+              className="modal_container__connect"
+              style={{ paddingTop: "10px" }}
+            >
+              <p className="modal_container__connect_instruction2">
+                {t("AIRDROP_MODAL_OPENSEA_DONT_HAVE")}{" "}
+                <a
+                  href="https://chrome.google.com/webstore/detail/keplr/dmkamcknogkgcdfhhbddcghachkejeap?hl=en"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {t("HERE")}
+                </a>
+              </p>
+            </div>
+            <div className="modal_container__form">
+              <div
+                className="modal_container__form_line2"
+                style={{ justifyContent: "center", paddingTop: "24px" }}
               >
-                {t("CLAIM")}
-              </button>
+                <button
+                  onClick={handleSignIn}
+                  className="modal_container__form_line2_button"
+                  disabled={MNTLAddress && MetaMaskAddress ? false : true}
+                >
+                  {t("CLAIM")}
+                </button>
+              </div>
             </div>
           </div>
         </div>
-      </div>
+      )}
     </Container>
   );
 }
@@ -410,6 +434,94 @@ const Container = styled.div`
           }
           @media (max-width: 548px) {
             width: 100%;
+          }
+        }
+      }
+    }
+  }
+  .modal_success {
+    background-color: var(--dark-xs);
+    padding: 40px;
+    border-radius: 20px;
+    z-index: 7;
+    position: relative;
+    max-width: 636px;
+    &__close {
+      font: var(--h2);
+      color: var(--yellow);
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      @media (max-width: 548px) {
+        top: 10px;
+        right: 20px;
+      }
+      img {
+        width: 16px;
+        height: 16px;
+      }
+    }
+    &__container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 42px;
+      &_element {
+        &:nth-child(1) {
+          @media (max-width: 548px) {
+            display: flex;
+          }
+          img {
+            margin: auto;
+            width: min(100%, 100px);
+          }
+        }
+        &:nth-child(2) {
+          text-align: center;
+          h1 {
+            font: var(--h2);
+            color: var(--gray);
+            padding-bottom: 24px;
+            margin: 0;
+            @media (max-width: 768px) {
+              font: var(--h2);
+            }
+          }
+          p {
+            font: var(--p-s);
+            color: var(--gray-deep);
+            margin: 0;
+            /* padding-bottom: 40px; */
+          }
+        }
+        &__button {
+          display: flex;
+          justify-content: flex-end;
+          align-items: center;
+          @media (max-width: 548px) {
+            justify-content: center;
+          }
+          button {
+            display: inline-block;
+            font: 600 var(--p-m);
+            color: var(--dark-m);
+            text-transform: capitalize;
+            background: var(--yellow-gradient-bg);
+            box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.25),
+              inset -4px -4px 8px rgba(0, 0, 0, 0.25),
+              inset 4px 4px 8px var(--yellow);
+            border-radius: 12px;
+            padding: 10px 43px 12px;
+            transition: all ease-in-out 100ms;
+            border: none;
+            &:hover,
+            &:focus {
+              box-shadow: 0px 0px 5px 3px rgba(255, 201, 66, 0.4);
+            }
+            &:disabled {
+              background-color: var(--yellow-disabled);
+            }
           }
         }
       }
