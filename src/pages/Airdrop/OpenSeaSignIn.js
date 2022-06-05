@@ -82,12 +82,12 @@ export default function OpenSeaSignIn({
     const exits = await checkAccountExists(MNTLAddress);
     console.log(exits)
     if (exits.exists === false){
-      // const accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
-      // const account = accounts[0];
-      // console.log("Metamask:",MetaMaskAddress);
+      const accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
+      const account = accounts[0];
       // console.log("Account:",account);
 
-      const sign = await window.ethereum.request({method: 'personal_sign', params: [message, MetaMaskAddress]})
+      const sign = await window.ethereum.request({method: 'personal_sign', params: [message, account]})
+      // console.log(sign);
       setSign(sign)
       const res = await fetch(
           process.env.REACT_APP_openSeaURL,
