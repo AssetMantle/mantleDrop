@@ -79,9 +79,9 @@ export default function OpenSeaSignIn({
   const handleSignIn = async () => {
     console.log("Signing in...");
     const message = MNTLAddress
-    const exits = await checkAccountExists(MNTLAddress);
-    console.log(exits)
-    if (exits.exists === false){
+    const exists = await checkAccountExists(MNTLAddress);
+    // console.log(exists)
+    if (exists.exists === false){
       const accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
       const account = accounts[0];
       // console.log("Account:",account);
@@ -100,11 +100,11 @@ export default function OpenSeaSignIn({
             body: JSON.stringify({
               signature: sign,
               mantleAddress: MNTLAddress,
+              ercAddress: account
             }),
           }
       );
       setSubmitResponse(res);
-      console.log(Sign);
     }
     else {
       console.log("Account Already exists!")

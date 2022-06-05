@@ -58,13 +58,13 @@ export default function Airdrop() {
   }, [OsmoAddress]);
 
   useEffect(() => {
-    fetch(`https://airdrop-data.assetmantle.one/metaMask/${MetaMaskAddress}`)
+    fetch(`${process.env.REACT_APP_openSeaURL}/${MetaMaskAddress}`)
       .then((res) => res.json())
       .then((data) => {
-        if (data.success.toString() === "true") {
+        if (data.success) {
           setMetaMaskCalculatedDATA(data);
           setMetamaskAllocation(data.allocation);
-        } else if (data.address.toString() === "undefined") {
+        } else if (data.success.toString() === "undefined") {
           setMetamaskAllocation(0);
           setMetaMaskCalculatedDATA();
         } else {
