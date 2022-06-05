@@ -80,8 +80,7 @@ export default function OpenSeaSignIn({
     console.log("Signing in...");
     const message = MNTLAddress
     const exists = await checkAccountExists(MNTLAddress);
-    // console.log(exists)
-    if (exists.exists === false){
+    if (exists.exists === false && exists.success){
       const accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
       const account = accounts[0];
       // console.log("Account:",account);

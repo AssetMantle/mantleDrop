@@ -19,9 +19,11 @@ import TerraCalculationPage from "./pages/StakeDrop/terra/CalculationPage";
 import ComdexCalculationPage from "./pages/StakeDrop/comdex/CalculationPage";
 import JunoCalculationPage from "./pages/StakeDrop/juno/CalculationPage";
 import StargazeCalculationPage from "./pages/StakeDrop/stargaze/CalculationPage";
+import {initialize} from "./pages/Airdrop/utils/mantle";
 
 const App = () => {
   const location = useLocation();
+  initialize();
 
   // changing header
   const CURRENT_VERSION = process.env.REACT_APP_VERSION;
