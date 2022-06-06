@@ -104,7 +104,9 @@ export default function Airdrop() {
             </div>
           </div>
         </section>
+
         <MantleDropClaim totalValue={setMantleDropClaimValue} />
+
         <section className="section_drop">
           <div className="section_drop__heading">
             <h3>{t("AIRDROP_REQUIRED_ELIGIBILITY_HEADING")}</h3>
@@ -128,7 +130,7 @@ export default function Airdrop() {
               {OsmoAddress ? (
                 KeplrCalculatedDATA &&
                 KeplrCalculatedDATA.allocation && (
-                  <button onClick={() => setTAndC(true)}>Claim</button>
+                  <button onClick={() => setTAndC(true)}>{t("CLAIM")}</button>
                 )
               ) : (
                 <button onClick={() => setLPModalStat(true)}>
@@ -140,7 +142,9 @@ export default function Airdrop() {
           <div className="section_drop__data">
             {OsmoAddress ? (
               <div className="sectionDropAdd">
-                <span>Wallet Address: {OsmoAddress}</span>
+                <span>
+                  {t("WALLET_ADDRESS")}: {OsmoAddress}
+                </span>
                 <span
                   style={{ cursor: "pointer" }}
                   onClick={() => setLPModalStat(true)}
@@ -183,7 +187,7 @@ export default function Airdrop() {
                         <h4>
                           {t("AIRDROP_REQUIRED_ELIGIBILITY_TABLE_TITLE_1")}
                         </h4>
-                        <p>Value LP (in USD)</p>
+                        <p>{t("VALUE_LP")}</p>
                       </div>
                       <div className="section_allocation_by_network__element_option">
                         <h4>
@@ -207,10 +211,6 @@ export default function Airdrop() {
                             Number(KeplrCalculatedDATA.unlocked).toFixed(2)}
                         </p>
                       </div>
-                      {/* <div className="section_allocation_by_network__element_option">
-                      <h4>{t("AIRDROP_ALLOCATION_BY_NETWORK_OPTION_3_KEY")}</h4>
-                      <p>{t("AIRDROP_ALLOCATION_BY_NETWORK_OPTION_3_VALUE")}</p>
-                    </div> */}
                     </div>
                   </section>
                 )}
@@ -248,7 +248,9 @@ export default function Airdrop() {
           <div className="section_drop__data">
             {MetaMaskAddress ? (
               <div className="sectionDropAdd">
-                <span>Wallet Address: {MetaMaskAddress}</span>
+                <span>
+                  {t("WALLET_ADDRESS")}: {MetaMaskAddress}
+                </span>
                 <span
                   style={{ cursor: "pointer" }}
                   onClick={() => setMetaMaskModalStat(true)}
@@ -305,14 +307,6 @@ export default function Airdrop() {
                             )}
                         </p>
                       </div>
-                      {/* <div className="section_allocation_by_network__element_option">
-                      <h4>{t("AIRDROP_ALLOCATION_BY_NETWORK_OPTION_2_KEY")}</h4>
-                      <p>{t("AIRDROP_ALLOCATION_BY_NETWORK_OPTION_2_VALUE")}</p>
-                    </div>
-                    <div className="section_allocation_by_network__element_option">
-                      <h4>{t("AIRDROP_ALLOCATION_BY_NETWORK_OPTION_3_KEY")}</h4>
-                      <p>{t("AIRDROP_ALLOCATION_BY_NETWORK_OPTION_3_VALUE")}</p>
-                    </div> */}
                     </div>
                   </section>
                 )}
@@ -322,7 +316,7 @@ export default function Airdrop() {
                     <div className="section_drop__element_value"></div>
                     <div className="section_drop__button">
                       <button onClick={() => setOpenseaSignState(true)}>
-                        Details
+                        {t("CLAIM")}
                       </button>
                     </div>
                   </div>
@@ -377,8 +371,8 @@ export default function Airdrop() {
               <section className="section_allocation_by_network">
                 <div className="section_allocation_by_network__element">
                   <div className="section_allocation_by_network__element_option">
-                    <h4>Category</h4>
-                    <p>$MNTL Allocation</p>
+                    <h4>{t("CATEGORY")}</h4>
+                    <p>$MNTL {t("ALLOCATION")}</p>
                   </div>
                   {MantleDropClaimValue !== 0 && (
                     <div className="section_allocation_by_network__element_option">

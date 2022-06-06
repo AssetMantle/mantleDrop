@@ -83,12 +83,9 @@ export default function OsmosisClaimPage() {
       });
   }
 
-  const total_supply =
-    `${process.env.REACT_APP_restAPI}/cosmos/bank/v1beta1/supply/umntl`;
-  const inflation =
-      `${process.env.REACT_APP_restAPI}/cosmos/mint/v1beta1/inflation`;
-  const bondedAmount =
-    `${process.env.REACT_APP_restAPI}/cosmos/staking/v1beta1/pool`;
+  const total_supply = `${process.env.REACT_APP_restAPI}/cosmos/bank/v1beta1/supply/umntl`;
+  const inflation = `${process.env.REACT_APP_restAPI}/cosmos/mint/v1beta1/inflation`;
+  const bondedAmount = `${process.env.REACT_APP_restAPI}/cosmos/staking/v1beta1/pool`;
 
   function getAPR() {
     return axios
@@ -439,7 +436,7 @@ export default function OsmosisClaimPage() {
         </section>
 
         <section className="section_mission">
-          <h2>My Missions</h2>
+          <h2>{t("OSMOSIS_CLAIM_MISSION_TITLE")}</h2>
           <div className="section_mission__container">
             <div
               className={`section_mission__container_mission ${
@@ -462,7 +459,7 @@ export default function OsmosisClaimPage() {
                 onClick={handleClaimInitial}
                 className="section_mission__container_mission__button"
               >
-                Claim
+                {t("CLAIM")}
               </button>
               <div className="section_mission__container_mission__done">
                 <MdDone />
@@ -491,7 +488,7 @@ export default function OsmosisClaimPage() {
                   )
                 }
               >
-                Stake
+                {t("STAKE")}
               </button>
               <div className="section_mission__container_mission__done">
                 <MdDone />
@@ -509,7 +506,8 @@ export default function OsmosisClaimPage() {
                 <h4>{t("OSMOSIS_CLAIM_MISSION_3")}</h4>
               </div>
               <button
-                disabled={ClaimResponse.success ? ClaimResponse.vote.success : true}
+                disabled={true}
+                // disabled={ClaimResponse.success ? ClaimResponse.vote.success : true}
                 className="section_mission__container_mission__button"
                 onClick={() =>
                   window.open(
@@ -519,33 +517,34 @@ export default function OsmosisClaimPage() {
                   )
                 }
               >
-                Vote
-                {/*Soon*/}
+                {/* {t("VOTE")} */}
+                {t("COMING_SOON")}
               </button>
               <div className="section_mission__container_mission__done">
                 <MdDone />
               </div>
             </div>
-            <div className={`section_mission__container_mission ${
+            <div
+              className={`section_mission__container_mission ${
                 ClaimResponse.success &&
                 ClaimResponse.liquidity.success &&
                 "completed"
-            }`}>
+              }`}
+            >
               <div className="section_mission__container_mission__title">
                 <p>{t("MISSION")} #4</p>
                 <h4>{t("OSMOSIS_CLAIM_MISSION_4")}</h4>
               </div>
               <button
-                disabled={ClaimResponse.success ? ClaimResponse.liquidity.success : true}
+                disabled={
+                  ClaimResponse.success ? ClaimResponse.liquidity.success : true
+                }
                 className="section_mission__container_mission__button"
                 onClick={() =>
-                    window.open(
-                        config.poolURL +
-                        config.poolNumber,
-                        "_blank"
-                    )}
+                  window.open(config.poolURL + config.poolNumber, "_blank")
+                }
               >
-                Provide
+                {t("PROVIDE")}
                 {/*Soon*/}
               </button>
               <div className="section_mission__container_mission__done">
@@ -561,8 +560,8 @@ export default function OsmosisClaimPage() {
                 disabled={true}
                 className="section_mission__container_mission__button"
               >
-                {/* Mint */}
-                Soon
+                {/* {t("MINT")} */}
+                {t("COMING_SOON")}
               </button>
               <div className="section_mission__container_mission__done">
                 <MdDone />
@@ -590,7 +589,7 @@ export default function OsmosisClaimPage() {
                 <span
                   onClick={() => setCalculationShowState(!CalculationShowState)}
                 >
-                  Calculation{" "}
+                  {t("CALCULATION")}{" "}
                   {CalculationShowState ? (
                     <AiFillCaretUp />
                   ) : (
@@ -604,8 +603,8 @@ export default function OsmosisClaimPage() {
                 <br />
                 <h4>{t("OSMOSIS_CLAIM_CALCULATION_TITLE")}</h4>
                 <div className="section_data__formula">
-                  <var>Allocation</var> <var>=</var> <var>750</var> <var>*</var>{" "}
-                  <var>(</var>
+                  <var>{t("ALLOCATION")}</var> <var>=</var> <var>750</var>{" "}
+                  <var>*</var> <var>(</var>
                   <var>1</var> <var>-</var> <var>e</var>
                   <sup>
                     <var>p</var>
@@ -613,7 +612,7 @@ export default function OsmosisClaimPage() {
                   <var>)</var>
                 </div>
                 <div className="section_data__exp_formula">
-                  <p>where;</p>
+                  <p>{t("WHERE")};</p>
                   <br />
                   <div className="section_data__exp_formula__var">
                     <p>

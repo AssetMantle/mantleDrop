@@ -1,6 +1,4 @@
-import React 
-// , { useEffect, useState }
- from "react";
+import React from "react"; // , { useEffect, useState }
 import ReactPlayer from "react-player";
 import { StakeDropContainer } from "../../styles/pages/stakeDropStyle";
 import { useTranslation } from "react-i18next";
@@ -8,43 +6,27 @@ import { useTranslation } from "react-i18next";
 import UList from "../../components/UList";
 import UList2 from "../../components/UList2";
 import Details from "../../components/Details";
-// import MantleDropClaim from "../claim/MantleDropClaim";
-// import { calculateFee } from "@cosmjs/stargate";
 
 export default function StakeDrop() {
   const { t } = useTranslation();
 
-  // checking calculating cosmos reward
-  const cosmosDropStats={
+  const cosmosDropStats = {
     isCompleted: true,
-    rewardLine1: "--",
-    rewardLine2: 0,
   };
-
-  const persistenceDropStats={
+  const persistenceDropStats = {
     isCompleted: true,
-    rewardLine1: 1234,
-    rewardLine2: 12345,
   };
-  const terraDropStats={
+  const terraDropStats = {
     isCompleted: true,
-    rewardLine1: 1234,
-    rewardLine2: 12345,
   };
-  const comdexDropStats={
+  const comdexDropStats = {
     isCompleted: true,
-    rewardLine1: 1234,
-    rewardLine2: 12345,
   };
-  const junoDropStats={
+  const junoDropStats = {
     isCompleted: true,
-    rewardLine1: 1234,
-    rewardLine2: 12345,
   };
-  const stargazeDropStats={
+  const stargazeDropStats = {
     isCompleted: true,
-    rewardLine1: 124,
-    rewardLine2: 85748983,
   };
 
   const whatIsLIST = [
@@ -75,6 +57,7 @@ export default function StakeDrop() {
   const AvailableStakeDrop = [
     {
       logo: "Cosmos_Logo.png",
+      link: "cosmos",
       name: t("STAKEDROP_AVAILABLE_STAKEDROP_DROP_1_NAME"),
       value: "2,000,000 $MNTL",
       date: t("STAKEDROP_AVAILABLE_STAKEDROP_DROP_1_DATE"),
@@ -83,6 +66,7 @@ export default function StakeDrop() {
     },
     {
       logo: "Persistence_logo.png",
+      link: "persistence",
       name: t("STAKEDROP_AVAILABLE_STAKEDROP_DROP_2_NAME"),
       value: "1,000,000 $MNTL",
       date: t("STAKEDROP_AVAILABLE_STAKEDROP_DROP_2_DATE"),
@@ -91,6 +75,7 @@ export default function StakeDrop() {
     },
     {
       logo: "Terra_logo.png",
+      link: "terra",
       name: t("STAKEDROP_AVAILABLE_STAKEDROP_DROP_3_NAME"),
       value: "2,000,000 $MNTL",
       date: t("STAKEDROP_AVAILABLE_STAKEDROP_DROP_3_DATE"),
@@ -99,6 +84,7 @@ export default function StakeDrop() {
     },
     {
       logo: "Comdex_logo.png",
+      link: "comdex",
       name: t("STAKEDROP_AVAILABLE_STAKEDROP_DROP_4_NAME"),
       value: "1,000,000 $MNTL",
       date: t("STAKEDROP_AVAILABLE_STAKEDROP_DROP_4_DATE"),
@@ -107,6 +93,7 @@ export default function StakeDrop() {
     },
     {
       logo: "Juno_logo.png",
+      link: "juno",
       name: t("STAKEDROP_AVAILABLE_STAKEDROP_DROP_5_NAME"),
       value: "2,000,000 $MNTL",
       date: t("STAKEDROP_AVAILABLE_STAKEDROP_DROP_5_DATE"),
@@ -115,6 +102,7 @@ export default function StakeDrop() {
     },
     {
       logo: "Stargaze_logo.png",
+      link: "stargaze",
       name: t("STAKEDROP_AVAILABLE_STAKEDROP_DROP_6_NAME"),
       value: "1,000,000 $MNTL",
       date: t("STAKEDROP_AVAILABLE_STAKEDROP_DROP_6_DATE"),
@@ -203,7 +191,7 @@ export default function StakeDrop() {
             />
           </div>
         </section>
-        {/* <MantleDropClaim /> */}
+
         <section className="section_availableStakeDrop">
           <h2>{t("STAKEDROP_AVAILABLE_STAKEDROP_TITLE")}</h2>
           <div className="section_availableStakeDrop__body">
@@ -225,7 +213,8 @@ export default function StakeDrop() {
                       ? stargazeDropStats.isCompleted && "completed2"
                       : ""
                   } ${
-                    data.name.includes("Junos") || data.name.includes("Stargazes")
+                    data.name.includes("Junos") ||
+                    data.name.includes("Stargazes")
                       ? "active"
                       : "comingSoon"
                   }`} //remove the last logic
@@ -236,45 +225,17 @@ export default function StakeDrop() {
                   </div>
                   <div className="section_availableStakeDrop__body_element__title">
                     <img
-                      src={`/images/stakedrop/${data.logo}`}
+                      src={`/images/stakedrop/${data.logo && data.logo}`}
                       alt="cosmos (atom) logo"
                     />
                     <a
-                      href={
-                        data.name.includes("Cosmos")
-                          ? "/stakedrop/cosmos"
-                          : data.name.includes("Terra")
-                          ? "/stakedrop/terra"
-                          : data.name.includes("Persistence")
-                          ? "/stakedrop/persistence"
-                          : data.name.includes("Comdex")
-                          ? "/stakedrop/comdex"
-                          : data.name.includes("Juno")
-                          ? "/stakedrop/juno"
-                          : data.name.includes("Stargaze")
-                          ? "/stakedrop/stargaze"
-                          : ""
-                      }
+                      href={`/stakedrop/${data.link && data.link}`}
                       className="section_availableStakeDrop__body_element__title_button_normal"
                     >
                       {t("VIEW")}
                     </a>
                     <a
-                      href={
-                        data.name.includes("Cosmos")
-                          ? "/stakedrop/cosmos"
-                          : data.name.includes("Persistence")
-                          ? "/stakedrop/persistence"
-                          : data.name.includes("Terra")
-                          ? "/stakedrop/terra"
-                          : data.name.includes("Comdex")
-                          ? "/stakedrop/comdex"
-                          : data.name.includes("Juno")
-                          ? "/stakedrop/juno"
-                          : data.name.includes("Stargaze")
-                          ? "/stakedrop/stargaze"
-                          : ""
-                      }
+                      href={`/stakedrop/${data.link && data.link}`}
                       className="section_availableStakeDrop__body_element__title_button_completed"
                     >
                       {t("DETAILS")}
@@ -284,35 +245,35 @@ export default function StakeDrop() {
                     </button>
                   </div>
                   <div className="section_availableStakeDrop__body_element__body">
-                    <p>{data.name}</p>
+                    <p>{data.name && data.name}</p>
                     <div className="section_availableStakeDrop__body_element__body_options">
                       <div className="section_availableStakeDrop__body_element__body_options_option">
                         <img
                           src="/images/stakedrop/coins.png"
                           alt="coins illustration"
                         />
-                        <p>{data.value}</p>
+                        <p>{data.value && data.value}</p>
                       </div>
                       <div className="section_availableStakeDrop__body_element__body_options_option">
                         <img
                           src="/images/stakedrop/calender.png"
                           alt="calender illustration"
                         />
-                        <p>{data.date}</p>
+                        <p>{data.date && data.date}</p>
                       </div>
                       <div className="section_availableStakeDrop__body_element__body_options_option">
                         <img
                           src="/images/stakedrop/flag_fill.png"
                           alt="flag_fill illustration"
                         />
-                        <p>{data.start}</p>
+                        <p>{data.start && data.start}</p>
                       </div>
                       <div className="section_availableStakeDrop__body_element__body_options_option">
                         <img
                           src="/images/stakedrop/flag_outline.png"
                           alt="flag_outline illustration"
                         />
-                        <p>{data.end}</p>
+                        <p>{data.end && data.end}</p>
                       </div>
                     </div>
                     <div className="section_availableStakeDrop__body_element__body_data">
@@ -336,43 +297,12 @@ export default function StakeDrop() {
                                 ? `0 $MNTL`
                                 : `$0 $MNTL`
                               : "You didn't participate in this campaign!"
-                            : undefined}{" "}
-                          {/* {cosmosCorrectAnswers} */}
+                            : undefined}
                         </p>
-                        {/* <p>
-                          {data.name.includes("Cosmos")
-                            ? cosmosDropStats.rewardLine2
-                            : data.name.includes("Persistence")
-                            ? persistenceDropStats.rewardLine2
-                            : data.name.includes("Terra")
-                            ? terraDropStats.rewardLine2
-                            : data.name.includes("Comdex")
-                            ? comdexDropStats.rewardLine2
-                            : data.name.includes("Juno")
-                            ? junoDropStats.rewardLine2
-                            : data.name.includes("Stargaze")
-                            ? stargazeDropStats.rewardLine2
-                            : ""}
-                        </p> */}
                       </div>
                     </div>
                     <div className="section_availableStakeDrop__body_element__claim_button">
-                      <button
-                        
-                      >
-                        Check
-                           {/* // : data.name.includes("Persistence")
-                            // ? persistenceDropStats.rewardLine2
-                            // : data.name.includes("Terra")
-                            // ? terraDropStats.rewardLine2
-                            // : data.name.includes("Comdex")
-                            // ? comdexDropStats.rewardLine2
-                            // : data.name.includes("Juno")
-                            // ? junoDropStats.rewardLine2
-                            // : data.name.includes("Stargaze")
-                            // ? stargazeDropStats.rewardLine2
-                            ""} */}
-                      </button>
+                      <button>{t("CHECK")}</button>
                     </div>
                   </div>
                 </div>
@@ -380,6 +310,7 @@ export default function StakeDrop() {
             )}
           </div>
         </section>
+
         <section className="section_whatIs">
           <h1>{t("STAKEDROP_WHAT_IS_STAKEDROP_TITLE")}</h1>
           <p>{t("STAKEDROP_WHAT_IS_STAKEDROP_DESCRIPTION")}</p>
@@ -391,11 +322,13 @@ export default function StakeDrop() {
             <UList data={whatIsLIST}></UList>
           </div>
         </section>
+
         <section className="section_howItWorks">
           <h2>{t("STAKEDROP_HOW_IT_WORKS_TITLE")}</h2>
           <p>{t("STAKEDROP_HOW_IT_WORKS_DESCRIPTION")}</p>
           <UList2 data={howItWorksLIST}></UList2>
         </section>
+
         <section className="section_explanation">
           <h3>{t("STAKEDROP_EXPLANATION_TITLE")}</h3>
           <div className="section_explanation__video">
@@ -407,6 +340,7 @@ export default function StakeDrop() {
             />
           </div>
         </section>
+
         <section className="section_faq">
           <h2>{t("STAKEDROP_FAQ_TITLE")}</h2>
           {/* <p>{t("STAKEDROP_FAQ_DESCRIPTION")}</p> */}
@@ -416,7 +350,6 @@ export default function StakeDrop() {
             )}
         </section>
       </StakeDropContainer>
-      {/* {modalStat && <Modal modalTitle={modal} closeModal={setModalStat} />} */}
     </>
   );
 }

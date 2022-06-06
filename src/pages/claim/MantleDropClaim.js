@@ -10,8 +10,6 @@ const stakeDropAPI = process.env.REACT_APP_claimPageClaimEndPoint;
 export default function MantleDropClaim({ totalValue }) {
   const { t } = useTranslation();
 
-  const [Participated, setParticipated] = useState();
-
   const [InputError, setInputError] = useState();
 
   const [Modal, setModal] = useState(false);
@@ -154,11 +152,6 @@ export default function MantleDropClaim({ totalValue }) {
     }
   };
 
-  const disconnectKeplr = () => {
-    setKeplrConnectionState(0);
-    setMNTLAddress("");
-  };
-
   const InputCalculate = () => {
     if (InputAddress.includes("cosmos")) {
       fetch(
@@ -170,7 +163,6 @@ export default function MantleDropClaim({ totalValue }) {
             setInputError();
             setInputCampaignData(data);
           } else if (data.success.toString() === "false") {
-            setParticipated(false);
             setInputError();
             setInputCampaignData({
               delegator: InputAddress,
@@ -191,7 +183,6 @@ export default function MantleDropClaim({ totalValue }) {
             setInputError();
             setInputCampaignData(data);
           } else if (data.success.toString() === "false") {
-            setParticipated(false);
             setInputError();
             setInputCampaignData({
               delegator: InputAddress,
@@ -210,7 +201,6 @@ export default function MantleDropClaim({ totalValue }) {
             setInputError();
             setInputCampaignData(data);
           } else if (data.success.toString() === "false") {
-            setParticipated(false);
             setInputError();
             setInputCampaignData({
               delegator: InputAddress,
@@ -231,7 +221,6 @@ export default function MantleDropClaim({ totalValue }) {
             setInputError();
             setInputCampaignData(data);
           } else if (data.success.toString() === "false") {
-            setParticipated(false);
             setInputError();
             setInputCampaignData({
               delegator: InputAddress,
@@ -250,7 +239,6 @@ export default function MantleDropClaim({ totalValue }) {
             setInputError();
             setInputCampaignData(data);
           } else if (data.success.toString() === "false") {
-            setParticipated(false);
             setInputError();
             setInputCampaignData({
               delegator: InputAddress,
@@ -271,7 +259,6 @@ export default function MantleDropClaim({ totalValue }) {
             setInputError();
             setInputCampaignData(data);
           } else if (data.success.toString() === "false") {
-            setParticipated(false);
             setInputError();
             setInputCampaignData({
               delegator: InputAddress,
@@ -291,7 +278,6 @@ export default function MantleDropClaim({ totalValue }) {
             setMNTLAddress(InputAddress);
             setInputError();
           } else if (data.success === false) {
-            setParticipated(false);
             setInputError();
             setAPIResponse({
               success: false,
@@ -346,15 +332,6 @@ export default function MantleDropClaim({ totalValue }) {
     setInputAddress(e.target.value);
   };
 
-  const division = (value) => {
-    let result;
-    let p = Number(value) / 1000000;
-    result = p.toLocaleString("en-US", {
-      maximumFractionDigits: 4,
-    });
-    return result;
-  };
-
   useEffect(() => {
     totalValue(
       APIResponse.cosmos.amount +
@@ -402,37 +379,41 @@ export default function MantleDropClaim({ totalValue }) {
           </div>
         </div>
       </section>
-      {KeplrConnectionState === 2 ? (
-        APIResponse.success === false ? (
-          <section className="section_allocation">
-            <h3 className="error-t">
-              {t("AIRDROP_REQUIRED_ELIGIBILITY_NOT_ELIGIBLE")}
-            </h3>
-          </section>
+
+      <>
+        {KeplrConnectionState === 2 ? (
+          APIResponse.success === false ? (
+            <section className="section_allocation">
+              <h3 className="error-t">
+                {t("AIRDROP_REQUIRED_ELIGIBILITY_NOT_ELIGIBLE")}
+              </h3>
+            </section>
+          ) : (
+            ""
+          )
+        ) : InputAddress ? (
+          InputAddress.includes("mantle") ? (
+            APIResponse.success === false && (
+              <section className="section_allocation">
+                <h3 className="error-t">
+                  {t("AIRDROP_REQUIRED_ELIGIBILITY_NOT_ELIGIBLE")}
+                </h3>
+              </section>
+            )
+          ) : (
+            InputCampaignData.mantleAddress === "" && (
+              <section className="section_allocation">
+                <h3 className="error-t">
+                  {t("AIRDROP_REQUIRED_ELIGIBILITY_NOT_ELIGIBLE")}
+                </h3>
+              </section>
+            )
+          )
         ) : (
           ""
-        )
-      ) : InputAddress ? (
-        InputAddress.includes("mantle") ? (
-          APIResponse.success === false && (
-            <section className="section_allocation">
-              <h3 className="error-t">
-                {t("AIRDROP_REQUIRED_ELIGIBILITY_NOT_ELIGIBLE")}
-              </h3>
-            </section>
-          )
-        ) : (
-          InputCampaignData.mantleAddress === "" && (
-            <section className="section_allocation">
-              <h3 className="error-t">
-                {t("AIRDROP_REQUIRED_ELIGIBILITY_NOT_ELIGIBLE")}
-              </h3>
-            </section>
-          )
-        )
-      ) : (
-        ""
-      )}
+        )}
+      </>
+
       <Container>
         {Modal && (
           <div className="section_calculation__modal">
@@ -452,8 +433,8 @@ export default function MantleDropClaim({ totalValue }) {
                       <img src="/images/icons/close.png" alt="close" />
                     </div>
                   </>
-                  <h2>Participated in the StakeDrop Campaign?</h2>
-                  <h3>Check your $MNTL Allocation</h3>
+                  <h2>{t("PARTICIPATED_QUESTION")}</h2>
+                  <h3>{t("PARTICIPATED_YES_CHECK")}</h3>
                   <div className="section_calculation__connect">
                     <button
                       className="section_calculation__connect_button"
@@ -481,13 +462,13 @@ export default function MantleDropClaim({ totalValue }) {
                       }`}</span>
                     </button>
                   </div>
-                  <div className="section_calculation__or">Or</div>
+                  <div className="section_calculation__or">{t("OR")}</div>
                   <div className="section_calculation__from">
                     <label
                       htmlFor="walletAddress"
                       className="section_calculation__from_label"
                     >
-                      Enter your wallet address
+                      {t("ENTER_YOUR_WALLET_ADDRESS")}
                     </label>
                     <div className="section_calculation__from_line2">
                       <input
@@ -514,7 +495,7 @@ export default function MantleDropClaim({ totalValue }) {
                             : true
                         }
                       >
-                        Calculate
+                        {t("CALCULATE")}
                       </button>
                     </div>
                   </div>
@@ -542,9 +523,9 @@ export default function MantleDropClaim({ totalValue }) {
                   <>
                     {APIResponse || InputCampaignData.delegator ? (
                       <div className="section_reward_table__element_option">
-                        <h4>Campaign</h4>
-                        <h4>Address</h4>
-                        <p>Rewards ($MNTL)</p>
+                        <h4>{t("CAMPAIGN")}</h4>
+                        <h4>{t("ADDRESS")}</h4>
+                        <p>{t("REWARDS")} ($MNTL)</p>
                       </div>
                     ) : (
                       ""
@@ -674,7 +655,7 @@ export default function MantleDropClaim({ totalValue }) {
               <>
                 {APIResponse || InputCampaignData.received ? (
                   <div className="section_reward_table__element_option">
-                    <h4>Total Rewards:</h4>
+                    <h4>{t("TOTAL_REWARDS")}:</h4>
                     {/* <span></span> */}
                     <h4>
                       {MNTLAddress
@@ -712,15 +693,6 @@ export default function MantleDropClaim({ totalValue }) {
         ) : (
           ""
         )}
-
-        {/*) : (*/}
-        {/*  <div className="section_calculation__error">*/}
-        {/*    <div className="section_calculation__error_element__line1">*/}
-        {/*      <img src="/images/stakedrop/info.svg" alt="info icon" />*/}
-        {/*      <h3>You didn't participate in the campaigns!</h3>*/}
-        {/*    </div>*/}
-        {/*  </div>*/}
-        {/*)}*/}
       </Container>
       {KeplrConnectionState === 2 || InputAddress ? (
         <section
@@ -739,7 +711,7 @@ export default function MantleDropClaim({ totalValue }) {
               <h4>{false}</h4>
             </div>
             <div className="section_drop__button">
-              <a href="/stakedrop">Details</a>
+              <a href="/stakedrop">{t("CLAIM")}</a>
             </div>
           </div>
         </section>
@@ -911,6 +883,7 @@ const Container = styled.main`
         }
       }
       &__or {
+        text-transform: capitalize;
         font-family: "Lato";
         font-style: normal;
         font-weight: 400;

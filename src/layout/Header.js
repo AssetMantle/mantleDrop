@@ -3,9 +3,7 @@ import React, { useEffect, useState } from "react";
 import HeaderContainer, { NavIcon } from "../styles/layout/HeaderContainer";
 import Nav from "./Nav";
 
-const a = "s"; // don't change this value
-
-export default function HeaderASAO() {
+export default function Header() {
   const [navToggler, setNavToggler] = useState(false);
 
   const [padding, setPadding] = useState("padding_1");
@@ -54,23 +52,6 @@ export default function HeaderASAO() {
             </NavIcon>
           </div>
         </div>
-        {a === false && <>
-        {window.location.pathname.includes("cosmos") ||
-        window.location.pathname.includes("comdex") ||
-        window.location.pathname.includes("juno") ||
-        window.location.pathname.includes("persistence") ||
-        window.location.pathname.includes("terra") ? (
-          <div className="banner">
-            <marquee behavior="scroll" direction="left">
-              StakeDrop site is under maintenance to sync to the latest of the
-              the chain. The ongoing Stargaze campaign would still remain
-              active.
-            </marquee>
-          </div>
-        ) : (
-          ""
-        )}
-        </>}
       </div>
       {navToggler && <Nav />}
     </HeaderContainer>

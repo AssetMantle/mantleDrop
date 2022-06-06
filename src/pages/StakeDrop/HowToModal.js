@@ -1,39 +1,132 @@
 import styled from "styled-components";
-// import { RiFileCopyLine } from "react-icons/ri";
+import campaignDATA from "../../data/campaignData.json";
 
-export default function HowToModal({ address, closeModal }) {
+export default function HowToModal({ address, closeModal, path }) {
   return (
     <Container>
       <div className="modal___fo_bg" onClick={() => closeModal(false)}></div>
       <div className="modal__sc">
         <div className="modal_container">
           <h2 className="modal_container__title">
-            Magic Transaction Guide (Cosmos StakeDrop Campaign)
+            Magic Transaction Guide (<span>{path}</span> StakeDrop Campaign)
           </h2>
           <p>
+            Magic Transaction needs to be sent only once for confirming your
+            participation in the campaign.
+          </p>
+          <p>
             To begin your participation in StakeDrop Campaign, please send{" "}
-            <strong>0.000001 $ATOM</strong> to the following address:
+            <strong>
+              0.000001{" "}
+              {
+                {
+                  cosmos: campaignDATA.cosmos.currency,
+                  persistence: campaignDATA.persistance.currency,
+                  terra: campaignDATA.terra.currency,
+                  comdex: campaignDATA.comdex.currency,
+                  juno: campaignDATA.juno.currency,
+                  stargaze: campaignDATA.stargaze.currency,
+                }[path]
+              }
+            </strong>{" "}
+            to the following address:
           </p>
           <p>
             <strong>{address}</strong>
           </p>
+          {path === "terra" && (
+            <p>
+              <strong>Terra Station Users:</strong>
+              <br />
+              To the recipient address ( as mentioned above) send 0.000001 $LUNA
+              and mention your cosmos address in the memo field.
+            </p>
+          )}
           <p>
             <strong>CLI Users:</strong>
             <br />
-            Please follow the following command to do the magic transaction
+            Please follow the following command to do the magic transaction.
+            {path === "persistence" || path === "terra"
+              ? `Remember to put your Cosmos address in the memo field.`
+              : ""}
           </p>
-          <p>
-            <strong>
-              gaiad tx bank send [FROM_YOUR_ADDRESS]
-              cosmos1dsuar2ztnqevefxlnalmaetxca3gr0fp4c0uxr 1uatom --chain-id
-              cosmoshub-4 --fees 3000uatom --node{" "}
-              <a href="https://rpc.cosmos.network:443">
-                https://rpc.cosmos.network:443
-              </a>
-              {"  "}
-              {/* <RiFileCopyLine onClick={handleCopy2} /> */}
-            </strong>
-          </p>
+          {
+            {
+              cosmos: (
+                <p>
+                  <strong>
+                    gaiad tx bank send [FROM_YOUR_ADDRESS]
+                    cosmos1dsuar2ztnqevefxlnalmaetxca3gr0fp4c0uxr 1uatom
+                    --chain-id cosmoshub-4 --fees 3000uatom --node{" "}
+                    <a href="https://rpc.cosmos.network:443">
+                      https://rpc.cosmos.network:443
+                    </a>
+                  </strong>
+                </p>
+              ),
+              persistence: (
+                <p>
+                  <strong>
+                    persistenceCore tx bank send [FROM_YOUR_PERSISTENCE_ADDRESS]
+                    persistence1muxl7jkupqq95l6lpfewxjf3nsgmaepgcvgyde 1uxprt
+                    --chain-id core-1 --fees 3000uxprt --node{" "}
+                    <a href="https://rpc.persistence.audit.one:443">
+                      https://rpc.persistence.audit.one:443
+                    </a>{" "}
+                    --memo [YOUR_COSMOS_ADDRESS]
+                  </strong>
+                </p>
+              ),
+              terra: (
+                <p>
+                  <strong>
+                    terrad tx bank send [FROM_YOUR_TERRA_ADDRESS] {address}{" "}
+                    1uluna --chain-id columbus-5 --fees 3000uluna --node{" "}
+                    <a href="https://rpc-columbus.keplr.app">
+                      https://rpc-columbus.keplr.app
+                    </a>{" "}
+                    --memo [YOUR_COSMOS_ADDRESS]
+                  </strong>
+                </p>
+              ),
+              comdex: (
+                <p>
+                  <strong>
+                    comdex tx bank send [FROM_YOUR_COMDEX_ADDRESS] {address}{" "}
+                    1ucmdx --chain-id comdex-1 --fees 3000ucmdx --node{" "}
+                    <a href="https://rpc.comdex.one:443">
+                      https://rpc.comdex.one:443
+                    </a>
+                  </strong>
+                </p>
+              ),
+              juno: (
+                <p>
+                  <strong>
+                    junod tx bank send [FROM_YOUR_JUNO_ADDRESS] {address} 1ujuno
+                    --chain-id juno-1 --fees 3000ujuno --node{" "}
+                    <a href="https://rpc.juno.omniflix.co:443">
+                      https://rpc.juno.omniflix.co:443
+                    </a>
+                    {"  "}
+                    {/* <RiFileCopyLine onClick={handleCopy2} /> */}
+                  </strong>
+                </p>
+              ),
+              stargaze: (
+                <p>
+                  <strong>
+                    starsd tx bank send [FROM_YOUR_STARGAZE_ADDRESS] {address}{" "}
+                    1ustars --chain-id stargaze-1 --fees 3000ustars --node ]
+                    <a href="https://rpc.stargaze-apis.com:443">
+                      https://rpc.stargaze-apis.com:443
+                    </a>
+                    {/* <RiFileCopyLine onClick={handleCopy2} /> */}
+                  </strong>
+                </p>
+              ),
+            }[path]
+          }
           <p>
             <strong>
               Note: The amount sent will be refunded back to the origin address.
@@ -119,6 +212,9 @@ const Container = styled.div`
       margin: 0;
       text-align: center;
       padding-bottom: 24px;
+      span {
+        text-transform: capitalize;
+      }
     }
     p {
       font: var(--p-m);
@@ -128,6 +224,9 @@ const Container = styled.div`
       strong {
         font: 600 var(--p-m);
         color: var(--gray);
+      }
+      span {
+        text-transform: capitalize;
       }
       a {
         color: var(--yellow);
