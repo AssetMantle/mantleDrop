@@ -111,8 +111,7 @@ const English = {
     AIRDROP_MODAL_OPENSEA_DONT_HAVE: airDropData.openSeaSignModal.dontHave,
     AIRDROP_MODAL_OPENSEA_SUCCESS_TITLE:
       airDropData.openSeaSignModal.successTitle,
-    AIRDROP_MODAL_OPENSEA_SUCCESS_DESCRIPTION:
-      airDropData.openSeaSignModal.successMessage,
+    AIRDROP_MODAL_OPENSEA_EXIST_TITLE: airDropData.openSeaSignModal.existTitle,
 
     // Osmosis Claim Page
     // title section

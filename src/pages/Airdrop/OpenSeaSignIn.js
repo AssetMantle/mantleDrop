@@ -14,7 +14,6 @@ export default function OpenSeaSignIn({
   const [MetaMaskConnectionState, setMetaMaskConnectionState] = useState(0);
   const [Sign, setSign] = useState("");
   const [SubmitResponse, setSubmitResponse] = useState();
-  const [AccountExist, setAccountExist] = useState();
 
   const handleMetamaskConnect = async () => {
     if (!MetaMaskAddress) {
@@ -81,7 +80,6 @@ export default function OpenSeaSignIn({
     const message = MNTLAddress;
     const exits = await checkAccountExists(MNTLAddress);
     console.log(exits);
-    setAccountExist(exits.exists);
     if (exits.exists === false) {
       // const accounts = await window.ethereum.request({method: 'eth_requestAccounts'});
       // const account = accounts[0];
@@ -114,7 +112,7 @@ export default function OpenSeaSignIn({
   return (
     <Container>
       <div className="modal___fo_bg" onClick={() => closeModal(false)}></div>
-      {AccountExist === true ? (
+      {SubmitResponse && SubmitResponse.success ? (
         <div className="modal_success">
           <div
             className="modal_success__close"
@@ -132,7 +130,29 @@ export default function OpenSeaSignIn({
             </div>
             <div className="modal_success__container_element">
               <h1>{t("AIRDROP_MODAL_OPENSEA_SUCCESS_TITLE")}</h1>
-              <p>{t("AIRDROP_MODAL_OPENSEA_SUCCESS_DESCRIPTION")}</p>
+            </div>
+          </div>
+        </div>
+      ) : SubmitResponse &&
+        SubmitResponse.message &&
+        SubmitResponse.message === "already claimed" ? (
+        <div className="modal_success">
+          <div
+            className="modal_success__close"
+            onClick={() => closeModal(false)}
+            onKeyPress={(e) => e.key === "Enter" && closeModal(false)}
+          >
+            <img src="/images/icons/close.png" alt="close" />
+          </div>
+          <div className="modal_success__container">
+            <div className="modal_success__container_element">
+              <img
+                src="/images/icons/greentick.png"
+                alt="Success illustration"
+              />
+            </div>
+            <div className="modal_success__container_element">
+              <h1>{t("AIRDROP_MODAL_OPENSEA_EXIST_TITLE")}</h1>
             </div>
           </div>
         </div>
@@ -482,13 +502,13 @@ const Container = styled.div`
           h1 {
             font: var(--h2);
             color: var(--gray);
-            padding-bottom: 24px;
             margin: 0;
             @media (max-width: 768px) {
               font: var(--h2);
             }
           }
           p {
+            padding-top: 24px;
             font: var(--p-s);
             color: var(--gray-deep);
             margin: 0;
