@@ -467,7 +467,7 @@ const Container = styled.div`
     border-radius: 20px;
     z-index: 7;
     position: relative;
-    max-width: 636px;
+    width: min(600px, 100%);
     &__close {
       font: var(--h2);
       color: var(--yellow);

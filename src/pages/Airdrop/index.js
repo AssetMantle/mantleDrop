@@ -58,6 +58,7 @@ export default function Airdrop() {
   }, [OsmoAddress]);
 
   useEffect(() => {
+    MetaMaskAddress &&
     fetch(`${process.env.REACT_APP_claimPageClaimEndPoint}/opensea/${MetaMaskAddress}`)
       .then((res) => res.json())
       .then((data) => {
