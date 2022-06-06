@@ -110,6 +110,7 @@ export default function OpenSeaSignIn({
       const text = await res.text();
       setSubmitResponse(JSON.parse(text));
     } else {
+      setSubmitResponse({ success: false, message: "already claimed" });
       console.log("Account Already exists!");
     }
   };
