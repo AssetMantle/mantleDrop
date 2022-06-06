@@ -92,18 +92,21 @@ export default function OpenSeaSignIn({
       });
       // console.log(sign);
       setSign(sign);
-      const res = await fetch(process.env.REACT_APP_claimPageClaimEndPoint+"/opensea", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          signature: sign,
-          mantleAddress: MNTLAddress,
-          ercAddress: account,
-        }),
-      });
+      const res = await fetch(
+        process.env.REACT_APP_claimPageClaimEndPoint + "/opensea",
+        {
+          method: "POST",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            signature: sign,
+            mantleAddress: MNTLAddress,
+            ercAddress: account,
+          }),
+        }
+      );
       const text = await res.text();
       setSubmitResponse(JSON.parse(text));
     } else {
@@ -148,10 +151,7 @@ export default function OpenSeaSignIn({
           </div>
           <div className="modal_success__container">
             <div className="modal_success__container_element">
-              <img
-                src="/images/icons/greentick.png"
-                alt="Success illustration"
-              />
+              <img src="/images/icons/error.png" alt="error illustration" />
             </div>
             <div className="modal_success__container_element">
               <h1>{t("AIRDROP_MODAL_OPENSEA_EXIST_TITLE")}</h1>
@@ -467,7 +467,7 @@ const Container = styled.div`
     border-radius: 20px;
     z-index: 7;
     position: relative;
-    width: min(600px, 100%);
+    max-width: 632px, 100%;
     &__close {
       font: var(--h2);
       color: var(--yellow);

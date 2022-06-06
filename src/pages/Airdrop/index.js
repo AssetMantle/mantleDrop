@@ -38,7 +38,7 @@ export default function Airdrop() {
 
   const [MantleDropClaimValue, setMantleDropClaimValue] = useState(0);
 
-  const [OpenseaSignState, setOpenseaSignState] = useState(false);
+  const [OpenseaSignState, setOpenseaSignState] = useState(true);
 
   useEffect(() => {
     fetch(`https://airdrop-data.assetmantle.one/keplr/${OsmoAddress}`)
@@ -59,20 +59,22 @@ export default function Airdrop() {
 
   useEffect(() => {
     MetaMaskAddress &&
-    fetch(`${process.env.REACT_APP_claimPageClaimEndPoint}/opensea/${MetaMaskAddress}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          setMetaMaskCalculatedDATA(data);
-          setMetamaskAllocation(data.allocation);
-        } else if (data.success.toString() === "undefined") {
-          setMetamaskAllocation(0);
-          setMetaMaskCalculatedDATA();
-        } else {
-          setMetamaskAllocation(0);
-          setMetaMaskCalculatedDATA(false);
-        }
-      });
+      fetch(
+        `${process.env.REACT_APP_claimPageClaimEndPoint}/opensea/${MetaMaskAddress}`
+      )
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.success) {
+            setMetaMaskCalculatedDATA(data);
+            setMetamaskAllocation(data.allocation);
+          } else if (data.success.toString() === "undefined") {
+            setMetamaskAllocation(0);
+            setMetaMaskCalculatedDATA();
+          } else {
+            setMetamaskAllocation(0);
+            setMetaMaskCalculatedDATA(false);
+          }
+        });
   }, [MetaMaskAddress]);
 
   return (
