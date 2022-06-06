@@ -1,5 +1,5 @@
 import { useTranslation } from "react-i18next";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import styled from "styled-components";
 
 export default function MetaMaskModal({ closeModal, setMetaMaskWallet }) {
@@ -8,6 +8,13 @@ export default function MetaMaskModal({ closeModal, setMetaMaskWallet }) {
   console.log(Input);
 
   const [MetaMaskConnectionState, setMetaMaskConnectionState] = useState(0);
+
+  useEffect(() => {
+    window.ethereum.on('accountsChanged', () => {
+      handleMetamaskConnect()
+    });
+
+  })
 
   const handleMetamaskConnect = async () => {
     if (typeof window.ethereum !== "undefined") {
