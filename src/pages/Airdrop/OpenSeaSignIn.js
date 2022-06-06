@@ -92,7 +92,7 @@ export default function OpenSeaSignIn({
       });
       // console.log(sign);
       setSign(sign);
-      const res = await fetch(process.env.REACT_APP_openSeaURL, {
+      const res = await fetch(process.env.REACT_APP_claimPageClaimEndPoint+"/opensea", {
         method: "POST",
         headers: {
           Accept: "application/json",
@@ -104,7 +104,8 @@ export default function OpenSeaSignIn({
           ercAddress: account,
         }),
       });
-      setSubmitResponse(res);
+      const text = await res.text();
+      setSubmitResponse(JSON.parse(text));
     } else {
       console.log("Account Already exists!");
     }

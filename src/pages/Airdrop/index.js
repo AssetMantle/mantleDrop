@@ -59,20 +59,20 @@ export default function Airdrop() {
 
   useEffect(() => {
     MetaMaskAddress &&
-      fetch(`${process.env.REACT_APP_openSeaURL}/${MetaMaskAddress}`)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success) {
-            setMetaMaskCalculatedDATA(data);
-            setMetamaskAllocation(data.allocation);
-          } else if (data.success.toString() === "undefined") {
-            setMetamaskAllocation(0);
-            setMetaMaskCalculatedDATA();
-          } else {
-            setMetamaskAllocation(0);
-            setMetaMaskCalculatedDATA(false);
-          }
-        });
+    fetch(`${process.env.REACT_APP_claimPageClaimEndPoint}/opensea/${MetaMaskAddress}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          setMetaMaskCalculatedDATA(data);
+          setMetamaskAllocation(data.allocation);
+        } else if (data.success.toString() === "undefined") {
+          setMetamaskAllocation(0);
+          setMetaMaskCalculatedDATA();
+        } else {
+          setMetamaskAllocation(0);
+          setMetaMaskCalculatedDATA(false);
+        }
+      });
   }, [MetaMaskAddress]);
 
   return (
