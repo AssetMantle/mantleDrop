@@ -77,6 +77,8 @@ export default function Airdrop() {
         });
   }, [MetaMaskAddress]);
 
+  console.log(MetaMaskCalculatedDATA);
+
   return (
     <>
       <AirdropContainer>
@@ -278,7 +280,10 @@ export default function Airdrop() {
                       </h4>
                     </div>
                     {MetaMaskCalculatedDATA &&
-                      MetaMaskCalculatedDATA.mantleAddress && (
+                      MetaMaskCalculatedDATA.mantleAddress &&
+                      MetaMaskCalculatedDATA.mantleAddress.includes(
+                        "mantle"
+                      ) && (
                         <p className="yellow-t">
                           {MetaMaskCalculatedDATA.mantleAddress}
                         </p>
@@ -328,7 +333,12 @@ export default function Airdrop() {
                       <button
                         onClick={() => setOpenseaSignState(true)}
                         disabled={
-                          MetaMaskCalculatedDATA.mantleAddress ? true : false
+                          MetaMaskCalculatedDATA.mantleAddress &&
+                          MetaMaskCalculatedDATA.mantleAddress.includes(
+                            "mantle"
+                          )
+                            ? true
+                            : false
                         }
                       >
                         {t("CLAIM")}
