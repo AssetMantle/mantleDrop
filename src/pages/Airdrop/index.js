@@ -232,7 +232,7 @@ export default function Airdrop() {
 
         <section className="section_drop">
           <div className="section_drop__heading">
-            <h3>{t("CHECK_NOW")}</h3>
+            <h3>{t("CLAIM_NOW")}</h3>
             <hr />
           </div>
           <div className="section_drop__element">
