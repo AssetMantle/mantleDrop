@@ -38,7 +38,7 @@ export default function Airdrop() {
 
   const [MantleDropClaimValue, setMantleDropClaimValue] = useState(0);
 
-  const [OpenseaSignState, setOpenseaSignState] = useState(true);
+  const [OpenseaSignState, setOpenseaSignState] = useState(false);
 
   useEffect(() => {
     fetch(`https://airdrop-data.assetmantle.one/keplr/${OsmoAddress}`)
