@@ -92,7 +92,7 @@ export default function OpenSeaSignIn({
       });
       // console.log(sign);
       setSign(sign);
-      const res = await fetch(process.env.REACT_APP_openSeaURL, {
+      const res = await fetch(process.env.REACT_APP_claimPageClaimEndPoint+"/opensea", {
         method: "POST",
         headers: {
           Accept: "application/json",
