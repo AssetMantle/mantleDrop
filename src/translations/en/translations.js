@@ -108,7 +108,10 @@ const English = {
     AIRDROP_MODAL_OPENSEA_STEP1: airDropData.openSeaSignModal.step1,
     AIRDROP_MODAL_OPENSEA_STEP2: airDropData.openSeaSignModal.step2,
     AIRDROP_MODAL_OPENSEA_PLACEHOLDER: airDropData.openSeaSignModal.placeholder,
-    AIRDROP_MODAL_OPENSEA_DONT_Have: airDropData.openSeaSignModal.dontHave,
+    AIRDROP_MODAL_OPENSEA_DONT_HAVE: airDropData.openSeaSignModal.dontHave,
+    AIRDROP_MODAL_OPENSEA_SUCCESS_TITLE:
+      airDropData.openSeaSignModal.successTitle,
+    AIRDROP_MODAL_OPENSEA_EXIST_TITLE: airDropData.openSeaSignModal.existTitle,
 
     // Osmosis Claim Page
     // title section

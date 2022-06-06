@@ -98,6 +98,8 @@
     "step1": "Step 1: Connect MetaMask",
     "step2": "Step 2: Provide Mantle Address",
     "placeholder": "Enter Valid Mantle Address",
-    "dontHave": "Don't have keplr? Install"
+    "dontHave": "Don't have keplr? Install",
+    "successTitle": "You have claimed successfully!",
+    "existTitle": "Account already exists!"
   }
 }
