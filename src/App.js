@@ -14,9 +14,11 @@ import StakeDrop from "./pages/StakeDrop";
 import OsmosisClaimPage from "./pages/claim/OsmosisClaimPage";
 
 import CalculationPage from "./pages/StakeDrop/CalculationPage";
+import {initialize} from "./pages/Airdrop/utils/mantle";
 
 const App = () => {
   const location = useLocation();
+  initialize();
 
   // changing header
   const CURRENT_VERSION = process.env.REACT_APP_VERSION;
