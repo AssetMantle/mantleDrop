@@ -104,7 +104,8 @@ export default function OpenSeaSignIn({
           ercAddress: account,
         }),
       });
-      setSubmitResponse(res);
+      const text = await res.text();
+      setSubmitResponse(JSON.parse(text));
     } else {
       console.log("Account Already exists!");
     }
