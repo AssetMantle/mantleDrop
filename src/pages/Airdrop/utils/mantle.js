@@ -37,7 +37,7 @@ async function checkAccountExists(address) {
     }
 }
 
-module.exports = {
+export {
     initialize,
     checkAccountExists,
     stargateClient,
