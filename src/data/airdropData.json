@@ -99,7 +99,7 @@
     "step2": "Step 2: Provide Mantle Address",
     "placeholder": "Enter Valid Mantle Address",
     "dontHave": "Don't have keplr? Install",
-    "successTitle": "You have claimed successfully!",
-    "existTitle": "Account already exists!"
+    "successTitle": "You have claimed successfully! Please wait for 10-15 minutes for token to be transferred.",
+    "existTitle": "Account already exists. Please provide new mantle address to claim"
   }
 }
