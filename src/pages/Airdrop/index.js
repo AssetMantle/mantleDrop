@@ -227,6 +227,7 @@ export default function Airdrop() {
             ) : undefined}
           </div>
         </section>
+
         <section className="section_drop">
           <div className="section_drop__heading">
             <h3>{t("CHECK_NOW")}</h3>
@@ -276,6 +277,12 @@ export default function Airdrop() {
                         {t("AIRDROP_ALLOCATION_KEY")}
                       </h4>
                     </div>
+                    {MetaMaskCalculatedDATA &&
+                      MetaMaskCalculatedDATA.mantleAddress && (
+                        <p className="yellow-t">
+                          {MetaMaskCalculatedDATA.mantleAddress}
+                        </p>
+                      )}
                     <p
                       onClick={() => setMetamaskTS(!MetamaskTS)}
                       style={{ cursor: "pointer" }}
@@ -318,7 +325,12 @@ export default function Airdrop() {
                     <div className="section_drop__element_details"></div>
                     <div className="section_drop__element_value"></div>
                     <div className="section_drop__button">
-                      <button onClick={() => setOpenseaSignState(true)}>
+                      <button
+                        onClick={() => setOpenseaSignState(true)}
+                        disabled={
+                          MetaMaskCalculatedDATA.mantleAddress ? true : false
+                        }
+                      >
                         {t("CLAIM")}
                       </button>
                     </div>
