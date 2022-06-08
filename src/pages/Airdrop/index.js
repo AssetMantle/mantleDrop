@@ -335,7 +335,10 @@ export default function Airdrop() {
                             : false
                         }
                       >
-                        {t("CLAIM")}
+                        {MetaMaskCalculatedDATA.mantleAddress &&
+                        MetaMaskCalculatedDATA.mantleAddress.includes("mantle")
+                          ? t("CLAIMED")
+                          : t("CLAIM")}
                       </button>
                     </div>
                   </div>
