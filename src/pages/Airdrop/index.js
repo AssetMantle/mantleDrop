@@ -229,10 +229,6 @@ export default function Airdrop() {
         </section>
 
         <section className="section_drop">
-          {/* <div className="section_drop__heading">
-            <h3>{t("CLAIM_NOW")}</h3>
-            <hr />
-          </div> */}
           <div className="section_drop__element">
             <div className="section_drop__element_details">
               <h3>{t("AIRDROP_REQUIRED_ELIGIBILITY_TITLE_2")}</h3>
