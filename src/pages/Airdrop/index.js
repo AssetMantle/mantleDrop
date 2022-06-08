@@ -110,8 +110,6 @@ export default function Airdrop() {
           </div>
         </section>
 
-        <MantleDropClaim totalValue={setMantleDropClaimValue} />
-
         <section className="section_drop">
           <div className="section_drop__heading">
             <h3>{t("AIRDROP_REQUIRED_ELIGIBILITY_HEADING")}</h3>
@@ -231,10 +229,10 @@ export default function Airdrop() {
         </section>
 
         <section className="section_drop">
-          <div className="section_drop__heading">
+          {/* <div className="section_drop__heading">
             <h3>{t("CLAIM_NOW")}</h3>
             <hr />
-          </div>
+          </div> */}
           <div className="section_drop__element">
             <div className="section_drop__element_details">
               <h3>{t("AIRDROP_REQUIRED_ELIGIBILITY_TITLE_2")}</h3>
@@ -356,7 +354,9 @@ export default function Airdrop() {
             ) : undefined}
           </div>
         </section>
-        <section className="section_wallets"></section>
+
+        <MantleDropClaim totalValue={setMantleDropClaimValue} />
+
         {KeplrCalculatedDATA ||
         MetaMaskCalculatedDATA ||
         MantleDropClaimValue ? (
@@ -428,6 +428,7 @@ export default function Airdrop() {
             )}
           </>
         ) : undefined}
+
         <section className="section_drop">
           <div className="section_drop__heading">
             <h3>{t("AIRDROP_NFT_OWNERS_HEADING")}</h3>
@@ -445,6 +446,7 @@ export default function Airdrop() {
             <div className="section_drop__button two"></div>
           </div>
         </section>
+
         {LPModalStat && (
           <LPModal
             closeModal={setLPModalStat}
