@@ -328,6 +328,7 @@ const English = {
     CHECK_ELIGIBILITY: "Check Eligibility",
     CHECK_NOW: "Check Now",
     CLAIM: "Claim",
+    CLAIMED: "Claimed",
     CLAIM_NOW: "Claim Now",
     COMING_SOON: "Coming Soon",
     COMPLETED: "Completed",
