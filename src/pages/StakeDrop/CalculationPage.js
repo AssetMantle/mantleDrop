@@ -21,7 +21,7 @@ export default function CalculationPage() {
   const [IsMagicTransaction, setIsMagicTransaction] = useState();
 
   useEffect(() => {
-    fetch(`https://${path.id}-stakedrop.assetmantle.one/status`)
+    fetch(`https://osmosis-stakedrop.assetmantle.one/status`)
       .then((res) => res.json())
       .then((res) => setCampaignStat(res))
       .catch((err) => console.log(err));
@@ -111,7 +111,7 @@ export default function CalculationPage() {
   }
 
   const handleCalculate = () => {
-    fetch(`https://${path.id}-stakedrop.assetmantle.one/delegator/${Address}`)
+    fetch(`https://osmosis-stakedrop.assetmantle.one/delegator/${Address}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success.toString() === "true") {
@@ -120,7 +120,7 @@ export default function CalculationPage() {
           setTotaReward(data.received);
           setTotalEstimated(data.estimated);
           setIsMagicTransaction(true);
-          fetch(`https://${path.id}-stakedrop.assetmantle.one/qna/${Address}`)
+          fetch(`https://osmosis-stakedrop.assetmantle.one/qna/${Address}`)
             .then((res) => res.json())
             .then((data) => {
               setTotalCorrect(countAnswer(data.qaData));
