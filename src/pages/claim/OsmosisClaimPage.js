@@ -148,7 +148,7 @@ export default function OsmosisClaimPage() {
       .catch((err) => console.log(err));
 
     //  Fetching claim response
-    fetch(`${config.claimPageClaimEndPoint}/osmosis/${OsmosisAccount}`)
+    fetch(`${config.claimPageClaimEndPoint}/osmosis/${mntlAddress}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
@@ -227,7 +227,7 @@ export default function OsmosisClaimPage() {
     console.log(res);
 
     //  Fetching claim response
-    fetch(`${config.claimPageClaimEndPoint}/osmosis/${OsmosisAddress}`)
+    fetch(`${config.claimPageClaimEndPoint}/osmosis/${MNTLAddress}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {

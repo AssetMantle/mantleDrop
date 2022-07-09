@@ -20,11 +20,67 @@ export default function CalculationPage() {
 
   const [IsMagicTransaction, setIsMagicTransaction] = useState();
 
+  const [unAvailable, setUnAvailable] = useState();
+
+  const STATS = {
+    cosmos: {
+      success: true,
+      lastHeight: 9839601,
+      totalDistributed: 1900000000000.0073,
+      worldGlobalDelegation: 9886571467065.578,
+      numDelegators: 65959,
+      totalStakeDropGlobalDelegation: 15936837864568.938,
+      numComplete: 69,
+    },
+    persistence: {
+      success: true,
+      lastHeight: 5375767,
+      totalDistributed: 900000000000.0002,
+      worldGlobalDelegation: 2585657350271.4604,
+      numDelegators: 8668,
+      totalStakeDropGlobalDelegation: 7720991135596.412,
+      numComplete: 69,
+    },
+    terra: {
+      success: true,
+      lastHeight: 7038531,
+      totalDistributed: 1924999999999.9993,
+      worldGlobalDelegation: 697890706914.201,
+      numDelegators: 9334,
+      totalStakeDropGlobalDelegation: 2848857958855.5728,
+      numComplete: 163,
+    },
+    comdex: {
+      success: true,
+      lastHeight: 1863701,
+      totalDistributed: 925000000000.0006,
+      worldGlobalDelegation: 1432312971075.849,
+      numDelegators: 8701,
+      totalStakeDropGlobalDelegation: 73185168779883.64,
+      numComplete: 49,
+    },
+    juno: {
+      success: true,
+      lastHeight: 2581277,
+      totalDistributed: 1925000000000.0002,
+      worldGlobalDelegation: 4142492846611.3335,
+      numDelegators: 35547,
+      totalStakeDropGlobalDelegation: 8342400920513.954,
+      numComplete: 97,
+    },
+    stargaze: {
+      success: true,
+      lastHeight: 2350991,
+      totalDistributed: 925000000000.001,
+      worldGlobalDelegation: 20049750322935,
+      numDelegators: 13711,
+      totalStakeDropGlobalDelegation: 44468389794490.64,
+      numComplete: 51,
+    },
+  };
+
   useEffect(() => {
-    fetch(`https://${path.id}-stakedrop.assetmantle.one/status`)
-      .then((res) => res.json())
-      .then((res) => setCampaignStat(res))
-      .catch((err) => console.log(err));
+    setCampaignStat(STATS[path.id]);
   }, [path.id]);
 
   // connect keplr
@@ -110,30 +166,34 @@ export default function CalculationPage() {
     return counter;
   }
 
+  // const handleCalculate = () => {
+  //   fetch(`https://${path.id}-stakedrop.assetmantle.one/delegator/${Address}`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       if (data.success.toString() === "true") {
+  //         setStakeAddress(data.mantleAddress);
+  //         setTotalStaked(data.globalDelegation);
+  //         setTotaReward(data.received);
+  //         setTotalEstimated(data.estimated);
+  //         setIsMagicTransaction(true);
+  //         fetch(`https://${path.id}-stakedrop.assetmantle.one/qna/${Address}`)
+  //           .then((res) => res.json())
+  //           .then((data) => {
+  //             setTotalCorrect(countAnswer(data.qaData));
+  //           });
+  //       } else if (data.success.toString() === "false") {
+  //         setIsMagicTransaction(false);
+  //         setStakeAddress();
+  //         setTotalStaked("0.00");
+  //         setTotaReward("0.00");
+  //         setTotalEstimated("0.00");
+  //       }
+  //     })
+  //     .catch((err) => console.log(err));
+  // };
+
   const handleCalculate = () => {
-    fetch(`https://${path.id}-stakedrop.assetmantle.one/delegator/${Address}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success.toString() === "true") {
-          setStakeAddress(data.mantleAddress);
-          setTotalStaked(data.globalDelegation);
-          setTotaReward(data.received);
-          setTotalEstimated(data.estimated);
-          setIsMagicTransaction(true);
-          fetch(`https://${path.id}-stakedrop.assetmantle.one/qna/${Address}`)
-            .then((res) => res.json())
-            .then((data) => {
-              setTotalCorrect(countAnswer(data.qaData));
-            });
-        } else if (data.success.toString() === "false") {
-          setIsMagicTransaction(false);
-          setStakeAddress();
-          setTotalStaked("0.00");
-          setTotaReward("0.00");
-          setTotalEstimated("0.00");
-        }
-      })
-      .catch((err) => console.log(err));
+    setUnAvailable(true);
   };
 
   return (
@@ -446,6 +506,19 @@ export default function CalculationPage() {
                       <h3>
                         {t("MANTLEDROP_CAMPAIGN_CONNECT_NOT_PARTICIPATED")}
                       </h3>
+                    </div>
+                  </div>
+                  <div className="section_calculation__error_element"></div>
+                </div>
+              )}
+              {unAvailable === true && (
+                <div className="section_calculation__error">
+                  <div className="section_calculation__error_element">
+                    <div className="section_calculation__error_element__line1">
+                      <span>
+                        <BsInfoCircle />
+                      </span>
+                      <h3>{t("MANTLEDROP_CAMPAIGN_CONNECT_UNAVAILABLE")}</h3>
                     </div>
                   </div>
                   <div className="section_calculation__error_element"></div>
