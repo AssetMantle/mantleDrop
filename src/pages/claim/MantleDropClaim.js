@@ -291,16 +291,9 @@ export default function MantleDropClaim({ totalValue }) {
         APIResponse.persistence.amount +
         APIResponse.juno.amount +
         APIResponse.stargaze.amount +
-        APIResponse.terra.amount / 1000000
+        APIResponse.terra.amount
     );
-  }, [
-    APIResponse.cosmos.amount,
-    APIResponse.comdex.amount,
-    APIResponse.persistence.amount,
-    APIResponse.juno.amount,
-    APIResponse.stargaze.amount,
-    APIResponse.terra.amount,
-  ]);
+  }, [APIResponse]);
 
   return (
     <>
