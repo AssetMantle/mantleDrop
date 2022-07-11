@@ -45,13 +45,6 @@ export default function MantleDropClaim({ totalValue }) {
       amount: 0,
     },
   });
-  const [InputAddress, setInputAddress] = useState("");
-
-  const [InputCampaignData, setInputCampaignData] = useState({
-    delegator: "",
-    received: 0,
-    mantleAddress: "",
-  });
 
   // connect keplr
   const [KeplrConnectionState, setKeplrConnectionState] = useState(0);
@@ -153,183 +146,142 @@ export default function MantleDropClaim({ totalValue }) {
   };
 
   const InputCalculate = () => {
-    if (InputAddress.includes("cosmos")) {
-      fetch(
-        `https://cosmos-stakedrop.assetmantle.one/delegator/${InputAddress}`
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success.toString() === "true") {
-            setInputError();
-            setInputCampaignData(data);
-          } else if (data.success.toString() === "false") {
-            setInputError();
-            setInputCampaignData({
-              delegator: InputAddress,
-              received: 0,
-              mantleAddress: "",
-            });
-          }
-        })
-        .catch((err) => console.log(err));
-      setModal(false);
-    } else if (InputAddress.includes("persistence")) {
-      fetch(
-        `https://persistence-stakedrop.assetmantle.one/delegator/${InputAddress}`
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success.toString() === "true") {
-            setInputError();
-            setInputCampaignData(data);
-          } else if (data.success.toString() === "false") {
-            setInputError();
-            setInputCampaignData({
-              delegator: InputAddress,
-              received: 0,
-              mantleAddress: "",
-            });
-          }
-        })
-        .catch((err) => console.log(err));
-      setModal(false);
-    } else if (InputAddress.includes("terra")) {
-      fetch(`https://terra-stakedrop.assetmantle.one/delegator/${InputAddress}`)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success.toString() === "true") {
-            setInputError();
-            setInputCampaignData(data);
-          } else if (data.success.toString() === "false") {
-            setInputError();
-            setInputCampaignData({
-              delegator: InputAddress,
-              received: 0,
-              mantleAddress: "",
-            });
-          }
-        })
-        .catch((err) => console.log(err));
-      setModal(false);
-    } else if (InputAddress.includes("comdex")) {
-      fetch(
-        `https://comdex-stakedrop.assetmantle.one/delegator/${InputAddress}`
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success.toString() === "true") {
-            setInputError();
-            setInputCampaignData(data);
-          } else if (data.success.toString() === "false") {
-            setInputError();
-            setInputCampaignData({
-              delegator: InputAddress,
-              received: 0,
-              mantleAddress: "",
-            });
-          }
-        })
-        .catch((err) => console.log(err));
-      setModal(false);
-    } else if (InputAddress.includes("juno")) {
-      fetch(`https://juno-stakedrop.assetmantle.one/delegator/${InputAddress}`)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success.toString() === "true") {
-            setInputError();
-            setInputCampaignData(data);
-          } else if (data.success.toString() === "false") {
-            setInputError();
-            setInputCampaignData({
-              delegator: InputAddress,
-              received: 0,
-              mantleAddress: "",
-            });
-          }
-        })
-        .catch((err) => console.log(err));
-      setModal(false);
-    } else if (InputAddress.includes("stars")) {
-      fetch(
-        `https://stargaze-stakedrop.assetmantle.one/delegator/${InputAddress}`
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success.toString() === "true") {
-            setInputError();
-            setInputCampaignData(data);
-          } else if (data.success.toString() === "false") {
-            setInputError();
-            setInputCampaignData({
-              delegator: InputAddress,
-              received: 0,
-              mantleAddress: "",
-            });
-          }
-        })
-        .catch((err) => console.log(err));
-      setModal(false);
-    } else if (InputAddress.includes("mantle")) {
-      fetch(`${stakeDropAPI}/stakeDrop/${InputAddress}`)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.success === true) {
-            setAPIResponse(data);
-            setMNTLAddress(InputAddress);
-            setInputError();
-          } else if (data.success === false) {
-            setInputError();
-            setAPIResponse({
-              success: false,
-              cosmos: {
-                address: "",
-                amount: 0,
-              },
-              juno: {
-                address: "",
-                amount: 0,
-              },
-              comdex: {
-                address: "",
-                amount: 0,
-              },
-              stargaze: {
-                address: "",
-                amount: 0,
-              },
-              terra: {
-                address: "",
-                amount: 0,
-              },
-              persistence: {
-                address: "",
-                amount: 0,
-              },
-            });
-          }
-        })
-        .catch((err) => console.log(err));
-      setModal(false);
-    } else {
-      setInputError();
-      setInputCampaignData({
-        delegator: "",
-        received: 0,
-        mantleAddress: "",
+    fetch(`${stakeDropAPI}/stakeDrop/${MNTLAddress}`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success === true) {
+          setAPIResponse(data);
+        } else if (data.success === false) {
+          setAPIResponse({
+            success: false,
+            cosmos: {
+              address: "",
+              amount: 0,
+            },
+            juno: {
+              address: "",
+              amount: 0,
+            },
+            comdex: {
+              address: "",
+              amount: 0,
+            },
+            stargaze: {
+              address: "",
+              amount: 0,
+            },
+            terra: {
+              address: "",
+              amount: 0,
+            },
+            persistence: {
+              address: "",
+              amount: 0,
+            },
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+
+        setAPIResponse({
+          success: false,
+          cosmos: {
+            address: "",
+            amount: 0,
+          },
+          juno: {
+            address: "",
+            amount: 0,
+          },
+          comdex: {
+            address: "",
+            amount: 0,
+          },
+          stargaze: {
+            address: "",
+            amount: 0,
+          },
+          terra: {
+            address: "",
+            amount: 0,
+          },
+          persistence: {
+            address: "",
+            amount: 0,
+          },
+        });
+        setInputError(
+          "Please enter a valid $MNTL address to calculate your rewards."
+        );
       });
-      setInputError(
-        "Please enter a valid $MNTL or Cosmos or Persistence or Terra or Comdex or Juno or Stargaze or Osmosis address to calculate your rewards."
-      );
-    }
+    setModal(false);
   };
 
   const handleInputChange = (e) => {
-    setInputCampaignData({
-      delegator: "",
-      received: 0,
-      mantleAddress: "",
-    });
-    setInputAddress(e.target.value);
+    if (e.target.value.includes("mantle")) {
+      setAPIResponse({
+        success: false,
+        cosmos: {
+          address: "",
+          amount: 0,
+        },
+        juno: {
+          address: "",
+          amount: 0,
+        },
+        comdex: {
+          address: "",
+          amount: 0,
+        },
+        stargaze: {
+          address: "",
+          amount: 0,
+        },
+        terra: {
+          address: "",
+          amount: 0,
+        },
+        persistence: {
+          address: "",
+          amount: 0,
+        },
+      });
+      setMNTLAddress(e.target.value);
+      setInputError();
+    } else {
+      setInputError(
+        "Please enter a valid $MNTL address to calculate your rewards."
+      );
+      setAPIResponse({
+        success: false,
+        cosmos: {
+          address: "",
+          amount: 0,
+        },
+        juno: {
+          address: "",
+          amount: 0,
+        },
+        comdex: {
+          address: "",
+          amount: 0,
+        },
+        stargaze: {
+          address: "",
+          amount: 0,
+        },
+        terra: {
+          address: "",
+          amount: 0,
+        },
+        persistence: {
+          address: "",
+          amount: 0,
+        },
+      });
+      setMNTLAddress(e.target.value);
+    }
   };
 
   useEffect(() => {
@@ -339,12 +291,9 @@ export default function MantleDropClaim({ totalValue }) {
         APIResponse.persistence.amount +
         APIResponse.juno.amount +
         APIResponse.stargaze.amount +
-        APIResponse.terra.amount +
-        InputCampaignData.received / 1000000
+        APIResponse.terra.amount
     );
-  }, [APIResponse, InputCampaignData]);
-
-  console.log(MNTLAddress);
+  }, [APIResponse]);
 
   return (
     <>
@@ -369,7 +318,7 @@ export default function MantleDropClaim({ totalValue }) {
             <h4>{t("AIRDROP_START_WITH_STAKEDROP_VALUE")}</h4>
           </div>
           <div className="section_drop__button">
-            {KeplrConnectionState === 2 || InputAddress ? (
+            {MNTLAddress ? (
               <button className="button_2" onClick={() => setModal(true)}>
                 {t("Edit")}
               </button>
@@ -381,37 +330,17 @@ export default function MantleDropClaim({ totalValue }) {
       </section>
 
       <>
-        {KeplrConnectionState === 2 ? (
-          APIResponse.success === false ? (
-            <section className="section_allocation">
-              <h3 className="error-t">
-                {t("AIRDROP_REQUIRED_ELIGIBILITY_NOT_ELIGIBLE")}
-              </h3>
-            </section>
-          ) : (
-            ""
-          )
-        ) : InputAddress ? (
-          InputAddress.includes("mantle") ? (
-            APIResponse.success === false && (
-              <section className="section_allocation">
-                <h3 className="error-t">
-                  {t("AIRDROP_REQUIRED_ELIGIBILITY_NOT_ELIGIBLE")}
-                </h3>
-              </section>
-            )
-          ) : (
-            InputCampaignData.mantleAddress === "" && (
-              <section className="section_allocation">
-                <h3 className="error-t">
-                  {t("AIRDROP_REQUIRED_ELIGIBILITY_NOT_ELIGIBLE")}
-                </h3>
-              </section>
-            )
-          )
-        ) : (
-          ""
-        )}
+        {MNTLAddress
+          ? MNTLAddress.includes("mantle")
+            ? APIResponse.success === false && (
+                <section className="section_allocation">
+                  <h3 className="error-t">
+                    {t("AIRDROP_REQUIRED_ELIGIBILITY_NOT_ELIGIBLE")}
+                  </h3>
+                </section>
+              )
+            : ""
+          : ""}
       </>
 
       <Container>
@@ -439,13 +368,6 @@ export default function MantleDropClaim({ totalValue }) {
                     <button
                       className="section_calculation__connect_button"
                       onClick={handleKeplrConnect}
-                      disabled={
-                        InputAddress !== null &&
-                        InputAddress !== undefined &&
-                        InputAddress !== ""
-                          ? true
-                          : false
-                      }
                     >
                       <img src="/images/airdrop/Kepler.png" alt="Keplr icon" />
                       <span>{`${
@@ -474,24 +396,23 @@ export default function MantleDropClaim({ totalValue }) {
                       <input
                         type="text"
                         name="walletAddress"
-                        value={InputAddress}
+                        value={MNTLAddress}
                         className="section_calculation__from_line2_input"
-                        readOnly={KeplrConnectionState === 2 ? true : false}
-                        onChange={(e) =>
-                          KeplrConnectionState === 2
-                            ? setInputAddress()
-                            : handleInputChange(e)
-                        }
-                        placeholder="Enter your wallet address"
+                        onChange={(e) => handleInputChange(e)}
+                        placeholder="Enter your mntl address"
                       />
                       <button
                         onClick={InputCalculate}
                         className="section_calculation__from_line2_button"
                         disabled={
-                          InputAddress !== null &&
-                          InputAddress !== "" &&
-                          InputAddress !== undefined
-                            ? false
+                          MNTLAddress !== null &&
+                          MNTLAddress !== "" &&
+                          MNTLAddress !== undefined
+                            ? InputError !== null &&
+                              InputError !== "" &&
+                              InputError !== undefined
+                              ? true
+                              : false
                             : true
                         }
                       >
@@ -500,7 +421,7 @@ export default function MantleDropClaim({ totalValue }) {
                     </div>
                   </div>
 
-                  {InputAddress && InputError && (
+                  {MNTLAddress && InputError && (
                     <div className="section_calculation__error">
                       <div className="section_calculation__error_element__line1">
                         <img src="/images/stakedrop/info.svg" alt="info icon" />
@@ -515,13 +436,13 @@ export default function MantleDropClaim({ totalValue }) {
         )}
 
         {/*{APIResponse.success === true && KeplrConnectionState ===2 ? (*/}
-        {APIResponse.success === true || InputCampaignData.mantleAddress ? (
+        {APIResponse.success === true ? (
           <section className="section_reward_table">
             <div className="section_reward_table__element">
               {ShowTable && (
                 <>
                   <>
-                    {APIResponse || InputCampaignData.delegator ? (
+                    {APIResponse ? (
                       <div className="section_reward_table__element_option">
                         <h4>{t("CAMPAIGN")}</h4>
                         <h4>{t("ADDRESS")}</h4>
@@ -620,57 +541,23 @@ export default function MantleDropClaim({ totalValue }) {
                       </p>
                     </div>
                   )}
-                  {InputCampaignData.delegator && (
-                    <div className="section_reward_table__element_option">
-                      <h4>
-                        {InputAddress.includes("cosmos")
-                          ? "Cosmos"
-                          : InputAddress.includes("persistence")
-                          ? "Persistence"
-                          : InputAddress.includes("terra")
-                          ? "Terra"
-                          : InputAddress.includes("comdex")
-                          ? "Comdex"
-                          : InputAddress.includes("juno")
-                          ? "Juno"
-                          : InputAddress.includes("stars")
-                          ? "Stargaze"
-                          : "Failed to detect"}
-                      </h4>
-                      <h4>{InputCampaignData.delegator}</h4>
-
-                      <p>
-                        {InputCampaignData.received
-                          ? (
-                              InputCampaignData.received / 1000000
-                            ).toLocaleString("en-US", {
-                              maximumFractionDigits: 2,
-                            })
-                          : "--"}
-                      </p>
-                    </div>
-                  )}
                 </>
               )}
               <>
-                {APIResponse || InputCampaignData.received ? (
+                {APIResponse ? (
                   <div className="section_reward_table__element_option">
                     <h4>{t("TOTAL_REWARDS")}:</h4>
                     {/* <span></span> */}
-                    <h4>
-                      {MNTLAddress
-                        ? MNTLAddress
-                        : InputCampaignData.mantleAddress}
-                    </h4>
+                    <h4>{MNTLAddress && MNTLAddress}</h4>
                     <span onClick={() => setShowTable(!ShowTable)}>
                       <p>
                         <img
                           src="/images/airdrop/dark.png"
                           alt="coin illustration dark"
                         />{" "}
-                        {(InputCampaignData.received
-                          ? InputCampaignData.received / 1000000
-                          : APIResponse.cosmos.amount +
+                        {(
+                          APIResponse.success === true &&
+                          APIResponse.cosmos.amount +
                             APIResponse.comdex.amount +
                             APIResponse.persistence.amount +
                             APIResponse.juno.amount +
@@ -694,7 +581,7 @@ export default function MantleDropClaim({ totalValue }) {
           ""
         )}
       </Container>
-      {KeplrConnectionState === 2 || InputAddress ? (
+      {MNTLAddress ? (
         <section
           className="section_drop"
           style={{ paddingTop: "20px", paddingBottom: "20px" }}
@@ -982,9 +869,9 @@ const Container = styled.main`
             display: flex;
             align-items: center;
             gap: 16px;
-            padding-bottom: 12px;
             h3 {
               color: var(--gray);
+              padding: 0;
             }
           }
           &__line2 {

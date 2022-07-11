@@ -26,11 +26,6 @@ export default function OsmosisClaimPage() {
   const [TotalClaimed, setTotalClaimed] = useState();
   const [InitialClaimNotification, setInitialClaimNotification] =
     useState(false);
-  const [Response, setResponse] = useState({
-    success: false,
-    address: "",
-    message: "Not eligible",
-  });
 
   const [NotEligible, setNotEligible] = useState();
   const [TAndC, setTAndC] = useState(
@@ -44,6 +39,7 @@ export default function OsmosisClaimPage() {
   const [ClaimResponse, setClaimResponse] = useState({
     success: false,
     address: "",
+    receivable: 0,
     initialClaim: {
       success: false,
       txHash: "",
@@ -131,24 +127,8 @@ export default function OsmosisClaimPage() {
   }, []);
 
   const fetchBackendData = async (OsmosisAccount, mntlAddress) => {
-    // fetching data from backend
-    fetch(`https://airdrop-data.assetmantle.one/keplr/${OsmosisAccount}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success.toString() === "true") {
-          setResponse(data);
-        } else {
-          setResponse({
-            success: false,
-            address: mntlAddress,
-            message: "Not eligible",
-          });
-        }
-      })
-      .catch((err) => console.log(err));
-
     //  Fetching claim response
-    fetch(`${config.claimPageClaimEndPoint}/osmosis/${OsmosisAccount}`)
+    fetch(`${config.claimPageClaimEndPoint}/osmosis/${mntlAddress}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
@@ -158,6 +138,7 @@ export default function OsmosisClaimPage() {
           setClaimResponse({
             success: false,
             address: "",
+            receivable: 0,
             initialClaim: {
               success: false,
               txHash: "",
@@ -227,7 +208,7 @@ export default function OsmosisClaimPage() {
     console.log(res);
 
     //  Fetching claim response
-    fetch(`${config.claimPageClaimEndPoint}/osmosis/${OsmosisAddress}`)
+    fetch(`${config.claimPageClaimEndPoint}/osmosis/${MNTLAddress}`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
@@ -242,6 +223,7 @@ export default function OsmosisClaimPage() {
           setClaimResponse({
             success: false,
             address: "",
+            receivable: 0,
             initialClaim: {
               success: false,
               txHash: "",
@@ -369,8 +351,8 @@ export default function OsmosisClaimPage() {
           <div className="section_overview__element">
             <p>{t("OSMOSIS_CLAIM_OVERVIEW_1")}</p>
             <h4>
-              {Response && Response.allocation
-                ? Number((Response.allocation * Bar) / 100).toLocaleString(
+              {ClaimResponse && ClaimResponse.receivable
+                ? Number((ClaimResponse.receivable * Bar) / 100).toLocaleString(
                     "en-US",
                     {
                       maximumFractionDigits: 2,
@@ -378,8 +360,8 @@ export default function OsmosisClaimPage() {
                   )
                 : "0"}{" "}
               /{" "}
-              {Response && Response.allocation
-                ? Number(Response.allocation).toLocaleString("en-US", {
+              {ClaimResponse && ClaimResponse.receivable
+                ? Number(ClaimResponse.receivable).toLocaleString("en-US", {
                     maximumFractionDigits: 2,
                   })
                 : "--"}{" "}

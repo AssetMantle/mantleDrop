@@ -298,6 +298,7 @@ const English = {
       mantledropPageData.connectWalletLabel,
     MANTLEDROP_CAMPAIGN_CONNECT_NOT_PARTICIPATED:
       mantledropPageData.notParticipated,
+    MANTLEDROP_CAMPAIGN_CONNECT_UNAVAILABLE: mantledropPageData.unavailable,
 
     // MantleDrop Claim section
     PARTICIPATED_QUESTION: "Participated in the StakeDrop Campaign?",

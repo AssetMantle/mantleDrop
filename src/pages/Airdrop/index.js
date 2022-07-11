@@ -41,20 +41,22 @@ export default function Airdrop() {
   const [OpenseaSignState, setOpenseaSignState] = useState(false);
 
   useEffect(() => {
-    fetch(`https://airdrop-data.assetmantle.one/keplr/${OsmoAddress}`)
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success.toString() === "true") {
-          setKeplrCalculatedDATA(data);
-          setOsmoAllocation(data.allocation);
-        } else if (data.address.toString() === "undefined") {
-          setKeplrCalculatedDATA();
-          setOsmoAllocation(0);
-        } else {
-          setKeplrCalculatedDATA(false);
-          setOsmoAllocation(0);
-        }
-      });
+    OsmoAddress &&
+      fetch(`https://osmosis-airdrop.assetmantle.one/osmosis/${OsmoAddress}`)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (data.success.toString() === "true") {
+            setKeplrCalculatedDATA(data);
+            setOsmoAllocation(data.receivable);
+            // } else if (data.address.toString() === "undefined") {
+            //   setKeplrCalculatedDATA();
+            //   setOsmoAllocation(0);
+          } else {
+            setKeplrCalculatedDATA(false);
+            setOsmoAllocation(0);
+          }
+        });
   }, [OsmoAddress]);
 
   useEffect(() => {
@@ -132,7 +134,7 @@ export default function Airdrop() {
             <div className="section_drop__button">
               {OsmoAddress ? (
                 KeplrCalculatedDATA &&
-                KeplrCalculatedDATA.allocation && (
+                KeplrCalculatedDATA.receivable && (
                   <button onClick={() => setTAndC(true)}>{t("CLAIM")}</button>
                 )
               ) : (
@@ -156,7 +158,7 @@ export default function Airdrop() {
                 </span>
               </div>
             ) : undefined}
-            {KeplrCalculatedDATA && KeplrCalculatedDATA.allocation ? (
+            {KeplrCalculatedDATA && KeplrCalculatedDATA.receivable ? (
               <>
                 <section className="section_allocation">
                   <h3>{t("AIRDROP_ALLOCATION_SINGLE_TITLE")}</h3>
@@ -172,18 +174,18 @@ export default function Airdrop() {
                     </div>
                     <p>{getMantleAddress(OsmoAddress)}</p>
                     <p
-                      onClick={() => setOsmoTS(!OsmoTS)}
+                      // onClick={() => setOsmoTS(!OsmoTS)}
                       style={{ cursor: "pointer" }}
                     >
                       {KeplrCalculatedDATA &&
-                        KeplrCalculatedDATA.allocation &&
-                        Number(KeplrCalculatedDATA.allocation).toFixed(2)}
+                        KeplrCalculatedDATA.receivable &&
+                        Number(KeplrCalculatedDATA.receivable).toFixed(2)}
                       {` $MNTL`}{" "}
-                      {OsmoTS ? <AiFillCaretUp /> : <AiFillCaretDown />}
+                      {/* {OsmoTS ? <AiFillCaretUp /> : <AiFillCaretDown />} */}
                     </p>
                   </div>
                 </section>
-                {OsmoTS && (
+                {/* {OsmoTS && (
                   <section className="section_allocation_by_network">
                     <div className="section_allocation_by_network__element">
                       <div className="section_allocation_by_network__element_option">
@@ -199,7 +201,7 @@ export default function Airdrop() {
                         <p>
                           $
                           {KeplrCalculatedDATA &&
-                            KeplrCalculatedDATA.allocation &&
+                            KeplrCalculatedDATA.receivable &&
                             Number(KeplrCalculatedDATA.locked).toFixed(2)}
                         </p>
                       </div>
@@ -210,13 +212,13 @@ export default function Airdrop() {
                         <p>
                           $
                           {KeplrCalculatedDATA &&
-                            KeplrCalculatedDATA.allocation &&
+                            KeplrCalculatedDATA.receivable &&
                             Number(KeplrCalculatedDATA.unlocked).toFixed(2)}
                         </p>
                       </div>
                     </div>
                   </section>
-                )}
+                )} */}
               </>
             ) : KeplrCalculatedDATA === false ? (
               <section className="section_allocation">
@@ -404,13 +406,13 @@ export default function Airdrop() {
                       <p>{Number(MantleDropClaimValue).toFixed(2)}</p>
                     </div>
                   )}
-                  {KeplrCalculatedDATA && KeplrCalculatedDATA.allocation && (
+                  {KeplrCalculatedDATA && KeplrCalculatedDATA.receivable && (
                     <div className="section_allocation_by_network__element_option">
                       <h4>{t("AIRDROP_ALLOCATION_BY_NETWORK_OPTION_1_KEY")}</h4>
                       <p>
                         {KeplrCalculatedDATA &&
-                          KeplrCalculatedDATA.allocation &&
-                          Number(KeplrCalculatedDATA.allocation).toFixed(2)}
+                          KeplrCalculatedDATA.receivable &&
+                          Number(KeplrCalculatedDATA.receivable).toFixed(2)}
                       </p>
                     </div>
                   )}
