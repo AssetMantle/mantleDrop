@@ -488,19 +488,18 @@ export default function OsmosisClaimPage() {
                 <h4>{t("OSMOSIS_CLAIM_MISSION_3")}</h4>
               </div>
               <button
-                disabled={true}
-                // disabled={ClaimResponse.success ? ClaimResponse.vote.success : true}
+                // disabled={true}
+                disabled={ClaimResponse.success ? ClaimResponse.vote.success : true}
                 className="section_mission__container_mission__button"
                 onClick={() =>
                   window.open(
-                    "https://wallet.keplr.app/#/osmosis/governance?detailId=" +
-                      config.proposalID,
+                      "https://restake.app/assetmantle/govern",
                     "_blank"
                   )
                 }
               >
-                {/* {t("VOTE")} */}
-                {t("COMING_SOON")}
+                 {t("VOTE")}
+                {/*{t("COMING_SOON")}*/}
               </button>
               <div className="section_mission__container_mission__done">
                 <MdDone />
