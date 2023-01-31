@@ -352,6 +352,7 @@ const English = {
     ELIGIBLE_POOLS: "Eligible Pools",
     EMAIL: "Email",
     ENTER_YOUR_WALLET_ADDRESS: "Enter Your Wallet Address",
+    EXPIRED: "Expired",
     EXPLORER: "Explorer",
     HERE: "here",
     IN_QUIZ: "in quiz",
