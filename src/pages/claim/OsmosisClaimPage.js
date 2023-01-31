@@ -433,15 +433,11 @@ export default function OsmosisClaimPage() {
                 <h4>{t("OSMOSIS_CLAIM_MISSION_1")}</h4>
               </div>
               <button
-                disabled={
-                  ClaimResponse.success
-                    ? ClaimResponse.initialClaim.success
-                    : true
-                }
-                onClick={handleClaimInitial}
+                disabled={true}
+                // onClick={handleClaimInitial}
                 className="section_mission__container_mission__button"
               >
-                {t("CLAIM")}
+                {t("EXPIRED")}
               </button>
               <div className="section_mission__container_mission__done">
                 <MdDone />
@@ -459,18 +455,16 @@ export default function OsmosisClaimPage() {
                 <h4>{t("OSMOSIS_CLAIM_MISSION_2")}</h4>
               </div>
               <button
-                disabled={
-                  ClaimResponse.success ? ClaimResponse.stake.success : true
-                }
+                disabled={true}
                 className="section_mission__container_mission__button"
-                onClick={() =>
-                  window.open(
-                    "https://wallet.assetmantle.one/dashboard/staking",
-                    "_blank"
-                  )
-                }
+                // onClick={() =>
+                //   window.open(
+                //     "https://wallet.assetmantle.one/dashboard/staking",
+                //     "_blank"
+                //   )
+                // }
               >
-                {t("STAKE")}
+                {t("EXPIRED")}
               </button>
               <div className="section_mission__container_mission__done">
                 <MdDone />
@@ -489,16 +483,16 @@ export default function OsmosisClaimPage() {
               </div>
               <button
                 // disabled={true}
-                disabled={ClaimResponse.success ? ClaimResponse.vote.success : true}
+                disabled={true}
                 className="section_mission__container_mission__button"
-                onClick={() =>
-                  window.open(
-                      "https://restake.app/assetmantle/govern",
-                    "_blank"
-                  )
-                }
+                // onClick={() =>
+                //   window.open(
+                //     "https://restake.app/assetmantle/govern",
+                //     "_blank"
+                //   )
+                // }
               >
-                 {t("VOTE")}
+                {t("EXPIRED")}
                 {/*{t("COMING_SOON")}*/}
               </button>
               <div className="section_mission__container_mission__done">
@@ -517,15 +511,13 @@ export default function OsmosisClaimPage() {
                 <h4>{t("OSMOSIS_CLAIM_MISSION_4")}</h4>
               </div>
               <button
-                disabled={
-                  ClaimResponse.success ? ClaimResponse.liquidity.success : true
-                }
+                disabled={true}
                 className="section_mission__container_mission__button"
-                onClick={() =>
-                  window.open(config.poolURL + config.poolNumber, "_blank")
-                }
+                // onClick={() =>
+                //   window.open(config.poolURL + config.poolNumber, "_blank")
+                // }
               >
-                {t("PROVIDE")}
+                {t("EXPIRED")}
                 {/*Soon*/}
               </button>
               <div className="section_mission__container_mission__done">
