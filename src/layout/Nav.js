@@ -95,7 +95,8 @@ export default function Nav() {
                 <>
                   {data.visibility && (
                     <NavLinkExt
-                      to={data.href}
+                      href={data.href}
+                      target={data.target}
                       className={data.disable && "disabled"}
                     >
                       <span>
@@ -259,7 +260,7 @@ const NavDetails = styled.div`
   }
 `;
 
-const NavLinkExt = styled(Link)`
+const NavLinkExt = styled.a`
   display: grid;
   grid-template-columns: 1fr;
   gap: 8px;
