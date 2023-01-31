@@ -83,18 +83,17 @@
     "spacial": [
       {
         "visibility": true,
-        "disable": true,
-        "target": "blank",
-        "text": "MantleBuilder",
-        "instruction": "(Coming Soon)",
-        "href": "",
+        "disable": false,
+        "target": "_blank",
+        "text": "Mantleplace",
+        "href": "https://marketplace.assetmantle.one/",
         "icon": "external-link"
       },
       {
         "visibility": true,
         "disable": true,
-        "target": "blank",
-        "text": "Mantleplace",
+        "target": "_blank",
+        "text": "MantleBuilder",
         "instruction": "(Coming Soon)",
         "href": "",
         "icon": "external-link"
